@@ -20,4 +20,6 @@ export async function retriveJson() {
 
     if (savedJson)
         return JSON.parse(savedJson);
+
+    return [];
 }

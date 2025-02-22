@@ -2,19 +2,14 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
 
-    // Types
-    import type {TodoType, TodoListType} from '$lib/index';
-
-    // Functions
     import {
         saveJson,
         retriveJson,
         updateLength,
         sortTodoList,
         getRandomTodo,
-        insertTodo
-
-
+        insertTodo,
+        type TodoListType
     } from '$lib/index';
 
     // Components
@@ -30,21 +25,35 @@
 
 
 
-    function updateTodoList() {
-        todo_list = sortTodoList(todo_list);
+    function updateTodoList(new_list : TodoListType) {
+
+        todo_list = sortTodoList(new_list);
+
         todo_length = updateLength(todo_list);
+
         saveJson(todo_list);
-        console.log(todo_list)
+
+        console.log(todo_list);
+        
     }
 
 
     async function insertRandomTodo() {
-        
+
         todo_list = insertTodo(todo_list, await getRandomTodo())
 
-        updateTodoList();
+        updateTodoList(todo_list);
+        
 
     }
+
+
+    function showModal(value : boolean) {
+
+        addTodoClicked = value
+
+    }
+
 
     onMount(async () => {
 
@@ -73,15 +82,15 @@
                 <span class="not-cover">🎲</span>
             </button>
 
-            <button class="add-button non-selectable" onclick={ () => addTodoClicked = !addTodoClicked }>➕</button>
+            <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button>
         </div>
         
     </div>
 
     {#if todo_length !== 0}
         <TodoList
-            bind:todo_list={todo_list}
-            bind:updateTodoList={updateTodoList}
+            {todo_list}
+            {updateTodoList}
         />
     {:else}
         <div class="nothing-todo non-selectable"> Nothing to do! </div>    
@@ -89,8 +98,8 @@
 
     {#if addTodoClicked}
         <TodoForm 
-            bind:addTodoClicked
-            bind:todo_list
+            {todo_list}
+            {showModal}
             {updateTodoList}
         />
     {/if}

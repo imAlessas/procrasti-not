@@ -1,29 +1,54 @@
 <script lang='ts'>
 
-    let { 
-        updateTodoList = $bindable(),
-        todo_list = $bindable(),
-        todo } = $props();
-
-    
     import {
         removeTodo,
-        completeTodo
+        completeTodo,
+
+        type TodoListType,
+        type TodoType
     } from '$lib/index';
 
 
+    export let todo_list : TodoListType;
+    export let todo : TodoType;
+    export let updateTodoList : (list : TodoListType) => void;
+
+
+
+    // Removes the clicked todo
     function remove(id: number) {
-        todo_list = removeTodo(todo_list, id);
-        updateTodoList();
+
+        updateTodoList(removeTodo(todo_list, id));
+
     }
 
+    // Marks the clicked todo as completed
     function complete(id: number) {
-        todo_list = completeTodo(todo_list, id);
-        updateTodoList();
+
+        updateTodoList(completeTodo(todo_list, id));
+
     }
 
 
 </script>
+
+
+
+
+
+<li class="todo-item {todo.completed ? 'completed' : ''}">
+
+    <div class="left-content">
+        <button class="complete-button non-selectable" onclick={ () => complete(todo.id)}> ✅ </button>
+        <span class="todo-text"> {todo.todo} </span>
+    </div>
+
+    <button class="delete-button non-selectable" onclick={ () => remove(todo.id) }> 🗑️ </button>
+</li>
+
+
+
+
 
 
 <style>
@@ -118,18 +143,3 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 </style>
-
-
-
-
-<li class="todo-item {todo.completed ? 'completed' : ''}">
-
-    <div class="left-content">
-        <button class="complete-button non-selectable" onclick={ () => complete(todo.id)}> ✅ </button>
-        <span class="todo-text"> {todo.todo} </span>
-    </div>
-
-    <button class="delete-button non-selectable" onclick={ () => remove(todo.id) }> 🗑️ </button>
-</li>
-
-<!--  -->

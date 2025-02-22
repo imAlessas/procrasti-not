@@ -10,7 +10,7 @@ import type {TodoType, TodoListType} from "$lib/types"
  * @param {TodoListType} todo_list - The list of to-do items.
  * @returns {number} - The maximum ID found in the list, or TODO_ID_OFFSET if no ID exceeds it.
  */
-function retrieveMaxId(todo_list: TodoListType) {
+function retrieveMaxId(todo_list: TodoListType) : number {
     // Find the maximum ID in the list
     let max_from_list = Math.max(...todo_list.map((item: any) => item.id));
   
@@ -45,9 +45,9 @@ export async function getRandomTodo() : Promise<TodoType> {
  * 
  * @param {string} todoValue - The description of the to-do item.
  * @param {TodoListType} todo_list - The list of existing to-do items.
- * @returns {object} - The new to-do item schema.
+ * @returns {TodoType} - The new to-do item schema.
  */
-export function createTodoSchema(todoValue: string, todo_list: TodoListType) {
+export function createTodoSchema(todoValue: string, todo_list: TodoListType) : TodoType {
     return {
         id: (1 + retrieveMaxId(todo_list)),  // Assign a unique ID by incrementing the maximum ID from the list
         todo: todoValue,

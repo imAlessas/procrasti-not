@@ -25,7 +25,7 @@
 
 
 
-    function updateTodoList(new_list : TodoListType) {
+    function updateTodoList(new_list : TodoListType) : void {
 
         todo_list = sortTodoList(new_list);
 
@@ -33,22 +33,19 @@
 
         saveJson(todo_list);
 
-        console.log(todo_list);
-        
     }
 
 
-    async function insertRandomTodo() {
+    async function insertRandomTodo() : Promise<void> {
 
         todo_list = insertTodo(todo_list, await getRandomTodo())
 
         updateTodoList(todo_list);
-        
 
     }
 
 
-    function showModal(value : boolean) {
+    function showModal(value : boolean) : void {
 
         addTodoClicked = value
 
@@ -56,7 +53,6 @@
 
 
     onMount(async () => {
-
         try {
 
             todo_list = await retriveJson();

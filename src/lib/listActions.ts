@@ -8,7 +8,7 @@ import type { TodoType, TodoListType } from '$lib/types';
  * @param {TodoListType} todo_list - The current list of todos.
  * @returns {TodoListType} - A new array with uncompleted items first, followed by completed items.
  */
-export function sortTodoList(todo_list: TodoListType) {
+export function sortTodoList(todo_list: TodoListType) : TodoListType {
     const uncompleted = todo_list.filter((item: any) => !item.completed);
     const completed = todo_list.filter((item: any) => item.completed);
     return [...uncompleted, ...completed];
@@ -22,7 +22,7 @@ export function sortTodoList(todo_list: TodoListType) {
  * @param {TodoListType} todo_list - The current list of todos.
  * @returns {number} - The length of the todo list.
  */
-export function updateLength(todo_list: TodoListType) {
+export function updateLength(todo_list: TodoListType) : number {
     return todo_list.length;
 }
 
@@ -35,7 +35,7 @@ export function updateLength(todo_list: TodoListType) {
  * @param {TodoType} todo - The new todo item to be added.
  * @returns {TodoListType} - A new array with the added todo item.
  */
-export function insertTodo(todo_list: TodoListType, todo: TodoType) {
+export function insertTodo(todo_list: TodoListType, todo: TodoType) : TodoListType {
     return [...todo_list, todo];
 }
 
@@ -48,7 +48,7 @@ export function insertTodo(todo_list: TodoListType, todo: TodoType) {
  * @param {number} id - The ID of the todo item to be toggled.
  * @returns {TodoListType} - A new array with the updated completion status.
  */
-export function completeTodo(todo_list: TodoListType, id: number) {
+export function completeTodo(todo_list: TodoListType, id: number) : TodoListType {
     return todo_list.filter((item: any) => {
         item.completed = (item.id === id ? !item.completed : item.completed);
         return item;
@@ -64,7 +64,7 @@ export function completeTodo(todo_list: TodoListType, id: number) {
  * @param {number} id - The ID of the todo item to be removed.
  * @returns {TodoListType} - A new array with the todo item removed.
  */
-export function removeTodo(todo_list: TodoListType, id: number) {
+export function removeTodo(todo_list: TodoListType, id: number) : TodoListType {
     return todo_list.filter((item: any) => {
         return item.id !== id;
     });

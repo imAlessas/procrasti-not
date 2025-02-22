@@ -13,13 +13,12 @@
 
 
 
-    function getTextAreaValue() {
+    function getTextAreaValue() : string | undefined {
         let textareaElement = document.getElementById("textarea-todo") as HTMLTextAreaElement;
 
-        // Exit modal if necessary
         if (!textareaElement || textareaElement.value === "") {
             showModal(false);
-            return;
+            return undefined;
         }
 
         return textareaElement.value;
@@ -27,15 +26,17 @@
 
 
     
-    function add() {
+    function add() : void {
         let todoValue = getTextAreaValue();
 
-        if (todoValue) {
-            todo_list = insertTodo(
-                todo_list,
-                createTodoSchema(todoValue, todo_list)
-            );
-        }
+        // Exit modal if undefined
+        if (todoValue === undefined)
+            return;
+    
+        todo_list = insertTodo(
+            todo_list,
+            createTodoSchema(todoValue, todo_list)
+        );
 
         updateTodoList(todo_list);
         showModal(false);

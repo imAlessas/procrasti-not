@@ -16,14 +16,14 @@
 
 
     // Removes the clicked todo
-    function remove(id: number) {
+    function remove(id: number) : void {
 
         updateTodoList(removeTodo(todo_list, id));
 
     }
 
     // Marks the clicked todo as completed
-    function complete(id: number) {
+    function complete(id: number) : void {
 
         updateTodoList(completeTodo(todo_list, id));
 

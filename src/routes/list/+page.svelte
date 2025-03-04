@@ -13,8 +13,8 @@
     } from '$lib/index';
 
     // Components
-    import TodoList from '../components/TodoList.svelte';
-    import TodoForm from '../components/TodoForm.svelte';
+    import TodoList from '../../components/TodoList.svelte';
+    import TodoForm from '../../components/TodoForm.svelte';
 
 
     // Variables

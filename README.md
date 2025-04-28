@@ -1,3 +1,6 @@
 # Todo
 
-- [ ] https://zitadel.com/docs
+- Implement logto autentication
+
+
+

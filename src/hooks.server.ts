@@ -7,8 +7,10 @@ export const handle = handleLogto(
     appId: env.LOGTO_APP_ID,
     appSecret: env.LOGTO_APP_SECRET,
   },
-  {
-    encryptionKey: env.LOGTO_COOKIE_ENCRYPTION_KEY,
-  }
+  { encryptionKey: env.LOGTO_COOKIE_ENCRYPTION_KEY }
 );
 
+import { sequence } from '@sveltejs/kit/hooks';
+
+
+// export const handle = sequence(handleLogto, handleOtherHook);

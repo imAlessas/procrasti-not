@@ -67,41 +67,47 @@
 
 </script>
 
-<div class="todo-container" in:fade={{ duration: 1000 }}>
-    
-    <div class="header">
-        <h1>Todo List</h1>
+<div class="app-container">
+
+    <form method="POST" action="?/signOut" class="signout-form">
+        <button type="submit" class="signout-button non-selectable">Sign out</button>
+    </form>
+
+    <div class="todo-container" in:fade={{ duration: 1000 }}>
         
-        <div class="button-container">
+        <div class="header">
+            <h1>Todo List</h1>
+            
+            <div class="button-container">
 
-            <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
-                <span class="not-cover">🎲</span>
-            </button>
+                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
+                    <span class="not-cover">🎲</span>
+                </button>
 
-            <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button>
+                <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button>
+            </div>
+            
         </div>
-        
+
+        {#if todo_length !== 0}
+            <TodoList
+                {todo_list}
+                {updateTodoList}
+            />
+        {:else}
+            <div class="nothing-todo non-selectable"> Nothing to do! </div>    
+        {/if}
+
+        {#if addTodoClicked}
+            <TodoForm 
+                {todo_list}
+                {showModal}
+                {updateTodoList}
+            />
+        {/if}
+
     </div>
-
-    {#if todo_length !== 0}
-        <TodoList
-            {todo_list}
-            {updateTodoList}
-        />
-    {:else}
-        <div class="nothing-todo non-selectable"> Nothing to do! </div>    
-    {/if}
-
-    {#if addTodoClicked}
-        <TodoForm 
-            {todo_list}
-            {showModal}
-            {updateTodoList}
-        />
-    {/if}
-
 </div>
-
 
 
 <style>
@@ -246,4 +252,35 @@
         animation: fadeIn 2s ease-in-out;
     }
 
+
+.signout-form {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    z-index: 10;
+}
+
+.signout-button {
+    background: linear-gradient(135deg, #FFA500, #ADD8E6);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Futura', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.signout-button:hover {
+    background: linear-gradient(135deg, #FF8C00, #87CEEB);
+    transform: scale(105%);
+}
+
+.signout-button:active {
+    transform: scale(95%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 </style>

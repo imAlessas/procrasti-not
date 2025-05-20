@@ -5,6 +5,6 @@ const baseURL = env.BASE_URL
 
 export const actions: Actions = {
   signOut: async ({ locals }) => {
-    await locals.logtoClient.signOut(`${baseURL}/`);
+    await locals.logtoClient.signOut(`${baseURL}`);
   },
 };

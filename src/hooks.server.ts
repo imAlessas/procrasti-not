@@ -1,5 +1,6 @@
 import { handleLogto } from '@logto/sveltekit';
 import { env } from '$env/dynamic/private';
+import { connectDB } from '$lib/mongoose';
 
 export const handle = handleLogto(
   {
@@ -9,3 +10,8 @@ export const handle = handleLogto(
   },
   { encryptionKey: env.LOGTO_COOKIE_ENCRYPTION_KEY }
 );
+
+
+connectDB()
+  .then(() => console.log('MongoDB started'))
+  .catch((e) => console.error('MongoDB failed to start', e));

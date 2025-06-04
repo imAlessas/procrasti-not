@@ -3,20 +3,40 @@
     import { goto } from '$app/navigation';
 
     export let data;
+    const databaseUsers = data.databaseUsers;
 
     onMount(() => {
+
+        console.log(data)
+
         if (data?.user) {
 
-            goto('/list'); 
+            // goto('/list'); 
 
         }
     });
 
 </script>
 
-<form method="POST" action="?/signIn" class="signin-form">
+<!-- <form method="POST" action="?/signIn" class="signin-form">
     <button type="submit" class="signin-button non-selectable">Sign in</button>
-</form>
+</form> -->
+
+  {#if databaseUsers.length > 0}
+    <ul>
+      {#each databaseUsers as user (user._id)}
+        <li>
+          <strong>{user.name}</strong> — {user.email}
+        </li>
+      {/each}
+    </ul>
+  {:else}
+    <p>No users found.</p>
+  {/if}
+
+
+
+
 
 
 <style>

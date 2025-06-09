@@ -1,4 +1,4 @@
-import type { TodoListType } from '$lib/types';
+import type { TodoListType } from '$lib/utils/types';
 
 
 /**

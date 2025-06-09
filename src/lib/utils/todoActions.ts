@@ -1,6 +1,6 @@
-import { TODO_ID_OFFSET, RANDOM_TODO_URL } from "$lib/const";
+import { TODO_ID_OFFSET, RANDOM_TODO_URL } from "$lib/utils/const";
 
-import type {TodoType, TodoListType} from "$lib/types"
+import type {TodoType, TodoListType} from "$lib/utils/types"
 
 
 

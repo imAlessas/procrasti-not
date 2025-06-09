@@ -2,7 +2,7 @@ import type { Actions } from './$types';
 import { env } from '$env/dynamic/private';
 import type { PageServerLoad } from './$types';
 import { Users } from '$lib/models/users';
-import { connectDB } from '$lib/mongoose'; // connection helper
+import { connectDB } from '$lib/server/mongoose'; // connection helper
 
 const baseURL = env.BASE_URL
 

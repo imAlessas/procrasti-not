@@ -1,6 +1,6 @@
 import { handleLogto } from '@logto/sveltekit';
 import { env } from '$env/dynamic/private';
-import { connectDB } from '$lib/server/mongoose';
+import { connectToMongoDB } from '$lib/server/mongoose';
 
 export const handle = handleLogto(
   {
@@ -12,6 +12,6 @@ export const handle = handleLogto(
 );
 
 
-connectDB()
+connectToMongoDB()
   .then(() => console.log('MongoDB started'))
   .catch((e) => console.error('MongoDB failed to start', e));

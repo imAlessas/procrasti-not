@@ -4,7 +4,7 @@ import { env } from '$env/dynamic/private';
 
 let isConnected = false;
 
-export async function connectDB() {
+export async function connectToMongoDB() {
     if (isConnected)
         return;
 

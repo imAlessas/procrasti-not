@@ -1,10 +1,12 @@
 import type { Actions } from './$types';
 import { env } from '$env/dynamic/private';
 import type { PageServerLoad } from './$types';
-import { Users } from '$lib/models/users';
-import { connectDB } from '$lib/server/mongoose'; // connection helper
+import { Users } from '$lib/models/Users';
+import { connectToMongoDB } from '$lib/server/mongoose'; // connection helper
+import mongoose from 'mongoose';
 
 const baseURL = env.BASE_URL
+
 
 
 export const actions: Actions = {
@@ -17,15 +19,20 @@ export const actions: Actions = {
 };
 
 
+function serialize(doc: any) {
+	return {
+		...doc,
+		_id: doc._id.toString()
+	};
+}
 
 
 export const load: PageServerLoad = async () => {
-  await connectDB(); // ensure DB connection is established
   
-  const databaseUsers = await Users.find(); // fetch all users as plain JS objects
+  await connectToMongoDB(); // ensures the logs above are now accurate
 
-  console.log("Got users from db")
-  console.log(databaseUsers)
+  const databaseUsers = (await Users.find().lean()).map(serialize);
 
   return { databaseUsers };
+
 };

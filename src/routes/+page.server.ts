@@ -17,12 +17,17 @@ export const actions: Actions = {
 };
 
 
-
+function serialize(doc: any) {
+	return {
+		...doc,
+		_id: doc._id.toString()
+	};
+}
 
 export const load: PageServerLoad = async () => {
   await connectDB(); // ensure DB connection is established
   
-  const databaseUsers = await Users.find(); // fetch all users as plain JS objects
+  const databaseUsers = (await Users.find().lean()).map(serialize); // fetch all users as plain JS objects
 
   console.log("Got users from db")
   console.log(databaseUsers)

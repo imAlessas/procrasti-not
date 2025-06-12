@@ -6,7 +6,7 @@
 
         type TodoListType,
         type TodoType
-    } from '$lib/index';
+    } from '$lib/utils/index';
 
 
     export let todo_list : TodoListType;

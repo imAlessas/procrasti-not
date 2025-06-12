@@ -4,7 +4,7 @@
         createTodoSchema,
 
         type TodoListType
-    } from "$lib";
+    } from "$lib/utils";
 
 
     export let todo_list: TodoListType;

@@ -1,6 +1,6 @@
 <script lang='ts'>
 
-    import type { TodoListType } from "$lib";
+    import type { TodoListType } from "$lib/utils";
 
     import TodoItem from "./TodoItem.svelte";
     

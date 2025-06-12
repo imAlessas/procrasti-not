@@ -10,7 +10,7 @@
         getRandomTodo,
         insertTodo,
         type TodoListType
-    } from '$lib/index';
+    } from '$lib/utils/index';
 
     // Components
     import TodoList from '../../components/TodoList.svelte';
@@ -80,9 +80,9 @@
             
             <div class="button-container">
 
-                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
+                <!-- <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
                     <span class="not-cover">🎲</span>
-                </button>
+                </button> -->
 
                 <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button>
             </div>

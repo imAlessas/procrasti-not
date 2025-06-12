@@ -7,8 +7,6 @@
 
     onMount(() => {
 
-        console.log(data)
-
         if (data?.user) {
 
             // goto('/list'); 

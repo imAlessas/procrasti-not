@@ -1,38 +1,34 @@
+import { BASE_URL } from '$env/static/private';
 import type { Actions } from './$types';
-import { env } from '$env/dynamic/private';
-import type { PageServerLoad } from './$types';
 import { Users } from '$lib/models/Users';
-import { connectToMongoDB } from '$lib/server/mongoose'; // connection helper
-import mongoose from 'mongoose';
-
-const baseURL = env.BASE_URL
-
+import type { PageServerLoad } from './$types';
+import { connectToMongoDB } from '$lib/server/mongoose';
 
 
 export const actions: Actions = {
-  signIn: async ({ locals }) => {
-    await locals.logtoClient.signIn(`${baseURL}callback`);
-  },
-  signOut: async ({ locals }) => {
-    await locals.logtoClient.signOut((`${baseURL}`));
-  },
+    signIn: async ({ locals }) => {
+        await locals.logtoClient.signIn(`${BASE_URL}callback`);
+    },
+    signOut: async ({ locals }) => {
+        await locals.logtoClient.signOut((`${BASE_URL}`));
+    },
 };
 
 
 function serialize(doc: any) {
-	return {
-		...doc,
-		_id: doc._id.toString()
-	};
+    return {
+        ...doc,
+        _id: doc._id.toString()
+    };
 }
 
 
 export const load: PageServerLoad = async () => {
   
-  await connectToMongoDB(); // ensures the logs above are now accurate
+    await connectToMongoDB();
 
-  const databaseUsers = (await Users.find().lean()).map(serialize);
+    const databaseUsers = (await Users.find().lean()).map(serialize);
 
-  return { databaseUsers };
+    return { databaseUsers };
 
 };

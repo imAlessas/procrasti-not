@@ -13,22 +13,3 @@ export const actions: Actions = {
         await locals.logtoClient.signOut((`${BASE_URL}`));
     },
 };
-
-
-function serialize(doc: any) {
-    return {
-        ...doc,
-        _id: doc._id.toString()
-    };
-}
-
-
-export const load: PageServerLoad = async () => {
-  
-    await connectToMongoDB();
-
-    const databaseUsers = (await Users.find().lean()).map(serialize);
-
-    return { databaseUsers };
-
-};

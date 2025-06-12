@@ -6,7 +6,7 @@
 
     onMount(() => {
 
-        const authUser = data?.user
+        const authUser = data?.authUser
 
         if (!authUser)
             return;

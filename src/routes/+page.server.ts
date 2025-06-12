@@ -2,7 +2,7 @@ import { BASE_URL } from '$env/static/private';
 import type { Actions } from './$types';
 import { Users } from '$lib/models/Users';
 import type { PageServerLoad } from './$types';
-import { connectToMongoDB } from '$lib/server/mongoose';
+import { connectToMongoDB } from '$lib/database/mongoose';
 
 
 export const actions: Actions = {

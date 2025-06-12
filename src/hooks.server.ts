@@ -1,6 +1,6 @@
 import { handleLogto } from '@logto/sveltekit';
 import { env } from '$env/dynamic/private';
-import { connectToMongoDB } from '$lib/server/mongoose';
+import { connectToMongoDB } from '$lib/database/mongoose';
 
 export const handle = handleLogto(
   {

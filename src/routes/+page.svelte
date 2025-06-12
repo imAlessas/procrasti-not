@@ -4,16 +4,28 @@
 
     export let data;
 
-    onMount(() => {
+    onMount( async () => {
+        let foundUser = null;
+        console.log(data?.authUser);
 
-        const authUser = data?.authUser
-
+        const authUser = data?.authUser;
         if (!authUser)
             return;
-
+            
+        const response = await fetch(`/api/users/${authUser.sub}`);
+        if (response.ok)
+            foundUser = await response.json();
         
+        console.log(foundUser);
 
+        // if (!foundUser)
+        //     await createUser({
+        //         userId:     authUser.sub,
+        //         username:   authUser?.username, 
+        //         email:      authUser.email, 
+        //         created:    authUser.created_at,
 
+        //     });
 
         goto('/list'); 
 
@@ -21,13 +33,21 @@
 
 </script>
 
+
+
 <form method="POST" action="?/signIn" class="signin-form">
     <button type="submit" class="signin-button non-selectable">Sign in</button>
 </form>
 
+
+
+
+
+
 <style>
     :global(body) {
-        background: linear-gradient(135deg, #ffcb6b, #FCFCFC, #ADD8E6);
+        /* background: linear-gradient(135deg, #ffcb6b, #FCFCFC, #ADD8E6); */
+        background: linear-gradient(135deg, #b3862f, #2c2c2c, #3b5e7a);
         background-size: 150% 150%;
         animation: waveAnimation 15s ease-in-out infinite;
         font-family: 'Futura', sans-serif;
@@ -37,7 +57,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-      }
+    }
 
     @keyframes waveAnimation {
         0% { background-position: 0% 50%; }
@@ -45,7 +65,7 @@
         50% { background-position: 100% 50%; }
         75% { background-position: 50% 0%; }
         100% { background-position: 0% 50%; }
-      }
+    }
 
     .signin-form {
         position: absolute;
@@ -54,7 +74,8 @@
     }
 
     .signin-button {
-        background: linear-gradient(135deg, #FFA500, #ADD8E6);
+        /* background: linear-gradient(135deg, #FFA500, #ADD8E6); */
+        background: linear-gradient(135deg, #b36b00, #3a5a7c);
         border: none;
         color: white;
         padding: 10px 20px;
@@ -68,7 +89,8 @@
     }
 
     .signin-button:hover {
-        background: linear-gradient(135deg, #FF8C00, #87CEEB);
+        /* background: linear-gradient(135deg, #FF8C00, #87CEEB); */
+        background: linear-gradient(135deg, #b35f00, #4a7ca3);
         transform: scale(105%);
     }
 

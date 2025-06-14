@@ -4,7 +4,7 @@ declare global {
     namespace App {
         interface Locals {
             logtoClient: LogtoClient;
-            authUser?: UserInfoResponse;
+            user?: UserInfoResponse;
         }
     }
 }

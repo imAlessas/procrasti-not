@@ -26,9 +26,11 @@ export const findUser = async (id : string) : Promise<DatabaseUser | null> => {
 };
 
 
-export const createUser = async (newUser : DatabaseUser) : Promise<void> => {
+export const createUser = async (newUser : DatabaseUser) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
     await Users.create(newUser);
+
+    return newUser;
 
 };

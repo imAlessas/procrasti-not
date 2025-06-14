@@ -1,33 +1,76 @@
-<script>
+<script lang=ts>
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import type { UserInfoResponse } from '@logto/sveltekit';
+    import { LOGGED_USER_SESSION } from '$lib/utils/const.js';
 
     export let data;
 
-    onMount( async () => {
-        let foundUser = null;
-        console.log(data?.authUser);
 
+    // Queries the MongDB to find a user with userId
+    // Returns true or false based on the result
+    async function findUser(userId:string) : Promise<boolean> {
+        
+        const response = await fetch(`/api/users/${userId}`, {method: 'GET'});
+        const json = await response.json();
+
+        if (json.error) {
+            console.debug(json.error);
+            return false;
+        }
+
+        const user : DatabaseUser = json;
+        console.debug('User found!');
+
+        // Save user to store
+        sessionStorage.setItem(LOGGED_USER_SESSION, JSON.stringify(user));
+
+        goto('/list');
+        return true;
+
+    }
+
+
+    // Creates a new user, based on the Logto information
+    async function addUser(newUser:UserInfoResponse) : Promise<void> {
+        
+        const response = await fetch(`/api/users/${newUser.sub}`, {
+            method: 'POST',
+            body:JSON.stringify({
+                userId:     newUser.sub,
+                username:   newUser?.username, 
+                email:      newUser.email, 
+                created:    newUser.created_at,
+            })
+        });
+        const user : DatabaseUser = await response.json();
+        console.debug(`User created!`);
+
+        // Save user to store
+        sessionStorage.setItem(LOGGED_USER_SESSION, JSON.stringify(user));
+
+        
+        goto('/list'); 
+
+    }
+
+
+
+
+
+    onMount( async () => {
+
+        // Retrieve Logto information
         const authUser = data?.authUser;
         if (!authUser)
             return;
-            
-        const response = await fetch(`/api/users/${authUser.sub}`);
-        if (response.ok)
-            foundUser = await response.json();
+    
+        // User found, return
+        if (await findUser(authUser.sub))
+            return;
         
-        console.log(foundUser);
-
-        // if (!foundUser)
-        //     await createUser({
-        //         userId:     authUser.sub,
-        //         username:   authUser?.username, 
-        //         email:      authUser.email, 
-        //         created:    authUser.created_at,
-
-        //     });
-
-        goto('/list'); 
+        // No user? Create one
+        addUser(authUser);
 
     });
 
@@ -37,6 +80,11 @@
 
 <form method="POST" action="?/signIn" class="signin-form">
     <button type="submit" class="signin-button non-selectable">Sign in</button>
+</form>
+
+
+<form method="POST" action="?/signOut" class="signin-form">
+    <button type="submit" class="signin-button non-selectable">Sign out</button>
 </form>
 
 
@@ -68,7 +116,7 @@
     }
 
     .signin-form {
-        position: absolute;
+        /* position: absolute; */
         margin: auto;
         z-index: 10;
     }

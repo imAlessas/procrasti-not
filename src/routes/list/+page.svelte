@@ -90,9 +90,9 @@
             
             <div class="button-container">
 
-                <!-- <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
+                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
                     <span class="not-cover">🎲</span>
-                </button> -->
+                </button>
 
                 <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button>
             </div>

@@ -8,7 +8,7 @@ export const actions: Actions = {
         await locals.logtoClient.signIn(`${BASE_URL}callback`);
     },
     signOut: async ({ locals }) => {
-        sessionStorage.removeItem(LOGGED_USER_SESSION);
+        sessionStorage.removeItem(LOGGED_USER_SESSION);     // Remove logged user from session
         await locals.logtoClient.signOut((`${BASE_URL}`));
     },
 };

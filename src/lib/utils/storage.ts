@@ -1,11 +1,8 @@
-import type { TodoListType } from '$lib/utils/types';
-
-
 /**
  * Saves the todo list to local storage.
  * @param todo_list - The list of todos to be saved.
  */
-export async function saveJson(todo_list: TodoListType) : Promise<void> {
+export async function saveJson(todo_list: DatabaseTodo[]) : Promise<void> {
     localStorage.setItem('todo_list', JSON.stringify(todo_list));
 }
 
@@ -15,7 +12,7 @@ export async function saveJson(todo_list: TodoListType) : Promise<void> {
  * Retrieves the todo list from local storage.
  * @returns The parsed todo list if it exists, otherwise undefined.
  */
-export async function retriveJson() : Promise<TodoListType> {
+export async function retriveJson() : Promise<DatabaseTodo[]> {
     let savedJson = localStorage.getItem('todo_list');
 
     if (savedJson)

@@ -1,16 +1,12 @@
-import type { TodoType, TodoListType } from '$lib/utils/types';
-
-
-
 /**
  * Sorts the todo list by separating uncompleted and completed items.
  * 
- * @param {TodoListType} todo_list - The current list of todos.
- * @returns {TodoListType} - A new array with uncompleted items first, followed by completed items.
+ * @param {DatabaseTodo[]} todoList - The current list of todos.
+ * @returns {DatabaseTodo[]} - A new array with uncompleted items first, followed by completed items.
  */
-export function sortTodoList(todo_list: TodoListType) : TodoListType {
-    const uncompleted = todo_list.filter((item: any) => !item.completed);
-    const completed = todo_list.filter((item: any) => item.completed);
+export function sortTodoList(todoList: DatabaseTodo[]) : DatabaseTodo[] {
+    const uncompleted = todoList.filter((item: any) => !item.completed);
+    const completed = todoList.filter((item: any) => item.completed);
     return [...uncompleted, ...completed];
 }
 
@@ -19,11 +15,11 @@ export function sortTodoList(todo_list: TodoListType) : TodoListType {
 /**
  * Updates the length of the todo list.
  * 
- * @param {TodoListType} todo_list - The current list of todos.
+ * @param {DatabaseTodo[]} todoList - The current list of todos.
  * @returns {number} - The length of the todo list.
  */
-export function updateLength(todo_list: TodoListType) : number {
-    return todo_list.length;
+export function updateLength(todoList: DatabaseTodo[]) : number {
+    return todoList.length;
 }
 
 
@@ -31,11 +27,11 @@ export function updateLength(todo_list: TodoListType) : number {
 /**
  * Inserts a new todo item into the todo list.
  * 
- * @param {TodoListType} todo_list - The current list of todos.
- * @param {TodoType} todo - The new todo item to be added.
- * @returns {TodoListType} - A new array with the added todo item.
+ * @param {DatabaseTodo[]} todo_list - The current list of todos.
+ * @param {DatabaseTodo} todo - The new todo item to be added.
+ * @returns {DatabaseTodo[]} - A new array with the added todo item.
  */
-export function insertTodo(todo_list: TodoListType, todo: TodoType) : TodoListType {
+export function insertTodo(todo_list: DatabaseTodo[], todo: DatabaseTodo) : DatabaseTodo[] {
     return [...todo_list, todo];
 }
 
@@ -44,12 +40,12 @@ export function insertTodo(todo_list: TodoListType, todo: TodoType) : TodoListTy
 /**
  * Toggles the completion status of a todo item by its ID.
  * 
- * @param {TodoListType} todo_list - The current list of todos.
+ * @param {DatabaseTodo[]} todoList - The current list of todos.
  * @param {number} id - The ID of the todo item to be toggled.
- * @returns {TodoListType} - A new array with the updated completion status.
+ * @returns {DatabaseTodo[]} - A new array with the updated completion status.
  */
-export function completeTodo(todo_list: TodoListType, id: number) : TodoListType {
-    return todo_list.filter((item: any) => {
+export function completeTodo(todoList: DatabaseTodo[], id: number) : DatabaseTodo[] {
+    return todoList.filter((item: any) => {
         item.completed = (item.id === id ? !item.completed : item.completed);
         return item;
     });
@@ -60,12 +56,12 @@ export function completeTodo(todo_list: TodoListType, id: number) : TodoListType
 /**
  * Removes a todo item from the list by its ID.
  * 
- * @param {TodoListType} todo_list - The current list of todos.
+ * @param {DatabaseTodo[]} todoList - The current list of todos.
  * @param {number} id - The ID of the todo item to be removed.
- * @returns {TodoListType} - A new array with the todo item removed.
+ * @returns {DatabaseTodo[]} - A new array with the todo item removed.
  */
-export function removeTodo(todo_list: TodoListType, id: number) : TodoListType {
-    return todo_list.filter((item: any) => {
+export function removeTodo(todoList: DatabaseTodo[], id: number) : DatabaseTodo[] {
+    return todoList.filter((item: any) => {
         return item.id !== id;
     });
 }

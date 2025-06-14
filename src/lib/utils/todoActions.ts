@@ -7,25 +7,19 @@ import type {TodoType, TodoListType} from "$lib/utils/types"
 /**
  * Retrieves the maximum ID from a list of to-do items.
  * 
- * @param {TodoListType} todo_list - The list of to-do items.
+ * @param {DatabaseTodo[]} todoList - The list of to-do items.
  * @returns {number} - The maximum ID found in the list, or TODO_ID_OFFSET if no ID exceeds it.
  */
-function retrieveMaxId(todo_list: TodoListType) : number {
+function retrieveMaxId(todoList: DatabaseTodo[]) : number {
     // Find the maximum ID in the list
-    let max_from_list = Math.max(...todo_list.map((item: any) => item.id));
+    let max_from_list = Math.max(...todoList.map((item: any) => item.id));
   
     return max_from_list > TODO_ID_OFFSET ? max_from_list : TODO_ID_OFFSET;
 }
 
 
 
-/**
- * Fetches a random todo item from the specified URL, marks it as not completed,
- * and adds it to the existing todo list.
- * @param todo_list - The current list of todos.
- * @returns A new array with the added random todo item.
- */
-export async function getRandomTodo() : Promise<TodoType> {
+export async function getRandomTodo() : Promise<DatabaseTodo> {
     const response = await fetch(RANDOM_TODO_URL);
 
     let todo = await response.json();
@@ -44,14 +38,17 @@ export async function getRandomTodo() : Promise<TodoType> {
  * Creates a new to-do item schema with a unique ID.
  * 
  * @param {string} todoValue - The description of the to-do item.
- * @param {TodoListType} todo_list - The list of existing to-do items.
+ * @param {DatabaseTodo[]} todoList - The list of existing to-do items.
  * @returns {TodoType} - The new to-do item schema.
  */
-export function createTodoSchema(todoValue: string, todo_list: TodoListType) : TodoType {
+export function createTodoSchema(todoValue: string, todoList: DatabaseTodo[]) : DatabaseTodo {
     return {
-        id: (1 + retrieveMaxId(todo_list)),  // Assign a unique ID by incrementing the maximum ID from the list
-        todo: todoValue,
-        completed: false,
+        todoId: (1 + retrieveMaxId(todoList)),  // Assign a unique ID by incrementing the maximum ID from the list
+        text: todoValue,
+        created: Date.now(),
+        isDone: false,
+        completed: null,
+        userId: ""
     };
 }
 

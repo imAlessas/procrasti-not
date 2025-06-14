@@ -2,14 +2,12 @@
     import {
         insertTodo,
         createTodoSchema,
-
-        type TodoListType
     } from "$lib/utils";
 
 
-    export let todo_list: TodoListType;
+    export let todoList: DatabaseTodo[];
     export let showModal: (value: boolean) => void;
-    export let updateTodoList: (list: TodoListType) => void;
+    export let updateTodoList: (list: DatabaseTodo[]) => void;
 
 
 
@@ -33,12 +31,12 @@
         if (todoValue === undefined)
             return;
     
-        todo_list = insertTodo(
-            todo_list,
-            createTodoSchema(todoValue, todo_list)
+        todoList = insertTodo(
+            todoList,
+            createTodoSchema(todoValue, todoList)
         );
 
-        updateTodoList(todo_list);
+        updateTodoList(todoList);
         showModal(false);
     }
 </script>

@@ -1,11 +1,9 @@
 <script lang='ts'>
 
-    import type { TodoListType } from "$lib/utils";
-
     import TodoItem from "./TodoItem.svelte";
     
-    export let todo_list:TodoListType;
-    export let updateTodoList: (list : TodoListType) => void;
+    export let todoList:DatabaseTodo[];
+    export let updateTodoList: (list : DatabaseTodo[]) => void;
 
 </script>
 
@@ -14,10 +12,10 @@
 
 
 <ul class="todo-list">
-    {#each todo_list as todo}
+    {#each todoList as todo}
         <TodoItem
             {updateTodoList}
-            {todo_list}
+            {todoList}
             {todo}
         />
     {/each}

@@ -3,29 +3,26 @@
     import {
         removeTodo,
         completeTodo,
-
-        type TodoListType,
-        type TodoType
     } from '$lib/utils/index';
 
 
-    export let todo_list : TodoListType;
-    export let todo : TodoType;
-    export let updateTodoList : (list : TodoListType) => void;
+    export let todoList : DatabaseTodo[];
+    export let todo : DatabaseTodo;
+    export let updateTodoList : (list : DatabaseTodo[]) => void;
 
 
 
     // Removes the clicked todo
     function remove(id: number) : void {
 
-        updateTodoList(removeTodo(todo_list, id));
+        updateTodoList(removeTodo(todoList, id));
 
     }
 
     // Marks the clicked todo as completed
     function complete(id: number) : void {
 
-        updateTodoList(completeTodo(todo_list, id));
+        updateTodoList(completeTodo(todoList, id));
 
     }
 
@@ -36,14 +33,14 @@
 
 
 
-<li class="todo-item {todo.completed ? 'completed' : ''}">
+<li class="todo-item {todo.isDone ? 'completed' : ''}">
 
     <div class="left-content">
-        <button class="complete-button non-selectable" onclick={ () => complete(todo.id)}> ✅ </button>
-        <span class="todo-text"> {todo.todo} </span>
+        <button class="complete-button non-selectable" onclick={ () => complete(todo.todoId)}> ✅ </button>
+        <span class="todo-text"> {todo.text} </span>
     </div>
 
-    <button class="delete-button non-selectable" onclick={ () => remove(todo.id) }> 🗑️ </button>
+    <button class="delete-button non-selectable" onclick={ () => remove(todo.todoId) }> 🗑️ </button>
 </li>
 
 

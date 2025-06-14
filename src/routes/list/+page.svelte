@@ -15,12 +15,17 @@
     // Components
     import TodoList from '../../components/TodoList.svelte';
     import TodoForm from '../../components/TodoForm.svelte';
+    import { LOGGED_USER_SESSION } from '$lib/utils/const';
 
 
     // Variables
     let todo_list: TodoListType;
     let todo_length: number;
     let addTodoClicked = false;
+
+    let loggedUser : DatabaseUser;
+
+
 
 
 
@@ -55,6 +60,10 @@
     onMount(async () => {
         try {
 
+            const userJson = sessionStorage.getItem(LOGGED_USER_SESSION);
+            if (userJson)
+                loggedUser = JSON.parse(userJson);
+
             todo_list = await retriveJson();
 
             todo_length = updateLength(todo_list);
@@ -66,6 +75,7 @@
 
 
 </script>
+
 
 <div class="app-container">
 

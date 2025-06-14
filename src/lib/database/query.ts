@@ -1,4 +1,4 @@
-import { Users } from "$lib/models/Users";
+import { Users } from "$lib/models/users";
 import { connectToMongoDB } from "./mongoose";
 
 

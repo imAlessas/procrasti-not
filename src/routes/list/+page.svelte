@@ -19,10 +19,10 @@
 
 
     // Variables
-    let todo_list: TodoListType;
-    let todo_length: number;
+    let todoSize: number;
     let addTodoClicked = false;
-
+    
+    let todoList: DatabaseTodo[];
     let loggedUser : DatabaseUser;
 
 
@@ -31,42 +31,55 @@
 
 
     function updateTodoList(new_list : TodoListType) : void {
-
-        todo_list = sortTodoList(new_list);
-
-        todo_length = updateLength(todo_list);
-
-        saveJson(todo_list);
-
+        todoList = sortTodoList(new_list);
+        todoSize = updateLength(todoList);
+        saveJson(todoList);
     }
 
 
     async function insertRandomTodo() : Promise<void> {
-
-        todo_list = insertTodo(todo_list, await getRandomTodo())
-
-        updateTodoList(todo_list);
-
+        todoList = insertTodo(todoList, await getRandomTodo())
+        updateTodoList(todoList);
     }
 
 
     function showModal(value : boolean) : void {
-
         addTodoClicked = value
+    }
+
+
+
+
+    async function retrieveTodos(userId:string) : Promise<DatabaseTodo[]> {
+        
+        let todos : DatabaseTodo[] = [];
+        const response = await fetch(`/api/todos/${userId}`, {method: 'GET'});
+        const json = await response.json();
+
+        if (json.error) {
+            console.debug(json.error);
+            return todos;
+        }
+
+        todos = json;
+        return todos;
 
     }
+
+
 
 
     onMount(async () => {
         try {
 
             const userJson = sessionStorage.getItem(LOGGED_USER_SESSION);
-            if (userJson)
-                loggedUser = JSON.parse(userJson);
+            if (!userJson)
+                return;
 
-            todo_list = await retriveJson();
+            loggedUser = JSON.parse(userJson);
 
-            todo_length = updateLength(todo_list);
+            todoList = await retrieveTodos(loggedUser.userId);
+            todoSize = todoList.length;
 
         } catch (error) {
             console.error('Error fetching todo:', error);
@@ -90,18 +103,18 @@
             
             <div class="button-container">
 
-                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
+                <!-- <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
                     <span class="not-cover">🎲</span>
-                </button>
+                </button> -->
 
                 <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button>
             </div>
             
         </div>
 
-        {#if todo_length !== 0}
+        {#if todoSize !== 0}
             <TodoList
-                {todo_list}
+                todoList={todoList}
                 {updateTodoList}
             />
         {:else}
@@ -110,7 +123,7 @@
 
         {#if addTodoClicked}
             <TodoForm 
-                {todo_list}
+                todoList={todoList}
                 {showModal}
                 {updateTodoList}
             />

@@ -1,3 +1,5 @@
+import type { DatabaseTodo } from "$lib/database/interfaces";
+
 /**
  * Saves the todo list to local storage.
  * @param todo_list - The list of todos to be saved.

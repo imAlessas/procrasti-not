@@ -3,7 +3,6 @@ import { Users } from "$lib/models/users";
 import type { ObjectId } from "mongodb";
 import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 import { connectToMongoDB } from "./mongoose";
-import { todo } from "node:test";
 
 function removeMongoID(doc: any) : DatabaseTodo {
     const { _id, ...rest } = doc;
@@ -57,6 +56,6 @@ export const findTodos = async (_idUser : ObjectId) : Promise<DatabaseTodo[] | n
 export const createTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo | null> => {
     await connectToMongoDB();
 
-    return newTodo;
+    return await Todos.create(newTodo);
 
 };

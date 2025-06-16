@@ -9,8 +9,7 @@ export interface DatabaseUser {
 }
 
 export interface DatabaseTodo {
-    _id: ObjectId;
-    todoId: number;
+    _id: ObjectId | undefined;
     text: string;
     created: number;
     isDone: boolean;

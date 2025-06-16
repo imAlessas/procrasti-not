@@ -1,3 +1,5 @@
+import type { DatabaseTodo } from "$lib/database/interfaces";
+
 /**
  * Sorts the todo list by separating uncompleted and completed items.
  * 

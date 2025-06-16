@@ -11,7 +11,7 @@ function removeMongoID(doc: any) : DatabaseTodo{
 
 
 
-export const findUser = async (id : string) : Promise<DatabaseUser | null> => {
+export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
     const constraints = { userId: id  }

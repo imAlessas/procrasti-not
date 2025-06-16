@@ -1,15 +1,19 @@
-interface DatabaseUser {
-    userId: string;
-    username: string;
-    email: string;
-    created: number;
+import type { ObjectId } from 'mongodb';
+
+export interface DatabaseUser {
+  _id: ObjectId;
+  logtoId: string;
+  username: string;
+  email: string;
+  created: number;
 }
 
-interface DatabaseTodo {
-    todoId: number,
-    text: string,
-    created: number,
-    isDone: boolean,
-    completed: number | null,
-    userId: string, 
+export interface DatabaseTodo {
+    _id: ObjectId;
+    todoId: number;
+    text: string;
+    created: number;
+    isDone: boolean;
+    completed: number | null;
+    _idUser: ObjectId;
 }

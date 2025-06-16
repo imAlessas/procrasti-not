@@ -2,20 +2,15 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
 
-    import {
-        saveJson,
-        retriveJson,
-        updateLength,
-        sortTodoList,
-        getRandomTodo,
-        insertTodo,
-        type TodoListType
-    } from '$lib/utils/index';
+    import { saveJson, updateLength, sortTodoList, getRandomTodo, insertTodo} from '$lib/utils/index';
 
     // Components
     import TodoList from '../../components/TodoList.svelte';
     import TodoForm from '../../components/TodoForm.svelte';
     import { LOGGED_USER_SESSION } from '$lib/utils/const';
+    import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
+    import type { ObjectId } from 'mongodb';
+
 
 
     // Variables
@@ -30,7 +25,7 @@
 
 
 
-    function updateTodoList(new_list : TodoListType) : void {
+    function updateTodoList(new_list : DatabaseTodo[]) : void {
         todoList = sortTodoList(new_list);
         todoSize = updateLength(todoList);
         saveJson(todoList);
@@ -50,18 +45,20 @@
 
 
 
-    async function retrieveTodos(userId:string) : Promise<DatabaseTodo[]> {
+    async function retrieveTodos(_idUser:ObjectId) : Promise<DatabaseTodo[]> {
         
         let todos : DatabaseTodo[] = [];
-        const response = await fetch(`/api/todos/${userId}`, {method: 'GET'});
+        const response = await fetch(`/api/todos/${_idUser}`, {method: 'GET'});
         const json = await response.json();
 
         if (json.error) {
             console.debug(json.error);
             return todos;
         }
-
+        
         todos = json;
+        console.log("todos", todos)
+
         return todos;
 
     }
@@ -77,8 +74,8 @@
                 return;
 
             loggedUser = JSON.parse(userJson);
-
-            todoList = await retrieveTodos(loggedUser.userId);
+            
+            todoList = await retrieveTodos(loggedUser._id);
             todoSize = todoList.length;
 
         } catch (error) {

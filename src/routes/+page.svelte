@@ -3,15 +3,16 @@
     import { goto } from '$app/navigation';
     import type { UserInfoResponse } from '@logto/sveltekit';
     import { LOGGED_USER_SESSION } from '$lib/utils/const.js';
+    import type { DatabaseUser } from '$lib/database/interfaces.js';
 
     export let data;
 
 
     // Queries the MongDB to find a user with userId
     // Returns true or false based on the result
-    async function findUser(userId:string) : Promise<boolean> {
+    async function findUser(logtoId:string) : Promise<boolean> {
         
-        const response = await fetch(`/api/users/${userId}`, {method: 'GET'});
+        const response = await fetch(`/api/users/${logtoId}`, {method: 'GET'});
         const json = await response.json();
 
         if (json.error) {
@@ -37,9 +38,9 @@
         const response = await fetch(`/api/users/${newUser.sub}`, {
             method: 'POST',
             body:JSON.stringify({
-                userId:     newUser.sub,
+                logtoId:    newUser.sub,
                 username:   newUser?.username, 
-                email:      newUser.email, 
+                email:      newUser?.email, 
                 created:    newUser.created_at,
             })
         });
@@ -48,7 +49,6 @@
 
         // Save user to store
         sessionStorage.setItem(LOGGED_USER_SESSION, JSON.stringify(user));
-
         
         goto('/list'); 
 

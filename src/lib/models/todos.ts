@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 const todosSchema = new mongoose.Schema({
-    todoId: Number,
+    _id: ObjectId,
+    _idUser: ObjectId,     // External key
     text: String,
     created: Number,
     isDone: Boolean,
     completed: Number,
     
-    userId: String,     // External key
 });
 
 export const Todos = mongoose.models.Todos || mongoose.model('Todos', todosSchema);

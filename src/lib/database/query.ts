@@ -1,9 +1,11 @@
 import { Todos } from "$lib/models/todos";
 import { Users } from "$lib/models/users";
-import { todo } from "node:test";
+import type { ObjectId } from "mongodb";
+import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 import { connectToMongoDB } from "./mongoose";
+import { todo } from "node:test";
 
-function removeMongoID(doc: any) : DatabaseTodo{
+function removeMongoID(doc: any) : DatabaseTodo {
     const { _id, ...rest } = doc;
     return { ...rest }
 }
@@ -14,13 +16,15 @@ function removeMongoID(doc: any) : DatabaseTodo{
 export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
-    const constraints = { userId: id  }
+    const constraints = { logtoId: id  }
     const user = await Users.findOne(constraints).lean<DatabaseUser | null>();
 
-    if (!user) return null;
+    if (!user)
+        return null;
 
     return {
-        userId:     user.userId,
+        _id:        user._id,
+        logtoId:    user.logtoId,
         username:   user.username,
         email:      user.email,
         created:    user.created
@@ -30,30 +34,28 @@ export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | nu
 export const createUser = async (newUser : DatabaseUser) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
-    await Users.create(newUser);
-
-    return newUser;
+    return await Users.create(newUser);
 
 };
 
 
 
-export const findTodos = async (userId : string) : Promise<DatabaseTodo[] | null> => {
+export const findTodos = async (_idUser : ObjectId) : Promise<DatabaseTodo[] | null> => {
     await connectToMongoDB();
 
-    const constraints = { userId: userId  }
+    const constraints = { _idUser: _idUser  }
     const todos = await Todos.find(constraints).lean<DatabaseTodo[] | null>();
+
+    console.log(todos);
 
     if (!todos)
         return null;
 
-    return todos.map(removeMongoID);
+    return todos;
 }; 
 
 export const createTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo | null> => {
     await connectToMongoDB();
-
-    await Todos.create(newTodo);
 
     return newTodo;
 

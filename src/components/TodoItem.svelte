@@ -1,6 +1,7 @@
 <script lang='ts'>
     import type { DatabaseTodo } from '$lib/database/interfaces';
 
+
     import {
         removeTodo,
         completeTodo,
@@ -14,9 +15,16 @@
 
 
     // Removes the clicked todo
-    function remove(id: number) : void {
+    async function remove(todoId: string) : Promise<void> {
 
-        updateTodoList(removeTodo(todoList, id));
+        const response = await fetch(`/api/todos/${todoId}`, {method: 'DELETE'})
+
+        if (!await response.json())
+            return;
+        
+        updateTodoList(
+            removeTodo(todoList, todoId)
+        );
 
     }
 
@@ -30,9 +38,10 @@
             })
         });
         
-        if (await response.json())
-            todo.isDone = !todo.isDone;
-
+        if (!await response.json())
+            return
+        
+        todo.isDone = !todo.isDone;
         updateTodoList(todoList);
 
     }
@@ -51,7 +60,7 @@
         <span class="todo-text"> {todo.text} </span>
     </div>
 
-    <button class="delete-button non-selectable" onclick={ () => remove(todo.todoId) }> 🗑️ </button>
+    <button class="delete-button non-selectable" onclick={ () => remove(todo._id.toString()) }> 🗑️ </button>
 </li>
 
 

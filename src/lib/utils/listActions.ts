@@ -62,8 +62,8 @@ export function completeTodo(todoList: DatabaseTodo[], id: number) : DatabaseTod
  * @param {number} id - The ID of the todo item to be removed.
  * @returns {DatabaseTodo[]} - A new array with the todo item removed.
  */
-export function removeTodo(todoList: DatabaseTodo[], id: number) : DatabaseTodo[] {
-    return todoList.filter((item: any) => {
-        return item.id !== id;
+export function removeTodo(todoList: DatabaseTodo[], id: string) : DatabaseTodo[] {
+    return todoList.filter((item: DatabaseTodo) => {
+        return item._id.toString() !== id;
     });
 }

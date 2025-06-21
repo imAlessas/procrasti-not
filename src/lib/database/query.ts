@@ -1,6 +1,6 @@
 import { Todos } from "$lib/models/todos";
 import { Users } from "$lib/models/users";
-import type { ObjectId } from "mongodb";
+import { ObjectId } from "mongodb";
 import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 import { connectToMongoDB } from "./mongoose";
 import type { UpdateResult } from "mongoose";
@@ -79,9 +79,11 @@ export const uncompleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
 
 };
 
-export const deleteTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo | null> => {
+export const deleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
     await connectToMongoDB();
 
-    return await Todos.create(newTodo);
+    const result = await Todos.deleteOne({_id: todoId});
+
+    return result.deletedCount == 1;
 
 };

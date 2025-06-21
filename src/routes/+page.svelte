@@ -37,12 +37,7 @@
         
         const response = await fetch(`/api/users/${newUser.sub}`, {
             method: 'POST',
-            body:JSON.stringify({
-                logtoId:    newUser.sub,
-                username:   newUser?.username, 
-                email:      newUser?.email, 
-                created:    newUser.created_at,
-            })
+            body:JSON.stringify({newUser})
         });
         const user : DatabaseUser = await response.json();
         console.debug(`User created!`);

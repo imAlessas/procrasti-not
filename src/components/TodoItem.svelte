@@ -1,4 +1,5 @@
 <script lang='ts'>
+    import type { DatabaseTodo } from '$lib/database/interfaces';
 
     import {
         removeTodo,
@@ -20,9 +21,19 @@
     }
 
     // Marks the clicked todo as completed
-    function complete(id: number) : void {
+    async function complete(todoId: string) : Promise<void> {
 
-        updateTodoList(completeTodo(todoList, id));
+        const response = await fetch(`/api/todos/${todoId}`, {
+            method: 'PUT',
+            body:JSON.stringify({
+                complete: !todo.isDone
+            })
+        });
+        
+        if (await response.json())
+            todo.isDone = !todo.isDone;
+
+        updateTodoList(todoList);
 
     }
 
@@ -36,7 +47,7 @@
 <li class="todo-item {todo.isDone ? 'completed' : ''}">
 
     <div class="left-content">
-        <button class="complete-button non-selectable" onclick={ () => complete(todo.todoId)}> ✅ </button>
+        <button class="complete-button non-selectable" onclick={ () => complete(todo._id.toString())}> ✅ </button>
         <span class="todo-text"> {todo.text} </span>
     </div>
 

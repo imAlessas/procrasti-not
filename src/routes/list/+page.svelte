@@ -85,7 +85,7 @@
 
             loggedUser = JSON.parse(userJson);
             
-            todoList = await retrieveTodos(loggedUser._id);
+            todoList = sortTodoList(await retrieveTodos(loggedUser._id));
             todoSize = todoList.length;
 
         } catch (error) {

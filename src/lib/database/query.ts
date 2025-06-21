@@ -3,6 +3,7 @@ import { Users } from "$lib/models/users";
 import type { ObjectId } from "mongodb";
 import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 import { connectToMongoDB } from "./mongoose";
+import type { UpdateResult } from "mongoose";
 
 function removeMongoID(doc: any) : DatabaseTodo {
     const { _id, ...rest } = doc;
@@ -18,16 +19,8 @@ export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | nu
     const constraints = { logtoId: id  }
     const user = await Users.findOne(constraints).lean<DatabaseUser | null>();
 
-    if (!user)
-        return null;
+    return user ?? null;
 
-    return {
-        _id:        user._id,
-        logtoId:    user.logtoId,
-        username:   user.username,
-        email:      user.email,
-        created:    user.created
-    }
 };
 
 export const createUser = async (newUser : DatabaseUser) : Promise<DatabaseUser | null> => {
@@ -45,13 +38,48 @@ export const findTodos = async (_idUser : ObjectId) : Promise<DatabaseTodo[] | n
     const constraints = { _idUser: _idUser  }
     const todos = await Todos.find(constraints).lean<DatabaseTodo[] | null>();
 
-    if (!todos)
-        return null;
+    return todos ?? null
 
-    return todos;
 }; 
 
-export const createTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo | null> => {
+export const createTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo> => {
+    await connectToMongoDB();
+
+    return await Todos.create(newTodo);
+
+};
+
+export const completeTodo = async (todoId : ObjectId) : Promise<Boolean> => {
+    await connectToMongoDB();
+
+    const response : UpdateResult = await Todos.updateOne(
+        {  _id: todoId  },
+        { $set : {
+            isDone: true,
+            completed: Date.now()
+        }}
+    );
+
+    return response.matchedCount == 1 && response.modifiedCount == 1;
+
+};
+
+export const uncompleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
+    await connectToMongoDB();
+
+    const response : UpdateResult = await Todos.updateOne(
+        {  _id: todoId  },
+        { $set : {
+            isDone: false,
+            completed: null
+        }}
+    );
+
+    return response.matchedCount == 1 && response.modifiedCount == 1;
+
+};
+
+export const deleteTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo | null> => {
     await connectToMongoDB();
 
     return await Todos.create(newTodo);

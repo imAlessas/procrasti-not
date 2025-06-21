@@ -7,8 +7,8 @@ import type { DatabaseTodo } from "$lib/database/interfaces";
  * @returns {DatabaseTodo[]} - A new array with uncompleted items first, followed by completed items.
  */
 export function sortTodoList(todoList: DatabaseTodo[]) : DatabaseTodo[] {
-    const uncompleted = todoList.filter((item: any) => !item.completed);
-    const completed = todoList.filter((item: any) => item.completed);
+    const uncompleted = todoList.filter((item: any) => !item.isDone);
+    const completed = todoList.filter((item: any) => item.isDone);
     return [...uncompleted, ...completed];
 }
 

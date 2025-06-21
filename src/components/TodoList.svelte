@@ -1,4 +1,6 @@
 <script lang='ts'>
+    import type { DatabaseTodo } from "$lib/database/interfaces";
+
 
     import TodoItem from "./TodoItem.svelte";
     

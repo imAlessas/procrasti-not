@@ -45,8 +45,6 @@ export const findTodos = async (_idUser : ObjectId) : Promise<DatabaseTodo[] | n
     const constraints = { _idUser: _idUser  }
     const todos = await Todos.find(constraints).lean<DatabaseTodo[] | null>();
 
-    console.log(todos);
-
     if (!todos)
         return null;
 

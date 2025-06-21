@@ -29,12 +29,12 @@ export function updateLength(todoList: DatabaseTodo[]) : number {
 /**
  * Inserts a new todo item into the todo list.
  * 
- * @param {DatabaseTodo[]} todo_list - The current list of todos.
+ * @param {DatabaseTodo[]} todoList - The current list of todos.
  * @param {DatabaseTodo} todo - The new todo item to be added.
  * @returns {DatabaseTodo[]} - A new array with the added todo item.
  */
-export function insertTodo(todo_list: DatabaseTodo[], todo: DatabaseTodo) : DatabaseTodo[] {
-    return [...todo_list, todo];
+export function insertTodo(todoList: DatabaseTodo[], todo: DatabaseTodo) : DatabaseTodo[] {
+    return [...todoList, todo];
 }
 
 

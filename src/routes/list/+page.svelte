@@ -33,7 +33,19 @@
 
 
     async function insertRandomTodo() : Promise<void> {
-        todoList = insertTodo(todoList, await getRandomTodo())
+
+        const text = await getRandomTodo();
+
+        const response = await fetch(`/api/todos/1`, {
+            method: 'POST',
+            body:JSON.stringify({
+                text : text,
+                _idUser : loggedUser._id
+            })
+        });
+
+
+        todoList = insertTodo(todoList, await response.json())
         updateTodoList(todoList);
     }
 
@@ -57,8 +69,6 @@
         }
         
         todos = json;
-        console.log("todos", todos)
-
         return todos;
 
     }
@@ -100,11 +110,11 @@
             
             <div class="button-container">
 
-                <!-- <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
+                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
                     <span class="not-cover">🎲</span>
-                </button> -->
+                </button>
 
-                <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button>
+                <!-- <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button> -->
             </div>
             
         </div>

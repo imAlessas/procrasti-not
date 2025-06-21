@@ -1,7 +1,8 @@
 // src/routes/api/users/[id].ts
 import type { RequestHandler } from '@sveltejs/kit';
-import { findTodos } from '$lib/database/query';
+import { createTodo, findTodos } from '$lib/database/query';
 import { ObjectId } from 'mongodb';
+import type { DatabaseTodo } from '$lib/database/interfaces';
 
 
 export const GET: RequestHandler = async ({ params }) => {
@@ -17,5 +18,20 @@ export const GET: RequestHandler = async ({ params }) => {
 };
 
 
-// export const POST: RequestHandler = async ({ request }) => {
-// };
+export const POST: RequestHandler = async ({ request }) => {
+    const data = await request.json();
+
+    const newTodo : DatabaseTodo ={
+        _id:        new ObjectId(),
+        _idUser:    data._idUser,
+        text:       data.text,
+        created:    Date.now(),
+        isDone:     false,
+        completed:  null
+    }
+
+    const todo = await createTodo(newTodo);
+
+    return new Response(JSON.stringify(todo), { status: 200 });
+ 
+};

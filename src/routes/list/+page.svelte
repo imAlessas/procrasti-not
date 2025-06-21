@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
 
@@ -93,89 +93,11 @@
 </script>
 
 
-<div class="app-container">
 
-    <form method="POST" action="?/signOut" class="signout-form">
-        <button type="submit" class="signout-button non-selectable">Sign out</button>
-    </form>
+<style lang="scss">
 
-    <div class="todo-container" in:fade={{ duration: 1000 }}>
-        
-        <div class="header">
-            <h1>Todo List</h1>
-            
-            <div class="button-container">
+   @use '$lib/styles/style.scss' as *;
 
-                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
-                    <span class="not-cover">🎲</span>
-                </button>
-
-                <button class="add-button non-selectable" onclick={ () => showDialog(true) }>➕</button>
-            </div>
-            
-        </div>
-
-        {#if todoList.length >0}
-            <TodoList
-                todoList={todoList}
-                {updateTodoList}
-            />
-        {:else}
-            <div class="nothing-todo non-selectable"> Nothing to do! </div>    
-        {/if}
-
-        {#if addTodoClicked}
-            <TodoForm
-                {loggedUser}
-                {todoList}
-                {showDialog}
-                {updateTodoList}
-            />
-        {/if}
-
-    </div>
-</div>
-
-
-<style>
-
-    .non-selectable {
-        user-select: none; /* Standard syntax */
-        -webkit-user-select: none; /* Safari */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-    }
-
-    /* Fancy moving gradient */
-    :global(body) {
-        background: linear-gradient(135deg, #ffcb6b, #FCFCFC, #ADD8E6);
-        background-size: 150% 150%;
-        animation: waveAnimation 15s ease-in-out infinite;
-        font-family: 'Futura', sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    @keyframes waveAnimation {
-        0% { background-position: 0% 50%; }
-        25% { background-position: 50% 100%; }
-        50% { background-position: 100% 50%; }
-        75% { background-position: 50% 0%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    .todo-container {
-        background-color: rgba(255,255,255,0.2);
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        width: 400px;
-        padding: 20px;
-        animation: fadeIn 1s ease-in-out;
-    }
 
     @keyframes fadeIn {
         from { opacity: 0; }
@@ -310,4 +232,49 @@
     transform: scale(95%);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-</style>
+</style> 
+
+
+
+<div class="app-container">
+
+    <form method="POST" action="?/signOut" class="signout-form">
+        <button type="submit" class="fancy-button non-selectable">Sign out</button>
+    </form>
+
+    <div class="todo-container" in:fade={{ duration: 1000 }}>
+        
+        <div class="header">
+            <h1>Todo List</h1>
+            
+            <div class="button-container">
+
+                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
+                    <span class="not-cover">🎲</span>
+                </button>
+
+                <button class="fancy-button non-selectable" onclick={ () => showDialog(true) }>➕</button>
+            </div>
+            
+        </div>
+
+        {#if todoList.length >0}
+            <TodoList
+                todoList={todoList}
+                {updateTodoList}
+            />
+        {:else}
+            <div class="nothing-todo non-selectable"> Nothing to do! </div>    
+        {/if}
+
+        {#if addTodoClicked}
+            <TodoForm
+                {loggedUser}
+                {todoList}
+                {showDialog}
+                {updateTodoList}
+            />
+        {/if}
+
+    </div>
+</div>

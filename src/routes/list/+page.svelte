@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
 
-    import { saveJson, updateLength, sortTodoList, getRandomTodo, insertTodo} from '$lib/utils/index';
+    import { saveJson, sortTodoList, getRandomTodo, insertTodo} from '$lib/utils/index';
 
     // Components
     import TodoList from '../../components/TodoList.svelte';
@@ -13,11 +13,9 @@
 
 
 
-    // Variables
-    let todoSize: number;
     let addTodoClicked = false;
     
-    let todoList: DatabaseTodo[];
+    let todoList: DatabaseTodo[] = [];
     let loggedUser : DatabaseUser;
 
 
@@ -27,7 +25,6 @@
 
     function updateTodoList(new_list : DatabaseTodo[]) : void {
         todoList = sortTodoList(new_list);
-        todoSize = updateLength(todoList);
         saveJson(todoList);
     }
 
@@ -86,7 +83,6 @@
             loggedUser = JSON.parse(userJson);
             
             todoList = sortTodoList(await retrieveTodos(loggedUser._id));
-            todoSize = todoList.length;
 
         } catch (error) {
             console.error('Error fetching todo:', error);
@@ -119,7 +115,7 @@
             
         </div>
 
-        {#if 1}
+        {#if todoList.length >0}
             <TodoList
                 todoList={todoList}
                 {updateTodoList}

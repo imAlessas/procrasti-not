@@ -14,17 +14,6 @@ export function sortTodoList(todoList: DatabaseTodo[]) : DatabaseTodo[] {
 
 
 
-/**
- * Updates the length of the todo list.
- * 
- * @param {DatabaseTodo[]} todoList - The current list of todos.
- * @returns {number} - The length of the todo list.
- */
-export function updateLength(todoList: DatabaseTodo[]) : number {
-    return todoList.length;
-}
-
-
 
 /**
  * Inserts a new todo item into the todo list.

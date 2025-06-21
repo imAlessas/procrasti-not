@@ -1,52 +1,9 @@
-// Background variables
-$bkg-base-light:    #fcfcfc;
-$bkg-orange-light:  #ffcb6b;
-$bkg-blue-light:    #add8e6;
-
-$bkg-base-dark:     #2c2c2c;
-$bkg-orange-dark:   #b3862f;
-$bkg-blue-dark:     #3b5e7a;
-
-$bkg-gradient-light: linear-gradient(135deg, $bkg-orange-light, $bkg-base-light, $bkg-blue-light);
-$bkg-gradient-dark: linear-gradient(135deg, $bkg-orange-dark, $bkg-base-dark, $bkg-blue-dark);
-
-// Button variables
-$btn-orange-light:         #ffa500;
-$btn-blue-light:           #add8e6;
-$btn-hover-orange-light:   #ff8c00;
-$btn-hover-blue-light:     #87ceeb;
-
-$btn-orange-dark:         #b36b00;
-$btn-blue-dark:           #3a5a7c;
-$btn-hover-orange-dark:   #b35f00;
-$btn-hover-blue-dark:     #4a7ca3;
-
-$btn-gradient-light: linear-gradient(135deg, $btn-orange-light, $btn-blue-light);
-$btn-hover-gradient-light: linear-gradient(135deg, $btn-hover-orange-light, $btn-hover-blue-light);
-$btn-gradient-dark: linear-gradient(135deg, $btn-orange-dark, $btn-blue-dark);
-$btn-hover-gradient-dark: linear-gradient(135deg, $btn-hover-orange-dark, $btn-hover-blue-dark);
-
-
-// Todo list
-$list-bkg-light: rgba(255,255,255,0.2);
-$list-bkg-dark:  rgba(50, 50, 50, 0.4);
-
-
-
-
-
-
-
-
-
-
-
-
-
+@import 'dark.scss';
+@import 'light.scss';
 
 
 :global(body) {
-    background: $bkg-gradient-dark;
+    background: var(--bkg-gradient);
     background-size: 150% 150%;
     animation: waveAnimation 15s ease-in-out infinite;
     font-family: 'Futura', sans-serif;
@@ -73,7 +30,7 @@ $list-bkg-dark:  rgba(50, 50, 50, 0.4);
 }
 
 .fancy-button {
-    background: $btn-gradient-dark;
+    background: var(--btn-gradient);
     border: none;
     color: white;
     padding: 10px 20px;
@@ -86,7 +43,7 @@ $list-bkg-dark:  rgba(50, 50, 50, 0.4);
     transition: background 0.3s ease, transform 0.2s ease;
     
     &:hover {
-        background: $btn-hover-gradient-dark;
+        background: var(--btn-hover-gradient);
         transform: scale(105%);
     }
     
@@ -97,7 +54,7 @@ $list-bkg-dark:  rgba(50, 50, 50, 0.4);
 }
 
 .todo-container {
-    background-color: $list-bkg-dark;
+    background-color: var(--list-bkg);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 400px;

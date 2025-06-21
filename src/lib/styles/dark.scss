@@ -1,0 +1,21 @@
+// Background variables
+$bkg-base:    #2c2c2c;
+$bkg-orange:  #b3862f;
+$bkg-blue:    #3b5e7a;
+
+// Button variables
+$btn-orange:         #b36b00;
+$btn-blue:           #3a5a7c;
+$btn-hover-orange:   #b35f00;
+$btn-hover-blue:     #4a7ca3;
+
+
+
+body.dark {
+    --bkg-gradient: linear-gradient(135deg, #{$bkg-orange}, #{$bkg-base}, #{$bkg-blue});
+
+    --btn-gradient: linear-gradient(135deg, #{$btn-orange}, #{$btn-blue});
+    --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-orange}, #{$btn-hover-blue});
+
+    --list-bkg: rgba(50, 50, 50, 0.4);
+};

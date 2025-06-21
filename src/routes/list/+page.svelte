@@ -6,7 +6,7 @@
 
     // Components
     import TodoList from '../../components/TodoList.svelte';
-    import TodoForm from '../../components/TodoForm.svelte';
+    import TodoForm from '../../components/TodoDialog.svelte';
     import { LOGGED_USER_SESSION } from '$lib/utils/const';
     import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
     import type { ObjectId } from 'mongodb';
@@ -50,7 +50,7 @@
     }
 
 
-    function showModal(value : boolean) : void {
+    function showDialog(value : boolean) : void {
         addTodoClicked = value
     }
 
@@ -114,12 +114,12 @@
                     <span class="not-cover">🎲</span>
                 </button>
 
-                <!-- <button class="add-button non-selectable" onclick={ () => showModal(true) }>➕</button> -->
+                <button class="add-button non-selectable" onclick={ () => showDialog(true) }>➕</button>
             </div>
             
         </div>
 
-        {#if todoSize !== 0}
+        {#if 1}
             <TodoList
                 todoList={todoList}
                 {updateTodoList}
@@ -129,9 +129,10 @@
         {/if}
 
         {#if addTodoClicked}
-            <TodoForm 
-                todoList={todoList}
-                {showModal}
+            <TodoForm
+                {loggedUser}
+                {todoList}
+                {showDialog}
                 {updateTodoList}
             />
         {/if}

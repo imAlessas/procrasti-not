@@ -1,12 +1,11 @@
 <script lang="ts">
-    import {
-        insertTodo,
-        createTodoSchema,
-    } from "$lib/utils";
+    import type { DatabaseTodo, DatabaseUser } from "$lib/database/interfaces";
+    import { insertTodo } from "$lib/utils";
 
 
+    export let loggedUser: DatabaseUser;
     export let todoList: DatabaseTodo[];
-    export let showModal: (value: boolean) => void;
+    export let showDialog: (value: boolean) => void;
     export let updateTodoList: (list: DatabaseTodo[]) => void;
 
 
@@ -15,7 +14,7 @@
         let textareaElement = document.getElementById("textarea-todo") as HTMLTextAreaElement;
 
         if (!textareaElement || textareaElement.value === "") {
-            showModal(false);
+            showDialog(false);
             return undefined;
         }
 
@@ -24,21 +23,25 @@
 
 
     
-    function add() : void {
-        let todoValue = getTextAreaValue();
-
-        // Exit modal if undefined
-        if (todoValue === undefined)
+    async function add() : Promise<void> {
+        let text = getTextAreaValue();
+        if (text === undefined)
             return;
     
-        todoList = insertTodo(
-            todoList,
-            createTodoSchema(todoValue, todoList)
-        );
+        const response = await fetch(`/api/todos/1`, {
+            method: 'POST',
+            body:JSON.stringify({
+                text: text,
+                _idUser: loggedUser._id
+            })
+        });
 
-        updateTodoList(todoList);
-        showModal(false);
+        updateTodoList(
+            insertTodo( todoList, await response.json())
+        );
+        showDialog(false);
     }
+
 </script>
 
 
@@ -47,7 +50,7 @@
 
 <div class="modal">
     <div class="modal-content">
-        <button class="close" onclick={() => showModal(false)}>❌</button>
+        <button class="close" onclick={() => showDialog(false)}>❌</button>
 
         <h2>Add your todo</h2>
 

@@ -55,7 +55,7 @@
 
     onMount( async () => {
 
-        document.body.classList.add('dark');
+        document.body.classList.add('light');
 
         // Retrieve Logto information
         const authUser = data?.authUser;

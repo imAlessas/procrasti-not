@@ -1,12 +1,17 @@
-@import 'dark.scss';
-@import 'light.scss';
+@use './themes/light' as light;
+@use './themes/dark' as dark;
+
+:root {
+    --font-family: 'Futura', sans-serif;
+}
 
 
 :global(body) {
     background: var(--bkg-gradient);
+    font-family: var(--font-family);
+    color: var(--text-color);
     background-size: 150% 150%;
     animation: waveAnimation 15s ease-in-out infinite;
-    font-family: 'Futura', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -29,14 +34,14 @@
     z-index: 10;
 }
 
-.fancy-button {
+.primary-button {
     background: var(--btn-gradient);
     border: none;
     color: white;
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
-    font-family: 'Futura', sans-serif;
+    font-family: var(--font-family);
     font-size: 16px;
     font-weight: bold;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -61,3 +66,71 @@
     padding: 20px;
     animation: fadeIn 1s ease-in-out;
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+        margin: 0;
+        font-size: 24px;
+        color: var(--text-color);
+    }
+    
+    .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the spacing between buttons as needed */
+    }
+
+}
+
+.secondary-button {
+    position: relative;
+    background: var(--btn-gradient);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Futura', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        right: 3px;
+        bottom: 3px;
+        background: white;
+        border-radius: 7px; // Slightly smaller than the button
+        z-index: 1;
+        transition: opacity 0.3s ease;
+    }
+
+    &:hover {
+        transform: scale(105%);
+
+        &::after {
+            opacity: 0;
+        }
+    }
+
+    &:active {
+        transform: scale(95%);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .not-cover {
+        z-index: 2;
+        position: relative;
+    }
+
+}
+
+

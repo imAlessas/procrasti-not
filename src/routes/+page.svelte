@@ -8,6 +8,7 @@
     import type { UserInfoResponse } from '@logto/sveltekit';
     import { LOGGED_USER_SESSION } from '$lib/utils/const.js';
     import type { DatabaseUser } from '$lib/database/interfaces.js';
+    import PrimaryButton from '../components/generics/PrimaryButton.svelte';
 
     export let data;
 
@@ -75,9 +76,13 @@
 
 
 <form method="POST" action="?/signIn" class="signin-form">
-    <button type="submit" class="fancy-button non-selectable">Sign in</button>
+    <PrimaryButton>
+        Sign in
+    </PrimaryButton>
 </form>
 
 <form method="POST" action="?/signOut" class="signin-form">
-    <button type="submit" class="fancy-button non-selectable">Sign out</button>
+    <PrimaryButton>
+        Sign out
+    </PrimaryButton>
 </form>

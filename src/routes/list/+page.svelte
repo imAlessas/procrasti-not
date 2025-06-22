@@ -10,16 +10,14 @@
     import { LOGGED_USER_SESSION } from '$lib/utils/const';
     import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
     import type { ObjectId } from 'mongodb';
+    import PrimaryButton from '../../components/generics/PrimaryButton.svelte';
+    import SecondaryButton from '../../components/generics/SecondaryButton.svelte';
 
-
-
-    let addTodoClicked = false;
     
     let todoList: DatabaseTodo[] = [];
     let loggedUser : DatabaseUser;
-
-
-
+    
+    let addTodoClicked = false;
 
 
 
@@ -52,8 +50,6 @@
     }
 
 
-
-
     async function retrieveTodos(_idUser:ObjectId) : Promise<DatabaseTodo[]> {
         
         let todos : DatabaseTodo[] = [];
@@ -69,8 +65,6 @@
         return todos;
 
     }
-
-
 
 
     onMount(async () => {
@@ -98,140 +92,21 @@
 
    @use '$lib/styles/style.scss' as *;
 
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .header h1 {
-        margin: 0;
-        font-size: 24px;
-        color: #333;
-    }
-
-    .button-container {
-        display: flex;
-        gap: 10px; /* Adjust the spacing between buttons as needed */
-    }
-
-    .add-button {
-        background: linear-gradient(135deg, #FFA500, #ADD8E6);
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'Futura', sans-serif;
-        font-size: 16px;
-        font-weight: bold;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .add-button:hover {
-        background: linear-gradient(135deg, #FF8C00, #87CEEB);
-        transform: scale(105%);
-    }
-
-    .add-button:active {
-        transform: scale(95%);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .add-random-button {
-        position: relative;
-        background: linear-gradient(135deg, #FFA500, #ADD8E6);
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-family: 'Futura', sans-serif;
-        font-size: 16px;
-        font-weight: bold;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease;
-    }
-
-    .add-random-button .not-cover {
-        z-index: 2;
-        position: relative;
-    }
-
-    .add-random-button::after {
-        content: '';
-        position: absolute;
-        top: 3px;
-        left: 3px;
-        right: 3px;
-        bottom: 3px;
-        background: white;
-        border-radius: 7px; /* Adjust to be slightly smaller than the button */
-        z-index: 1;
-        transition: opacity 0.3s ease;
-    }
-
-    .add-random-button:hover::after {
-        opacity: 0;
-    }
-
-    .add-random-button:hover {
-        transform: scale(105%);
-    }
-
-    .add-random-button:active {
-        transform: scale(95%);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
     .nothing-todo {
         display: flex;
         align-items: center;
         justify-content: center;
         padding-top: 15px;
         font-size: 18px;
-        animation: fadeIn 2s ease-in-out;
     }
 
 
-.signout-form {
-    position: absolute;
-    top: 30px;
-    right: 50px;
-    z-index: 10;
-}
-
-.signout-button {
-    background: linear-gradient(135deg, #FFA500, #ADD8E6);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: 'Futura', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.signout-button:hover {
-    background: linear-gradient(135deg, #FF8C00, #87CEEB);
-    transform: scale(105%);
-}
-
-.signout-button:active {
-    transform: scale(95%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    .signout-form {
+        position: absolute;
+        top: 30px;
+        right: 50px;
+        z-index: 10;
+    }
 </style> 
 
 
@@ -239,7 +114,9 @@
 <div class="app-container">
 
     <form method="POST" action="?/signOut" class="signout-form">
-        <button type="submit" class="fancy-button non-selectable">Sign out</button>
+        <PrimaryButton>
+            Sign out
+        </PrimaryButton>
     </form>
 
     <div class="todo-container" in:fade={{ duration: 1000 }}>
@@ -248,12 +125,13 @@
             <h1>Todo List</h1>
             
             <div class="button-container">
+                <SecondaryButton onClick={() => insertRandomTodo()}>
+                    🎲 
+                </SecondaryButton>
 
-                <button class="add-random-button non-selectable" onclick={ () => insertRandomTodo() }>
-                    <span class="not-cover">🎲</span>
-                </button>
-
-                <button class="fancy-button non-selectable" onclick={ () => showDialog(true) }>➕</button>
+                <PrimaryButton onClick={ () => showDialog(true)}>
+                    ➕
+                </PrimaryButton>
             </div>
             
         </div>
@@ -264,7 +142,7 @@
                 {updateTodoList}
             />
         {:else}
-            <div class="nothing-todo non-selectable"> Nothing to do! </div>    
+            <div class="nothing-todo non-selectable" in:fade={{ delay: 500 }}> Nothing to do! </div>    
         {/if}
 
         {#if addTodoClicked}

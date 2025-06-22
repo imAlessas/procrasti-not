@@ -3,7 +3,7 @@ $bkg-base:    #fcfcfc;
 $bkg-orange:  #ffcb6b;
 $bkg-blue:    #add8e6;
 
-// Button variables
+// Primary button variables
 $btn-orange:         #ffa500;
 $btn-blue:           #add8e6;
 $btn-hover-orange:   #ff8c00;
@@ -11,8 +11,10 @@ $btn-hover-blue:     #87ceeb;
 
 .light {
     --text-color: #333;
+    --bkg-base: #{$bkg-base};
     --bkg-gradient: linear-gradient(135deg, #{$bkg-orange}, #{$bkg-base}, #{$bkg-blue});
     --btn-gradient: linear-gradient(135deg, #{$btn-orange}, #{$btn-blue});
     --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-orange}, #{$btn-hover-blue});
     --list-bkg: rgba(255, 255, 255, 0.2);
+    --bkg-todo: rgba(240, 240, 240, 0.3);
 }

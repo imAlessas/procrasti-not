@@ -86,27 +86,8 @@
 
 </script>
 
-
-
 <style lang="scss">
-
    @use '$lib/styles/style.scss' as *;
-
-    .nothing-todo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding-top: 15px;
-        font-size: 18px;
-    }
-
-
-    .signout-form {
-        position: absolute;
-        top: 30px;
-        right: 50px;
-        z-index: 10;
-    }
 </style> 
 
 

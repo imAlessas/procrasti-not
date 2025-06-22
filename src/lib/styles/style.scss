@@ -18,20 +18,21 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    @keyframes waveAnimation {
+        0% { background-position: 0% 50%; }
+        25% { background-position: 50% 100%; }
+        50% { background-position: 100% 50%; }
+        75% { background-position: 50% 0%; }
+        100% { background-position: 0% 50%; }
+    }
 }
 
-@keyframes waveAnimation {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 100%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 0%; }
-    100% { background-position: 0% 50%; }
-}
-
-.signin-form {
-    /* position: absolute; */
-    margin: auto;
-    z-index: 10;
+.non-selectable {
+    user-select: none;          /* Standard syntax */
+    -webkit-user-select: none;  /* Safari */
+    -moz-user-select: none;     /* Firefox */
+    -ms-user-select: none;      /* Internet Explorer/Edge */
 }
 
 .primary-button {
@@ -58,39 +59,10 @@
     }
 }
 
-.todo-container {
-    background-color: var(--list-bkg);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    padding: 20px;
-    animation: fadeIn 1s ease-in-out;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-
-    h1 {
-        margin: 0;
-        font-size: 24px;
-        color: var(--text-color);
-    }
-    
-    .button-container {
-        display: flex;
-        gap: 10px; /* Adjust the spacing between buttons as needed */
-    }
-
-}
-
 .secondary-button {
     position: relative;
     background: var(--btn-gradient);
     border: none;
-    color: white;
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
@@ -107,8 +79,8 @@
         left: 3px;
         right: 3px;
         bottom: 3px;
-        background: white;
-        border-radius: 7px; // Slightly smaller than the button
+        background: var(--bkg-base);
+        border-radius: 10px; // Slightly smaller than the button
         z-index: 1;
         transition: opacity 0.3s ease;
     }
@@ -133,4 +105,124 @@
 
 }
 
+.signin-form {
+    // position: absolute;
+    margin: auto;
+}
 
+
+.todo-container {
+    background-color: var(--list-bkg);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+        margin: 0;
+        font-size: 24px;
+        color: var(--text-color);
+    }
+
+    .button-container {
+        display: flex;
+        gap: 10px; /* Adjust the spacing between buttons as needed */
+    }
+
+}
+
+.nothing-todo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
+    font-size: 18px;
+}
+
+
+.signout-form {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    z-index: 10;
+}
+
+
+
+
+
+
+.todo-item {
+    background-color: var(--bkg-todo);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    .left-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .todo-text {
+        text-align: justify;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    &.completed .todo-text {
+        text-decoration: line-through;
+        color: #999;
+    }
+
+}
+
+
+.action-button {
+    background: none;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+
+    &:hover {
+        transform: scale(102.5%);
+    }
+
+    &:active {
+        transform: scale(97.5%);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    &.complete {
+        border-radius: 100%; // override border-radius for complete button
+
+        &:hover {
+            background: linear-gradient(135deg, rgba(72, 220, 126, 0.8), #FFFFFF);
+        }
+    }
+
+    &.delete {
+        border-radius: 10px;
+
+        &:hover {
+            background: linear-gradient(315deg, rgba(205, 0, 0, 0.6), #FFFFFF);
+        }
+    }
+
+}

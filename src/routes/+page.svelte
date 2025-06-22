@@ -1,7 +1,3 @@
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style>
-
 <script lang="ts">
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
@@ -73,6 +69,10 @@
     });
 
 </script>
+
+<style lang="scss">
+   @use '$lib/styles/style.scss' as *;
+</style>
 
 
 <form method="POST" action="?/signIn" class="signin-form">

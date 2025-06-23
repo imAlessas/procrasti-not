@@ -1,20 +1,31 @@
+// Global variable
+$text-color: #333;
+$bkg-base: #fcfcfc;
+
 // Background variables
-$bkg-base:    #fcfcfc;
-$bkg-orange:  #ffcb6b;
-$bkg-blue:    #add8e6;
+$bkg-orange: #ffcb6b;
+$bkg-blue: #add8e6;
 
 // Primary button variables
-$btn-orange:         #ffa500;
-$btn-blue:           #add8e6;
-$btn-hover-orange:   #ff8c00;
-$btn-hover-blue:     #87ceeb;
+$btn-orange: #ffa500;
+$btn-blue: #add8e6;
+$btn-hover-orange: #ff8c00;
+$btn-hover-blue: #87ceeb;
+
+// List
+$bkg-todo-list: rgba(255, 255, 255, 0.2);
+$bkg-todo-item: rgba(240, 240, 240, 0.3);
+
+
+
+
 
 .light {
-    --text-color: #333;
+    --text-color: #{$text-color};
     --bkg-base: #{$bkg-base};
     --bkg-gradient: linear-gradient(135deg, #{$bkg-orange}, #{$bkg-base}, #{$bkg-blue});
     --btn-gradient: linear-gradient(135deg, #{$btn-orange}, #{$btn-blue});
     --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-orange}, #{$btn-hover-blue});
-    --list-bkg: rgba(255, 255, 255, 0.2);
-    --bkg-todo: rgba(240, 240, 240, 0.3);
+    --bkg-todo-list: #{$bkg-todo-list};
+    --bkg-todo-item: #{$bkg-todo-item};
 }

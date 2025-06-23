@@ -6,5 +6,5 @@
 </script>
 
 <div class="iconify">
-    <Icon icon={icon} width="20"/>
+    <Icon icon={icon} width="20" height="20"/>
 </div>

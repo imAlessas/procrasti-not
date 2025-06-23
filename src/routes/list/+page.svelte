@@ -1,7 +1,10 @@
+<style lang="scss">
+   @use '$lib/styles/style.scss' as *;
+</style> 
+
 <script lang="ts">
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-
     import { saveJson, sortTodoList, getRandomTodo, insertTodo} from '$lib/utils/index';
 
     // Components
@@ -12,6 +15,8 @@
     import type { ObjectId } from 'mongodb';
     import PrimaryButton from '../../components/generics/PrimaryButton.svelte';
     import SecondaryButton from '../../components/generics/SecondaryButton.svelte';
+    import Icon from '../../components/generics/Icon.svelte';
+    import IconButton from '../../components/generics/IconButton.svelte';
 
     
     let todoList: DatabaseTodo[] = [];
@@ -86,18 +91,13 @@
 
 </script>
 
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style> 
 
 
 
 <div class="app-container">
 
     <form method="POST" action="?/signOut" class="signout-form">
-        <PrimaryButton>
-            Sign out
-        </PrimaryButton>
+        <IconButton icon="streamline-ultimate:smiley-sad-1-bold" text="Sign out"/>
     </form>
 
     <div class="todo-container" in:fade={{ duration: 1000 }}>
@@ -107,11 +107,11 @@
             
             <div class="button-container">
                 <SecondaryButton onClick={() => insertRandomTodo()}>
-                    🎲 
+                    <Icon icon="streamline-ultimate:dice-bold"/>
                 </SecondaryButton>
 
                 <PrimaryButton onClick={ () => showDialog(true)}>
-                    ➕
+                    <Icon icon="streamline-ultimate:add-circle-bold-bold"/>
                 </PrimaryButton>
             </div>
             

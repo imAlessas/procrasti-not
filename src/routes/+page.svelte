@@ -1,10 +1,14 @@
+<style lang="scss">
+   @use '$lib/styles/style.scss' as *;
+</style>
+
 <script lang="ts">
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import type { UserInfoResponse } from '@logto/sveltekit';
     import { LOGGED_USER_SESSION } from '$lib/utils/const.js';
     import type { DatabaseUser } from '$lib/database/interfaces.js';
-    import PrimaryButton from '../components/generics/PrimaryButton.svelte';
+    import IconButton from '../components/generics/IconButton.svelte';
 
     export let data;
 
@@ -70,19 +74,11 @@
 
 </script>
 
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style>
-
 
 <form method="POST" action="?/signIn" class="signin-form">
-    <PrimaryButton>
-        Sign in
-    </PrimaryButton>
+    <IconButton icon="streamline-ultimate:smiley-happy-bold" text="Sign in"/>
 </form>
 
-<form method="POST" action="?/signOut" class="signin-form">
-    <PrimaryButton>
-        Sign out
-    </PrimaryButton>
+<form method="POST" action="?/signOut" class="signout-form">
+    <IconButton icon="streamline-ultimate:smiley-sad-1-bold" text="Sign out"/>
 </form>

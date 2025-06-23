@@ -1,3 +1,7 @@
+<style lang="scss">
+   @use '$lib/styles/style.scss' as *;
+</style>
+
 <script lang='ts'>
     import type { DatabaseTodo } from '$lib/database/interfaces';
 
@@ -6,6 +10,7 @@
         removeTodo,
         completeTodo,
     } from '$lib/utils/index';
+    import ActionButton from './generics/ActionButton.svelte';
 
 
     export let todoList : DatabaseTodo[];
@@ -49,17 +54,15 @@
 
 </script>
 
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style>
+
 
 
 
 <li class="todo-item {todo.isDone ? 'completed' : ''}">
     <div class="left-content">
-        <button class="action-button complete non-selectable" onclick={ () => complete(todo._id.toString())}> ✅ </button>
+        <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon="streamline-ultimate:check-double"/>
         <span class="todo-text"> {todo.text} </span>
     </div>
 
-    <button class="action-button delete non-selectable" onclick={ () => remove(todo._id.toString()) }> 🗑️ </button>
+    <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon="streamline-ultimate:bin-1"/>
 </li>

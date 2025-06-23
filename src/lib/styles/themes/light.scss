@@ -12,9 +12,13 @@ $btn-blue: #add8e6;
 $btn-hover-orange: #ff8c00;
 $btn-hover-blue: #87ceeb;
 
+// Action buttons
+$btn-red: rgba(218, 0, 0, 0.5);
+$btn-green: rgba(0, 202, 74, 0.5);
+
 // List
 $bkg-todo-list: rgba(255, 255, 255, 0.2);
-$bkg-todo-item: rgba(240, 240, 240, 0.3);
+$bkg-todo-item: rgba(240, 240, 240, 0.6);
 
 
 
@@ -26,6 +30,8 @@ $bkg-todo-item: rgba(240, 240, 240, 0.3);
     --bkg-gradient: linear-gradient(135deg, #{$bkg-orange}, #{$bkg-base}, #{$bkg-blue});
     --btn-gradient: linear-gradient(135deg, #{$btn-orange}, #{$btn-blue});
     --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-orange}, #{$btn-hover-blue});
+    --btn-delete-gradient: linear-gradient(315deg, #{$btn-red}, #{$bkg-base});
+    --btn-complete-gradient: linear-gradient(315deg, #{$btn-green}, #{$bkg-base});
     --bkg-todo-list: #{$bkg-todo-list};
     --bkg-todo-item: #{$bkg-todo-item};
 }

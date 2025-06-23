@@ -46,7 +46,7 @@
 .primary-button {
     background: var(--btn-gradient);
     border: none;
-    color: white;
+    color: var(--text-color);
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
@@ -221,7 +221,7 @@
     border: none;
     padding: 10px 10px;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease;
     color: white;
     font-size: 14px;
@@ -240,7 +240,7 @@
         border-radius: 100%; // override border-radius for complete button
 
         &:hover {
-            background: linear-gradient(135deg, rgba(72, 220, 126, 0.8), #FFFFFF);
+            background: var(--btn-complete-gradient);
         }
     }
 
@@ -248,7 +248,7 @@
         border-radius: 10px;
 
         &:hover {
-            background: linear-gradient(315deg, rgba(205, 0, 0, 0.6), #FFFFFF);
+            background: var(--btn-delete-gradient);
         }
     }
 

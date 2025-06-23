@@ -1,16 +1,20 @@
-// Global settings
+// Global
 $text-color: #ccc;
 $bkg-base: #2c2c2c;
 
-// Background variables
+// Background
 $bkg-orange: #b3862f;
 $bkg-blue: #3b5e7a;
 
-// Primary button variables
+// Primary buttons
 $btn-orange: #b36b00;
 $btn-blue: #4a7ca3;
 $btn-hover-orange: #b35f00;
 $btn-hover-blue: #3a5a7c;
+
+// Action buttons
+$btn-red: rgba(156, 0, 0, 0.5);
+$btn-green: rgba(0, 163, 60, 0.5);
 
 // List
 $bkg-todo-list: rgba(50, 50, 50, 0.1);
@@ -26,6 +30,8 @@ $bkg-todo-item: rgba(40, 40, 40, 0.3);
     --bkg-gradient: linear-gradient(135deg, #{$bkg-orange}, #{$bkg-base}, #{$bkg-blue});
     --btn-gradient: linear-gradient(135deg, #{$btn-orange}, #{$btn-blue});
     --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-orange}, #{$btn-hover-blue});
+    --btn-delete-gradient: linear-gradient(315deg, #{$btn-red}, #{$bkg-base});
+    --btn-complete-gradient: linear-gradient(315deg, #{$btn-green}, #{$bkg-base});
     --bkg-todo-list: #{$bkg-todo-list};
     --bkg-todo-item: #{$bkg-todo-item};
 }

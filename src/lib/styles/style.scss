@@ -70,7 +70,11 @@
 .icon-button {
     display: flex;
     align-items: center;
-    gap: 8px;
+
+    
+    &.gap {
+        gap: 8px;
+    }
 
     .icon-container {
         width: 20px;
@@ -78,13 +82,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
+        gap: 8px;
     }
 }
-
-
-
-
 
 .secondary-button {
     position: relative;
@@ -179,7 +179,6 @@
     position: absolute;
     top: 30px;
     right: 50px;
-    z-index: 10;
 }
 
 

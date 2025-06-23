@@ -9,7 +9,7 @@
 </script>
 
 <PrimaryButton {onClick}>
-    <div class="icon-button">
+    <div class="icon-button {text.length > 0 ? "gap" : ""}">
         <div class="icon-container">
             <Icon {icon} />
         </div>

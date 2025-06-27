@@ -97,7 +97,7 @@
 <div class="app-container">
 
     <form method="POST" action="?/signOut" class="signout-form">
-        <IconButton icon="streamline-ultimate:smiley-sad-1-bold" text="Sign out"/>
+        <IconButton icon="streamline-ultimate:smiley-unhappy-bold" text="Sign out"/>
     </form>
 
     <div class="todo-container" in:fade={{ duration: 1000 }}>

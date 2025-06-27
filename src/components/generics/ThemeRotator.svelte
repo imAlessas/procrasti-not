@@ -2,8 +2,6 @@
     import '$lib/styles/style.scss';
     import { theme } from '$lib/store/theme';
     import { onMount } from 'svelte';
-    import Icon from './Icon.svelte';
-    import PrimaryButton from './PrimaryButton.svelte';
     import IconButton from './IconButton.svelte';
 
     const THEMES_MAP: Record<string, string> = {
@@ -35,6 +33,6 @@
 </script>
 
 
-<div style="position: absolute; top:10px; left: 20px">
+<div style="position: absolute; top:30px; left: 50px">
     <IconButton icon={THEMES_MAP[$theme]} onClick={rotateTheme}/>
 </div>

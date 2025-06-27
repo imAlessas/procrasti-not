@@ -53,7 +53,7 @@
     font-family: var(--font-family);
     font-size: 16px;
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--btn-box-shadow);
     transition: background 0.3s ease, transform 0.2s ease;
     
     &:hover {
@@ -63,7 +63,7 @@
     
     &:active {
         transform: scale(95%);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--btn-active-box-shadow);
     }
 }
 
@@ -96,7 +96,7 @@
     font-family: 'Futura', sans-serif;
     font-size: 16px;
     font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--btn-box-shadow);
     transition: transform 0.2s ease;
 
     &::after {
@@ -122,12 +122,52 @@
 
     &:active {
         transform: scale(95%);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--btn-active-box-shadow);
     }
 
     .not-cover {
         z-index: 2;
         position: relative;
+    }
+
+}
+
+
+.action-button {
+    background: none;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    box-shadow: var(--btn-box-shadow);
+    transition: transform 0.2s ease;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    flex-shrink: 0;
+
+    &:hover {
+        transform: scale(105%);
+    }
+
+    &:active {
+        transform: scale(95%);
+        box-shadow: var(--btn-active-box-shadow);
+    }
+
+    &.complete {
+        border-radius: 100%;
+
+        &:hover {
+            background: var(--btn-complete-gradient);
+        }
+    }
+
+    &.delete {
+        border-radius: 10px;
+
+        &:hover {
+            background: var(--btn-delete-gradient);
+        }
     }
 
 }
@@ -141,7 +181,7 @@
 .todo-container {
     background-color: var(--bkg-todo-list);
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--container-box-shadow);
     width: 400px;
     padding: 20px;
     animation: fadeIn 1s ease-in-out;
@@ -161,7 +201,7 @@
 
     .button-container {
         display: flex;
-        gap: 10px; /* Adjust the spacing between buttons as needed */
+        gap: 10px;
     }
 
 }
@@ -187,18 +227,21 @@
 
 
 .todo-item {
-    background-color: var(--bkg-todo-item);
-    border-radius: 10px;
-    padding: 10px;
+
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    gap: 10px;
 
-    .left-content {
+    .check-todo {
+        background-color: var(--bkg-todo-item);
+        border-radius: 10px;
+        padding: 10px;
         display: flex;
         align-items: center;
+        width: 100%;
     }
 
     .todo-text {
@@ -215,40 +258,4 @@
 }
 
 
-.action-button {
-    background: none;
-    border: none;
-    padding: 10px 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
 
-    &:hover {
-        transform: scale(102.5%);
-    }
-
-    &:active {
-        transform: scale(97.5%);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    &.complete {
-        border-radius: 100%; // override border-radius for complete button
-
-        &:hover {
-            background: var(--btn-complete-gradient);
-        }
-    }
-
-    &.delete {
-        border-radius: 10px;
-
-        &:hover {
-            background: var(--btn-delete-gradient);
-        }
-    }
-
-}

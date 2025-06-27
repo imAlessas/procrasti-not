@@ -5,12 +5,15 @@ $bkg-base: #2c2c2c;
 // Background
 $bkg-orange: #b3862f;
 $bkg-blue: #3b5e7a;
+$container-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 
 // Primary buttons
 $btn-orange: #b36b00;
 $btn-blue: #4a7ca3;
 $btn-hover-orange: #b35f00;
 $btn-hover-blue: #3a5a7c;
+$btn-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+$btn-active-box-shadow:  0 2px 4px rgba(0, 0, 0, 0.25);
 
 // Action buttons
 $btn-red: rgba(156, 0, 0, 0.5);
@@ -26,12 +29,18 @@ $bkg-todo-item: rgba(40, 40, 40, 0.3);
 
 .dark {
     --text-color: #{$text-color};
+
     --bkg-base: #{$bkg-base};
+    --bkg-todo-list: #{$bkg-todo-list};
+    --bkg-todo-item: #{$bkg-todo-item};
+
     --bkg-gradient: linear-gradient(135deg, #{$bkg-orange}, #{$bkg-base}, #{$bkg-blue});
     --btn-gradient: linear-gradient(135deg, #{$btn-orange}, #{$btn-blue});
     --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-orange}, #{$btn-hover-blue});
     --btn-delete-gradient: linear-gradient(315deg, #{$btn-red}, #{$bkg-base});
     --btn-complete-gradient: linear-gradient(315deg, #{$btn-green}, #{$bkg-base});
-    --bkg-todo-list: #{$bkg-todo-list};
-    --bkg-todo-item: #{$bkg-todo-item};
+
+    --btn-box-shadow: #{$btn-box-shadow};
+    --container-box-shadow: #{$container-box-shadow};
+    --btn-active-box-shadow: #{$btn-active-box-shadow};
 }

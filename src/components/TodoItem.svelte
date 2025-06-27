@@ -59,7 +59,7 @@
 
 
 <li class="todo-item {todo.isDone ? 'completed' : ''}">
-    <div class="left-content">
+    <div class="check-todo">
         <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon="streamline-ultimate:check-double"/>
         <span class="todo-text"> {todo.text} </span>
     </div>

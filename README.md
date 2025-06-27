@@ -9,6 +9,7 @@
     - [ ] Update `users` collection as needed
     - [ ] Imporve first page login
 - [ ] Detach style from .svelte
-    - [ ] Create dark and light theme
-    - [ ] Use icons instead of emojis
+    - [x] Create dark and light theme
+    - [x] Use icons instead of emojis
     - [ ] Add some animation
+    - [ ] change icon style

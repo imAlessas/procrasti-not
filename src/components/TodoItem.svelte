@@ -7,7 +7,7 @@
     import { ICONS } from '$lib/utils/const';
 
 
-    import { removeTodo } from '$lib/utils/listActions';
+    import { removeTodo } from '$lib/utils/todo';
     import ActionButton from './generics/ActionButton.svelte';
 
 

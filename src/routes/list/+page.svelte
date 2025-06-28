@@ -5,9 +5,8 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { sortTodoList, insertTodo} from "$lib/utils/listActions";
+    import { sortTodoList, insertTodo, getRandomTodo} from "$lib/utils/todo";
     import { saveJson } from '$lib/utils/storage';
-    import { getRandomTodo } from '$lib/utils/todoActions';
 
     // Components
     import TodoList from '../../components/TodoList.svelte';

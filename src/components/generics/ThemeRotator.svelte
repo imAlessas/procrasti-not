@@ -6,10 +6,10 @@
     import { ICONS } from '$lib/utils/const';
 
     const THEMES_MAP: Record<string, string> = {
-        "dark" : ICONS["moon"],
         "light" : ICONS["sun"],
-        "cyberpunk" : ICONS["city"],
         "alpine" : ICONS["mountain"],
+        "dark" : ICONS["moon"],
+        "cyberpunk" : ICONS["city"],
     }
 
     const THEMES: string[] = Object.keys(THEMES_MAP);

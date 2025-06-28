@@ -16,4 +16,5 @@ export const ICONS: Record<string, string> = {
     moon : "tabler:moon-filled",
     sun : "tabler:sun-filled",
     city: "tabler:building-skyscraper",
+    mountain: "tabler:mountain",
 }

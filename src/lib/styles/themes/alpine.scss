@@ -1,42 +1,45 @@
 // Global variable
-$text-color: #555;
-$bkg-base: #fcfcfc;
+$text-color: #2d312c;
+$bkg-base: #ccdde2;
 
-// Background
-$bkg-orange: #ffcb6b;
-$bkg-blue: #add8e6;
+// Background variables
+$bkg-first: #0A5F38;
+$bkg-second: #6D8196;
 $container-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
 // Primary button
-$btn-orange: #ffc233;
-$btn-blue: #add8e6;
-$btn-hover-orange: #ffb300;
-$btn-hover-blue: #91c3d8;
+$btn-first: #56A081;
+$btn-second: #b9c7d3;
+$btn-hover-first: #56a08150;
+$btn-hover-second: #b9c7d350;
 $btn-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-$btn-active-box-shadow:  0 2px 4px rgba(0, 0, 0, 0.1);
+$btn-active-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 // Action buttons
 $btn-red: rgba(218, 0, 0, 0.5);
 $btn-green: rgba(0, 202, 74, 0.5);
 
 // List
-$bkg-todo-list: rgba(255, 255, 255, 0.2);
-$bkg-todo-item: rgba(240, 240, 240, 0.6);
+$bkg-todo-list: rgba(109, 129, 150, 0.10); 
+$bkg-todo-item: rgba(10, 95, 56, 0.06);
 
 
 
 
 
-.light {
+
+
+
+.alpine {
     --text-color: #{$text-color};
 
     --bkg-base: #{$bkg-base};
     --bkg-todo-list: #{$bkg-todo-list};
     --bkg-todo-item: #{$bkg-todo-item};
 
-    --bkg-gradient: linear-gradient(135deg, #{$bkg-orange}, #{$bkg-base}, #{$bkg-blue});
-    --btn-gradient: linear-gradient(135deg, #{$btn-orange}, #{$btn-blue});
-    --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-orange}, #{$btn-hover-blue});
+    --bkg-gradient: linear-gradient(135deg, #{$bkg-first}, #{$bkg-base}, #{$bkg-second});
+    --btn-gradient: linear-gradient(135deg, #{$btn-first}, #{$btn-second});
+    --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-first}, #{$btn-hover-second});
     --btn-delete-gradient: linear-gradient(315deg, #{$btn-red}, #{$bkg-base});
     --btn-complete-gradient: linear-gradient(315deg, #{$btn-green}, #{$bkg-base});
 

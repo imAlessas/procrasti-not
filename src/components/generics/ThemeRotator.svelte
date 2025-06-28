@@ -9,6 +9,7 @@
         "dark" : ICONS["moon"],
         "light" : ICONS["sun"],
         "cyberpunk" : ICONS["city"],
+        "alpine" : ICONS["mountain"],
     }
 
     const THEMES: string[] = Object.keys(THEMES_MAP);

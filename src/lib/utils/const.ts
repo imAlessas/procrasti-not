@@ -9,8 +9,11 @@ export const ICONS: Record<string, string> = {
     dice : "tabler:dice-5",
     check : "tabler:check",
     bin : "tabler:trash",
-    moon : "tabler:moon-filled",
-    sun : "tabler:sun-filled",
     in : "tabler:door-enter",
     out : "tabler:door-exit",
+
+    // Themes
+    moon : "tabler:moon-filled",
+    sun : "tabler:sun-filled",
+    city: "tabler:building-skyscraper",
 }

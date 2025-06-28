@@ -8,6 +8,7 @@
     const THEMES_MAP: Record<string, string> = {
         "dark" : ICONS["moon"],
         "light" : ICONS["sun"],
+        "cyberpunk" : ICONS["city"],
     }
 
     const THEMES: string[] = Object.keys(THEMES_MAP);

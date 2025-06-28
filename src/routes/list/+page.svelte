@@ -79,6 +79,7 @@
             const userJson = sessionStorage.getItem(LOGGED_USER_SESSION);
             if (!userJson)
                 return;
+            
 
             loggedUser = JSON.parse(userJson);
             
@@ -103,7 +104,7 @@
 
     <div class="todo-container" in:fade={{ duration: 1000 }}>
         
-        <div class="header">
+        <div class="header non-selectable">
             <h1>Todo List</h1>
             
             <div class="button-container">

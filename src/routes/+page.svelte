@@ -9,7 +9,6 @@
     import { ICONS, LOGGED_USER_SESSION } from '$lib/utils/const.js';
     import type { DatabaseUser } from '$lib/database/interfaces.js';
     import IconButton from '../components/generics/IconButton.svelte';
-    import Icon from '../components/generics/Icon.svelte';
 
     export let data;
 
@@ -56,8 +55,6 @@
     }
 
     onMount( async () => {
-
-        document.body.classList.add('light');
 
         // Retrieve Logto information
         const authUser = data?.authUser;

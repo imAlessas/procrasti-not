@@ -21,13 +21,14 @@
     function rotateTheme() {
         index = (index + 1) % THEMES.length;
         $theme = THEMES[index];
-        refreshTheme()
+        refreshTheme();
     }
 
     // Removes the themes and sets the new one
     function refreshTheme() {
         document.body.classList.remove(...THEMES);
-        document.body.classList.add($theme)
+        document.body.classList.add($theme);
+        console.debug("Switching to theme:", $theme);
     }
 
 </script>

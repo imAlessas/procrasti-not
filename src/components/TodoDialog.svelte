@@ -8,6 +8,7 @@
     import { onMount } from "svelte";
     import ActionButton from "./generics/ActionButton.svelte";
     import PrimaryButton from "./generics/PrimaryButton.svelte";
+    import IconButton from "./generics/IconButton.svelte";
 
 
     export let loggedUser: DatabaseUser;
@@ -73,10 +74,8 @@
 
         <textarea placeholder={randomPlaceholder} id="textarea-todo" bind:this={textAreaElement}></textarea>
 
-        <div style="width:100%; margin: 1%; text-align:right;">
-            <PrimaryButton onClick={() => add()}>
-                Add
-            </PrimaryButton>
+        <div style="width:100%; text-align:right; bottom: 1%">
+            <IconButton onClick={() => add()} text="Add" icon="streamline-ultimate:add-circle-bold-bold"/>
         </div>
 
     </div>

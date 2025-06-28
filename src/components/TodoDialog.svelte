@@ -8,8 +8,8 @@
     import { getRandomTodo } from "$lib/utils/todoActions";
     import { onMount } from "svelte";
     import ActionButton from "./generics/ActionButton.svelte";
-    import PrimaryButton from "./generics/PrimaryButton.svelte";
     import IconButton from "./generics/IconButton.svelte";
+    import { ICONS } from "$lib/utils/const";
 
 
     export let loggedUser: DatabaseUser;
@@ -68,7 +68,7 @@
     <div class="modal-content">
 
         <div class="close">
-            <ActionButton icon="solar:close-square-outline" onClick={() => showDialog(false)} type="delete"/>
+            <ActionButton icon={ICONS["close"]} onClick={() => showDialog(false)} type="delete"/>
         </div>
 
         <h2>Add your todo</h2>
@@ -76,7 +76,7 @@
         <textarea placeholder={randomPlaceholder} id="textarea-todo" bind:this={textAreaElement}></textarea>
 
         <div style="width:100%; text-align:right; bottom: 1%">
-            <IconButton onClick={() => add()} text="Add" icon="streamline-ultimate:add-circle-bold-bold"/>
+            <IconButton onClick={() => add()} text="Add" icon={ICONS["add"]}/>
         </div>
 
     </div>

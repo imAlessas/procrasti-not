@@ -6,9 +6,10 @@
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import type { UserInfoResponse } from '@logto/sveltekit';
-    import { LOGGED_USER_SESSION } from '$lib/utils/const.js';
+    import { ICONS, LOGGED_USER_SESSION } from '$lib/utils/const.js';
     import type { DatabaseUser } from '$lib/database/interfaces.js';
     import IconButton from '../components/generics/IconButton.svelte';
+    import Icon from '../components/generics/Icon.svelte';
 
     export let data;
 
@@ -76,9 +77,5 @@
 
 
 <form method="POST" action="?/signIn" class="signin-form">
-    <IconButton icon="streamline-ultimate:smiley-happy-bold" text="Sign in"/>
-</form>
-
-<form method="POST" action="?/signOut" class="signout-form">
-    <IconButton icon="streamline-ultimate:smiley-sad-1-bold" text="Sign out"/>
+    <IconButton icon={ICONS["in"]} text="Sign in"/>
 </form>

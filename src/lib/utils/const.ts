@@ -1,4 +1,16 @@
 
-export const RANDOM_TODO_URL = 'https://dummyjson.com/todos/random/1'
+export const RANDOM_TODO_URL: string = 'https://dummyjson.com/todos/random/1'
 
-export const LOGGED_USER_SESSION = 'loggedUser'
+export const LOGGED_USER_SESSION: string = 'loggedUser'
+
+export const ICONS: Record<string, string> = {
+    add : "tabler:square-rounded-plus",
+    close : "tabler:square-rounded-x",
+    dice : "tabler:dice-5",
+    check : "tabler:check",
+    bin : "tabler:trash",
+    moon : "tabler:moon-filled",
+    sun : "tabler:sun-filled",
+    in : "tabler:door-enter",
+    out : "tabler:door-exit",
+}

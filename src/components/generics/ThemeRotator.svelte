@@ -3,10 +3,11 @@
     import { theme } from '$lib/store/theme';
     import { onMount } from 'svelte';
     import IconButton from './IconButton.svelte';
+    import { ICONS } from '$lib/utils/const';
 
     const THEMES_MAP: Record<string, string> = {
-        "dark" : "akar-icons:moon-fill",
-        "light" : "akar-icons:sun-fill",
+        "dark" : ICONS["moon"],
+        "light" : ICONS["sun"],
     }
 
     const THEMES: string[] = Object.keys(THEMES_MAP);

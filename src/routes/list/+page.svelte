@@ -12,7 +12,7 @@
     // Components
     import TodoList from '../../components/TodoList.svelte';
     import TodoForm from '../../components/TodoDialog.svelte';
-    import { LOGGED_USER_SESSION } from '$lib/utils/const';
+    import { ICONS, LOGGED_USER_SESSION } from '$lib/utils/const';
     import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
     import type { ObjectId } from 'mongodb';
     import PrimaryButton from '../../components/generics/PrimaryButton.svelte';
@@ -99,7 +99,7 @@
 <div class="app-container">
 
     <form method="POST" action="?/signOut" class="signout-form">
-        <IconButton icon="streamline-ultimate:smiley-unhappy-bold" text="Sign out"/>
+        <IconButton icon={ICONS["out"]} text="Sign out"/>
     </form>
 
     <div class="todo-container" in:fade={{ duration: 1000 }}>
@@ -109,11 +109,11 @@
             
             <div class="button-container">
                 <SecondaryButton onClick={() => insertRandomTodo()}>
-                    <Icon icon="streamline-ultimate:dice-bold"/>
+                    <Icon icon={ICONS["dice"]}/>
                 </SecondaryButton>
 
                 <PrimaryButton onClick={ () => showDialog(true)}>
-                    <Icon icon="streamline-ultimate:add-circle-bold-bold"/>
+                    <Icon icon={ICONS["add"]}/>
                 </PrimaryButton>
             </div>
             

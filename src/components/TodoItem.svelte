@@ -4,6 +4,7 @@
 
 <script lang='ts'>
     import type { DatabaseTodo } from '$lib/database/interfaces';
+    import { ICONS } from '$lib/utils/const';
 
 
     import { removeTodo } from '$lib/utils/listActions';
@@ -57,9 +58,9 @@
 
 <li class="todo-item {todo.isDone ? 'completed' : ''}">
     <div class="check-todo">
-        <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon="streamline-ultimate:check-double"/>
+        <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon={ICONS["check"]}/>
         <span class="todo-text"> {todo.text} </span>
     </div>
 
-    <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon="streamline-ultimate:bin-1"/>
+    <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon={ICONS["bin"]}/>
 </li>

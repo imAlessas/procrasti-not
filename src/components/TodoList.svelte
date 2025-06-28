@@ -9,7 +9,12 @@
 
 </script>
 
-
+<style>
+    .todo-list {
+        list-style-type: none;
+        padding: 0;
+    }
+</style>
 
 
 
@@ -22,15 +27,4 @@
         />
     {/each}
 </ul>
-        
-        
-
-
-
-<style>
-    .todo-list {
-        list-style-type: none;
-        padding: 0;
-    }
-</style>
         

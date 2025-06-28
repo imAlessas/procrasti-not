@@ -6,10 +6,7 @@
     import type { DatabaseTodo } from '$lib/database/interfaces';
 
 
-    import {
-        removeTodo,
-        completeTodo,
-    } from '$lib/utils/index';
+    import { removeTodo } from '$lib/utils/listActions';
     import ActionButton from './generics/ActionButton.svelte';
 
 

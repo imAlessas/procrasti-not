@@ -4,7 +4,8 @@
 
 <script lang="ts">
     import type { DatabaseTodo, DatabaseUser } from "$lib/database/interfaces";
-    import { getRandomTodo, insertTodo } from "$lib/utils";
+    import { insertTodo } from "$lib/utils/listActions";
+    import { getRandomTodo } from "$lib/utils/todoActions";
     import { onMount } from "svelte";
     import ActionButton from "./generics/ActionButton.svelte";
     import PrimaryButton from "./generics/PrimaryButton.svelte";

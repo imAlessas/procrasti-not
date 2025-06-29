@@ -1,7 +1,5 @@
 
-export const RANDOM_TODO_URL: string = 'https://dummyjson.com/todos/random/1'
-
-export const LOGGED_USER_SESSION: string = 'loggedUser'
+export const RANDOM_TODO_URL: string = 'https://dummyjson.com/todos/random/1';
 
 export const ICONS: Record<string, string> = {
     add : "tabler:square-rounded-plus",
@@ -17,4 +15,6 @@ export const ICONS: Record<string, string> = {
     sun : "tabler:sun-filled",
     city: "tabler:building-skyscraper",
     mountain: "tabler:mountain",
-}
+};
+
+export const DEFAULT_THEME = "dark";

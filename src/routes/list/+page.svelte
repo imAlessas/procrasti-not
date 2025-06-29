@@ -11,7 +11,7 @@
     // Components
     import TodoList from '../../components/TodoList.svelte';
     import TodoForm from '../../components/TodoDialog.svelte';
-    import { ICONS, LOGGED_USER_SESSION } from '$lib/utils/const';
+    import { ICONS } from '$lib/utils/const';
     import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
     import type { ObjectId } from 'mongodb';
     import PrimaryButton from '../../components/generics/PrimaryButton.svelte';

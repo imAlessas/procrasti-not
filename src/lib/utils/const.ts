@@ -17,4 +17,9 @@ export const ICONS: Record<string, string> = {
     mountain: "tabler:mountain",
 };
 
-export const DEFAULT_THEME = "dark";
+export function retrieveSystemTheme(): 'dark' | 'light' {
+  if (typeof window !== 'undefined' && window.matchMedia)
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  
+  return 'dark'; // fallback default on server
+}

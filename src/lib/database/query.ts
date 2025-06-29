@@ -26,7 +26,25 @@ export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | nu
 export const createUser = async (newUser : DatabaseUser) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
+    console.log(newUser);
+    
+
     return await Users.create(newUser);
+
+};
+
+export const updateTheme = async (userId : ObjectId, theme : string) : Promise<Boolean> => {
+    await connectToMongoDB();
+
+    const response : UpdateResult = await Users.updateOne(
+        {  _id: userId  },
+        { $set : {
+            theme: theme,
+        }}
+    );
+    
+
+    return response.matchedCount == 1 && response.modifiedCount == 1;
 
 };
 

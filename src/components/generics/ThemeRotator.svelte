@@ -4,6 +4,11 @@
     import { onMount } from 'svelte';
     import IconButton from './IconButton.svelte';
     import { ICONS } from '$lib/utils/const';
+    import type { DatabaseUser } from '$lib/database/interfaces';
+
+    export let loggedUser: DatabaseUser | undefined;
+    export let currentTheme: string;
+
 
     const THEMES_MAP: Record<string, string> = {
         "light" : ICONS["sun"],
@@ -13,18 +18,29 @@
     }
 
     const THEMES: string[] = Object.keys(THEMES_MAP);
+
+    $: theme.set(currentTheme);
     let index = THEMES.indexOf($theme);
 
     onMount(() => {
-        refreshTheme()
+        index = THEMES.indexOf($theme);
+        refreshTheme();
     });
 
 
     // Infinitely rotates the theme list
-    function rotateTheme() {
+    async function rotateTheme() {
         index = (index + 1) % THEMES.length;
-        $theme = THEMES[index];
+        const newTheme = THEMES[index];
+        theme.set(newTheme);
         refreshTheme();
+
+        if (loggedUser)
+            await fetch(`/api/users/${loggedUser._id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ theme: newTheme }),
+            });
+
     }
 
     // Removes the themes and sets the new one
@@ -33,6 +49,7 @@
         document.body.classList.add($theme);
         console.debug("Switching to theme:", $theme);
     }
+
 
 </script>
 

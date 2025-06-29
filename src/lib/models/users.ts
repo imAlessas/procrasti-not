@@ -6,7 +6,8 @@ const usersSchema = new mongoose.Schema({
     logtoId: String,
     username: String,
     email: String,
-    created: Number
+    created: Number,
+    theme: String,
 });
 
 export const Users = mongoose.models.Users || mongoose.model('Users', usersSchema);

@@ -6,6 +6,7 @@ export interface DatabaseUser {
   username: string;
   email: string;
   created: number;
+  theme: string;
 }
 
 export interface DatabaseTodo {

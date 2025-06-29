@@ -1,6 +1,6 @@
 // src/routes/api/users/[id].ts
 import type { RequestHandler } from '@sveltejs/kit';
-import { createUser, findUserByLogtoId } from '$lib/database/query';
+import { createUser, findUserByLogtoId, updateTheme } from '$lib/database/query';
 import { ObjectId } from 'mongodb';
 import type { DatabaseUser } from '$lib/database/interfaces';
 
@@ -28,10 +28,25 @@ export const POST: RequestHandler = async ({ request }) => {
         username:   data.newUser?.username, 
         email:      data.newUser?.email, 
         created:    data.newUser.created_at,
+        theme:      'dark', 
     }
      
     await createUser(newUser);
 
     return new Response(JSON.stringify(newUser), { status: 200 });
+
+};
+
+export const PUT: RequestHandler = async ({ params, request}) => {
+    if (!params.id)
+        return new Response(JSON.stringify({ error: 'Property [id] is mandatory.' }), { status: 200 });
+ 
+    const theme = (await request.json()).theme;
+
+    const result = await updateTheme(new ObjectId(params.id), theme);
+
+    console.log(result);
+    
+    return new Response(JSON.stringify(result), { status: 200 });
 
 };

@@ -1,31 +1,13 @@
 <script lang='ts'>
+    import type { DatabaseTodo } from "$lib/database/interfaces";
 
-    import type { TodoListType } from "$lib";
 
     import TodoItem from "./TodoItem.svelte";
     
-    export let todo_list:TodoListType;
-    export let updateTodoList: (list : TodoListType) => void;
+    export let todoList:DatabaseTodo[];
+    export let updateTodoList: (list : DatabaseTodo[]) => void;
 
 </script>
-
-
-
-
-
-<ul class="todo-list">
-    {#each todo_list as todo}
-        <TodoItem
-            {updateTodoList}
-            {todo_list}
-            {todo}
-        />
-    {/each}
-</ul>
-        
-        
-
-
 
 <style>
     .todo-list {
@@ -33,4 +15,16 @@
         padding: 0;
     }
 </style>
+
+
+
+<ul class="todo-list">
+    {#each todoList as todo}
+        <TodoItem
+            {updateTodoList}
+            {todoList}
+            {todo}
+        />
+    {/each}
+</ul>
         

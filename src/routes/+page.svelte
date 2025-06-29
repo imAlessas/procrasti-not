@@ -5,69 +5,14 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
-    import type { UserInfoResponse } from '@logto/sveltekit';
-    import { ICONS, LOGGED_USER_SESSION } from '$lib/utils/const.js';
-    import type { DatabaseUser } from '$lib/database/interfaces.js';
+    import { ICONS } from '$lib/utils/const.js';
     import IconButton from '../components/generics/IconButton.svelte';
 
     export let data;
 
-
-    // Queries the MongDB to find a user with userId
-    // Returns true or false based on the result
-    async function findUser(logtoId:string) : Promise<boolean> {
-        
-        const response = await fetch(`/api/users/${logtoId}`, {method: 'GET'});
-        const json = await response.json();
-
-        if (json.error) {
-            console.debug(json.error);
-            return false;
-        }
-
-        const user : DatabaseUser = json;
-        console.debug('User found!');
-
-        // Save user to store
-        sessionStorage.setItem(LOGGED_USER_SESSION, JSON.stringify(user));
-
-        goto('/list');
-        return true;
-
-    }
-
-
-    // Creates a new user, based on the Logto information
-    async function addUser(newUser:UserInfoResponse) : Promise<void> {
-        
-        const response = await fetch(`/api/users/${newUser.sub}`, {
-            method: 'POST',
-            body:JSON.stringify({newUser})
-        });
-        const user : DatabaseUser = await response.json();
-        console.debug(`User created!`);
-
-        // Save user to store
-        sessionStorage.setItem(LOGGED_USER_SESSION, JSON.stringify(user));
-        
-        goto('/list'); 
-
-    }
-
     onMount( async () => {
-
-        // Retrieve Logto information
-        const authUser = data?.authUser;
-        if (!authUser)
-            return;
-    
-        // User found, return
-        if (await findUser(authUser.sub))
-            return;
-        
-        // No user? Create one
-        addUser(authUser);
-
+        if(data.loggedUser)
+            goto("/list")
     });
 
 </script>

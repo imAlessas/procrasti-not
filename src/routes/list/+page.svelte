@@ -18,6 +18,9 @@
     import SecondaryButton from '../../components/generics/SecondaryButton.svelte';
     import Icon from '../../components/generics/Icon.svelte';
     import IconButton from '../../components/generics/IconButton.svelte';
+    import { goto } from '$app/navigation';
+
+    export let data;
 
     
     let todoList: DatabaseTodo[] = [];
@@ -76,12 +79,13 @@
     onMount(async () => {
         try {
 
-            const userJson = sessionStorage.getItem(LOGGED_USER_SESSION);
-            if (!userJson)
+            const user : DatabaseUser | undefined = data.loggedUser;
+            if (!user) {
+                goto("/");
                 return;
-            
+            }
 
-            loggedUser = JSON.parse(userJson);
+            loggedUser = user;
             
             todoList = sortTodoList(await retrieveTodos(loggedUser._id));
 

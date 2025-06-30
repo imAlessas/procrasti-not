@@ -45,8 +45,6 @@ export const PUT: RequestHandler = async ({ params, request}) => {
 
     const result = await updateTheme(new ObjectId(params.id), theme);
 
-    console.log(result);
-    
     return new Response(JSON.stringify(result), { status: 200 });
 
 };

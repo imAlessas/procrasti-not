@@ -26,8 +26,6 @@ export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | nu
 export const createUser = async (newUser : DatabaseUser) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
-    console.log(newUser);
-    
 
     return await Users.create(newUser);
 

@@ -1,7 +1,3 @@
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style>
-
 <script lang="ts">
     import type { DatabaseTodo, DatabaseUser } from "$lib/database/interfaces";
     import { insertTodo, getRandomTodo } from "$lib/utils/todo";

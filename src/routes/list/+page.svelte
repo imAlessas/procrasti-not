@@ -1,7 +1,3 @@
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style> 
-
 <script lang="ts">
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';

@@ -1,7 +1,3 @@
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style>
-
 <script lang='ts'>
     import type { DatabaseTodo } from '$lib/database/interfaces';
     import { ICONS } from '$lib/utils/const';

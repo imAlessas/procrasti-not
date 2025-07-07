@@ -9,6 +9,15 @@
     const currentTheme: string = loggedUser?.theme ?? retrieveSystemTheme();
 </script>
 
-<ThemeRotator {loggedUser} {currentTheme} />
 
-<slot />
+
+<main>
+    <ThemeRotator {loggedUser} {currentTheme} />
+    <slot />
+</main>
+
+
+
+<style lang="scss">
+   @use '$lib/styles/style.scss' as *;
+</style> 

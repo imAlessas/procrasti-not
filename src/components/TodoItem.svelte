@@ -50,8 +50,6 @@
 
 
 
-
-
 <li class="todo-item {todo.isDone ? 'completed' : ''}">
     <div class="check-todo">
         <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon={ICONS["check"]}/>
@@ -60,3 +58,38 @@
 
     <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon={ICONS["bin"]}/>
 </li>
+
+
+
+<style lang="scss">
+    .todo-item {
+
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        gap: 10px;
+
+        .check-todo {
+            background-color: var(--bkg-todo-item);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .todo-text {
+            text-align: justify;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        &.completed .todo-text {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+    }
+</style>

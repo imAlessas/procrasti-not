@@ -14,6 +14,16 @@
 </script>
 
 
+
 <form method="POST" action="?/signIn" class="signin-form">
     <IconButton icon={ICONS["in"]} text="Sign in"/>
 </form>
+
+
+
+<style lang="scss">
+    .signin-form {
+        margin: auto;
+    }
+</style>
+    

@@ -9,13 +9,6 @@
 
 </script>
 
-<style>
-    .todo-list {
-        list-style-type: none;
-        padding: 0;
-    }
-</style>
-
 
 
 <ul class="todo-list">
@@ -27,4 +20,12 @@
         />
     {/each}
 </ul>
-        
+   
+
+
+<style lang="scss">
+    .todo-list {
+        list-style-type: none;
+        padding: 0;
+    }
+</style>

@@ -95,7 +95,6 @@
 
 
 
-
 <div class="app-container">
 
     <form method="POST" action="?/signOut" class="signout-form">
@@ -139,3 +138,51 @@
 
     </div>
 </div>
+
+
+
+<style lang="scss">
+
+    .signout-form {
+        position: absolute;
+        top: 30px;
+        right: 50px;
+    }
+
+    .todo-container {
+        background-color: var(--bkg-todo-list);
+        border-radius: 10px;
+        box-shadow: var(--container-box-shadow);
+        width: 400px;
+        padding: 20px;
+        animation: fadeIn 1s ease-in-out;
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            
+            h1 {
+                margin: 0;
+                font-size: 24px;
+                color: var(--text-color);
+            }
+            
+            .button-container {
+                display: flex;
+                gap: 10px;
+            }
+            
+        }
+        
+        .nothing-todo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 15px;
+            font-size: 18px;
+        }
+        
+    }
+</style>

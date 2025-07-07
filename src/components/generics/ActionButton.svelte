@@ -8,6 +8,57 @@
 </script>
 
 
+
 <button class="action-button {type} non-selectable " onclick={onClick}>
     <Icon {icon} />
 </button>
+
+
+
+<style class="scss">
+    .action-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        box-shadow: var(--btn-box-shadow);
+        transition: transform 0.2s ease;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        flex-shrink: 0;
+
+        &:hover {
+            transform: scale(105%);
+        }
+
+        &:active {
+            transform: scale(95%);
+            box-shadow: var(--btn-active-box-shadow);
+        }
+
+        &.complete {
+            border-radius: 100%;
+
+            &:hover {
+                background: var(--btn-complete-gradient);
+            }
+        }
+
+        &.delete {
+            border-radius: 10px;
+
+            &:hover {
+                background: var(--btn-delete-gradient);
+            }
+        }
+
+        /* Icon alignment fix */
+        svg {
+            display: block;
+        }
+    }
+</style>

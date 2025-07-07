@@ -12,8 +12,6 @@
 
 
 
-// - - - - - - - - - - - - - - - - GLOBAL - - - - - - - - - - - - - - - - 
-
 :global(body) {
     background: var(--bkg-gradient);
     font-family: var(--font-family);
@@ -27,6 +25,10 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+
+    @media (max-width: 450px) {
+        animation: none;
+    }
 
     @keyframes waveAnimation {
         0% { background-position: 0% 50%; }
@@ -55,5 +57,16 @@
         stroke: currentColor;
         stroke-width: 1;
     }
-
 }
+
+.action-button {
+    svg {
+        display: block;
+    }
+}
+
+
+
+
+
+

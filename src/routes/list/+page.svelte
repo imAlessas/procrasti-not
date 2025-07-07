@@ -143,46 +143,59 @@
 
 <style lang="scss">
 
-    .signout-form {
-        position: absolute;
-        top: 30px;
-        right: 50px;
-    }
+    .app-container {
+        display: flex;
+        place-content: center;
+        align-items: center; // This centers children horizontally
+        min-height: 100vh;
+        width: 100%;
 
-    .todo-container {
-        background-color: var(--bkg-todo-list);
-        border-radius: 10px;
-        box-shadow: var(--container-box-shadow);
-        width: 400px;
-        padding: 20px;
-        animation: fadeIn 1s ease-in-out;
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+
+        .signout-form {
+            position: absolute;
+            top: 2.5%;
+            right: 2%;
+        }
+
+        .todo-container {
+            background-color: var(--bkg-todo-list);
+            border-radius: 10px;
+            box-shadow: var(--container-box-shadow);
+            width: 400px;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
             
-            h1 {
-                margin: 0;
-                font-size: 24px;
-                color: var(--text-color);
+            @media (max-width: 450px) {
+                width: 80%;
             }
-            
-            .button-container {
+
+            .header {
                 display: flex;
-                gap: 10px;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                
+                h1 {
+                    margin: 0;
+                    font-size: 24px;
+                    color: var(--text-color);
+                }
+                
+                .button-container {
+                    display: flex;
+                    gap: 10px;
+                }
+                
             }
             
+            .nothing-todo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding-top: 15px;
+                font-size: 18px;
+            }
+
         }
-        
-        .nothing-todo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 15px;
-            font-size: 18px;
-        }
-        
     }
 </style>

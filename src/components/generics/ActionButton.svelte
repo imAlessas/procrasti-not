@@ -56,9 +56,5 @@
             }
         }
 
-        /* Icon alignment fix */
-        svg {
-            display: block;
-        }
     }
 </style>

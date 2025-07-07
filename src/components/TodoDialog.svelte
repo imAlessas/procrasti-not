@@ -60,15 +60,17 @@
 <div class="dialog">
     <div class="dialog-content">
 
-        <div class="close">
-            <ActionButton icon={ICONS["close"]} onClick={() => showDialog(false)} type="delete"/>
+        <div class="header">
+            <h2>Add your todo</h2>
+            
+            <div class="close">
+                <ActionButton icon={ICONS["close"]} onClick={() => showDialog(false)} type="delete"/>
+            </div>
         </div>
-
-        <h2>Add your todo</h2>
 
         <textarea placeholder={randomPlaceholder} id="textarea-todo" bind:this={textAreaElement}></textarea>
 
-        <div style="width:100%; text-align:right; bottom: 1%">
+        <div class="add-button">
             <IconButton onClick={() => add()} text="Add" icon={ICONS["add"]}/>
         </div>
 
@@ -89,45 +91,24 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        justify-content: center;
 
         .dialog-content {
-            background-color: var(--bkg-base);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 50vh;
+            max-width: 400px;
+            width: 90%;
             margin: 10% auto;
-            padding: 20px;
-            padding-bottom: 3px;
+            padding: 20px 16px 16px 16px;
             border-radius: 15px;
-            width: 50%;
-            height: 50%;
+            background-color: var(--bkg-base);
             box-shadow: var(--container-box-shadow);
             animation: fadeIn 0.5s ease-in-out;
 
-            .close {
-                float: right;
-            }
-
-            h2 {
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-
-            textarea {
-                color: var(--text-color);
-                width: calc(100% - 20px);
-                background-color: var(--bkg-base);
-                font-family: var(--font-family);
-                font-size: var(--font-size);
-                border: 0px;
-                resize: none;
-                height: 60%;
-                margin-top: 10px;
-                padding: 10px;
-                border-radius: 10px;
-                transition: border-color 0.3s ease;
-            }
-
-            textarea:focus {
-                outline: none;
+            @media (max-width: 670px) {
+                width: 80%;
+                height: 50%;
             }
 
             @keyframes fadeIn {
@@ -137,6 +118,48 @@
                 to {
                     opacity: 1;
                 }
+            }
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                
+                .close {
+                    float: right;
+                }
+                
+                h2 {
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                }
+            }
+
+            textarea {
+                flex-grow: 1;
+                flex-shrink: 1;
+                min-height: 0;
+                width: calc(100% - 25px);
+                resize: none;
+                padding: 10px;
+                border-radius: 10px;
+                border: none;
+                font-family: var(--font-family);
+                font-size: var(--font-size);
+                color: var(--text-color);
+                background-color: var(--bkg-base);
+                transition: border-color 0.3s ease;
+                overflow-y: auto;
+            }
+
+            textarea:focus {
+                outline: none;
+            }
+
+            .add-button {
+                margin-top: 12px;
+                align-self: flex-end;      
             }
         }
     }

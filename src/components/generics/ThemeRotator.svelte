@@ -54,6 +54,17 @@
 </script>
 
 
-<div style="position: absolute; top:30px; left: 50px">
+
+<div class="theme-button">
     <IconButton icon={THEMES_MAP[$theme]} onClick={rotateTheme}/>
 </div>
+
+
+
+<style lang="scss">
+    .theme-button {
+        position: absolute;
+        top:2.5%;
+        left: 2%;
+    }
+</style>

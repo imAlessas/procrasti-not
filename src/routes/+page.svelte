@@ -16,7 +16,7 @@
 
 
 <form method="POST" action="?/signIn" class="signin-form">
-    <IconButton icon={ICONS["in"]} text="Sign in"/>
+    <IconButton icon={ICONS.in} text="Sign in"/>
 </form>
 
 

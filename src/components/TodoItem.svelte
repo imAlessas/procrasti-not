@@ -52,11 +52,11 @@
 
 <li class="todo-item {todo.isDone ? 'completed' : ''}">
     <div class="check-todo">
-        <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon={ICONS["check"]}/>
+        <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon={ICONS.check}/>
         <span class="todo-text"> {todo.text} </span>
     </div>
 
-    <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon={ICONS["bin"]}/>
+    <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon={ICONS.bin}/>
 </li>
 
 

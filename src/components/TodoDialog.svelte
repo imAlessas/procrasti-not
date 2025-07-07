@@ -64,14 +64,14 @@
             <h2>Add your todo</h2>
             
             <div class="close">
-                <ActionButton icon={ICONS["close"]} onClick={() => showDialog(false)} type="delete"/>
+                <ActionButton icon={ICONS.close} onClick={() => showDialog(false)} type="delete"/>
             </div>
         </div>
 
         <textarea placeholder={randomPlaceholder} id="textarea-todo" bind:this={textAreaElement}></textarea>
 
         <div class="add-button">
-            <IconButton onClick={() => add()} text="Add" icon={ICONS["add"]}/>
+            <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
         </div>
 
     </div>

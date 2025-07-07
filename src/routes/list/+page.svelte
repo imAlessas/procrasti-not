@@ -98,7 +98,7 @@
 <div class="app-container">
 
     <form method="POST" action="?/signOut" class="signout-form">
-        <IconButton icon={ICONS["out"]} text="Sign out"/>
+        <IconButton icon={ICONS.out} text="Sign out"/>
     </form>
 
     <div class="todo-container" in:fade={{ duration: 1000 }}>
@@ -108,11 +108,11 @@
             
             <div class="button-container">
                 <SecondaryButton onClick={() => insertRandomTodo()}>
-                    <Icon icon={ICONS["dice"]}/>
+                    <Icon icon={ICONS.dice}/>
                 </SecondaryButton>
 
                 <PrimaryButton onClick={ () => showDialog(true)}>
-                    <Icon icon={ICONS["add"]}/>
+                    <Icon icon={ICONS.add}/>
                 </PrimaryButton>
             </div>
             

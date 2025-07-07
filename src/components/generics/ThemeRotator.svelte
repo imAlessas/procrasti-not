@@ -11,10 +11,10 @@
 
 
     const THEMES_MAP: Record<string, string> = {
-        "light" : ICONS["sun"],
-        "alpine" : ICONS["mountain"],
-        "dark" : ICONS["moon"],
-        "cyberpunk" : ICONS["city"],
+        "light" : ICONS.sun,
+        "alpine" : ICONS.mountain,
+        "dark" : ICONS.moon,
+        "cyberpunk" : ICONS.city,
     }
 
     const THEMES: string[] = Object.keys(THEMES_MAP);

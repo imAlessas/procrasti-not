@@ -27,7 +27,7 @@
     height: 100vh;
 
     @media (max-width: 450px) {
-        animation: none;
+        background-size: 200% 200%;
     }
 
     @keyframes waveAnimation {

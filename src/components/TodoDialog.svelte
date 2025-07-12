@@ -5,6 +5,7 @@
     import ActionButton from "./generics/ActionButton.svelte";
     import IconButton from "./generics/IconButton.svelte";
     import { ICONS } from "$lib/utils/const";
+    import LoadingAnimation from "./generics/LoadingAnimation.svelte";
 
 
     export let loggedUser: DatabaseUser;
@@ -14,25 +15,49 @@
 
     let randomPlaceholder: string = "";
     let textAreaElement: HTMLTextAreaElement;
+    let thinking = false;
 
     function getTextAreaValue() : string | undefined {
         let textareaElement = document.getElementById("textarea-todo") as HTMLTextAreaElement;
-
-        if (!textareaElement || textareaElement.value === "") {
-            showDialog(false);
-            return undefined;
-        }
-
         return textareaElement.value;
     }
 
+    function setTextAreaValue(text : string) : void {
+        let textareaElement = document.getElementById("textarea-todo") as HTMLTextAreaElement;
+        textareaElement.value = text
+    }
+
+
+    async function generate() : Promise<void> {
+
+        thinking = true;
+
+        const response = await fetch(`/api/gemini`, {
+            method: 'POST',
+            body:JSON.stringify({
+                text: getTextAreaValue()
+            })
+        })
+
+        const enhanced = (await response.json()).enhanced;
+        if (!enhanced)
+            return;
+
+        thinking = false;
+        
+        setTextAreaValue(enhanced);
+        textAreaElement.focus();
+
+    }
 
 
     
     async function add() : Promise<void> {
         let text = getTextAreaValue();
-        if (text === undefined)
+        if (text === undefined || text === '') {
+            showDialog(false);
             return;
+        }
     
         const response = await fetch(`/api/todos/1`, {
             method: 'POST',
@@ -42,9 +67,7 @@
             })
         });
 
-        updateTodoList(
-            insertTodo( todoList, await response.json())
-        );
+        updateTodoList( insertTodo( todoList, await response.json()) );
         showDialog(false);
     }
 
@@ -60,6 +83,12 @@
 <div class="dialog">
     <div class="dialog-content">
 
+        {#if thinking}
+            <div class="loading">
+                <LoadingAnimation />
+            </div>
+        {/if}
+
         <div class="header">
             <h2>Add your todo</h2>
             
@@ -68,12 +97,14 @@
             </div>
         </div>
 
-        <textarea placeholder={randomPlaceholder} id="textarea-todo" bind:this={textAreaElement}></textarea>
-
-        <div class="add-button">
+        <textarea placeholder={randomPlaceholder} id="textarea-todo" class={thinking ? "blur" : ""} bind:this={textAreaElement}></textarea>
+ 
+        <div class="footer">
+            <ActionButton type="ai" onClick={() => generate()} icon={ICONS.sparkle}/>
             <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
         </div>
 
+            
     </div>
 </div>
 
@@ -120,6 +151,26 @@
                 }
             }
 
+            .loading {
+                position: absolute;
+                top: 45%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                
+                @media (max-width: 800px) {
+                    top: 40%;
+                }
+
+                @media (max-width: 450px) {
+                    top: 35%;
+                }
+
+            }
+
             .header {
                 display: flex;
                 justify-content: space-between;
@@ -151,16 +202,20 @@
                 background-color: var(--bkg-base);
                 transition: border-color 0.3s ease;
                 overflow-y: auto;
+
+                &:focus {
+                    outline: none;
+                }
             }
 
-            textarea:focus {
-                outline: none;
-            }
-
-            .add-button {
+            .footer {
+                display: flex;
                 margin-top: 12px;
-                align-self: flex-end;      
+                justify-content: space-between;
+
             }
+
+
         }
     }
 </style>

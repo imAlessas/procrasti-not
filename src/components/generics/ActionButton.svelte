@@ -3,7 +3,7 @@
     
     export let icon;
     export let onClick: () => any = () => {};
-    export let type : "complete" | "delete";
+    export let type : "complete" | "delete" | "ai";
 
 </script>
 
@@ -53,6 +53,14 @@
 
             &:hover {
                 background: var(--btn-delete-gradient);
+            }
+        }
+
+        &.ai {
+            border-radius: 100%;
+
+            &:hover {
+                background: var(--btn-ai-gradient);
             }
         }
 

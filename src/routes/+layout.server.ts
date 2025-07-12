@@ -5,7 +5,6 @@ import type { LayoutServerLoad } from './$types';
 
 // Server load function to provide the logged-in user data to all pages
 export const load: LayoutServerLoad = async ({ locals, fetch }) => {
-
     return {
         loggedUser: await findOrCreateUser(fetch, locals.user)
     };

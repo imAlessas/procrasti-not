@@ -2,11 +2,12 @@
 export const RANDOM_TODO_URL: string = 'https://dummyjson.com/todos/random/1';
 
 export const ICONS: Record<string, string> = {
-    add : "tabler:square-rounded-plus",
-    close : "tabler:square-rounded-x",
+    add : "mingcute:add-fill",
+    close : "mingcute:close-fill",
     dice : "tabler:dice-5",
-    check : "tabler:check",
+    check : "mingcute:check-fill",
     bin : "tabler:trash",
+    sparkle : "mingcute:sparkles-fill",
     in : "tabler:door-enter",
     out : "tabler:door-exit",
 

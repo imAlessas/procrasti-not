@@ -17,22 +17,44 @@
 
     function getTextAreaValue() : string | undefined {
         let textareaElement = document.getElementById("textarea-todo") as HTMLTextAreaElement;
-
-        if (!textareaElement || textareaElement.value === "") {
-            showDialog(false);
-            return undefined;
-        }
-
         return textareaElement.value;
     }
 
+    function setTextAreaValue(text : string) : void {
+        let textareaElement = document.getElementById("textarea-todo") as HTMLTextAreaElement;
+        textareaElement.value = text
+    }
+
+
+    async function generate() : Promise<void> {
+
+        const response = await fetch(`/api/gemini`, {
+            method: 'POST',
+            body:JSON.stringify({
+                text: getTextAreaValue()
+            })
+        })
+
+        const enhanced = (await response.json()).enhanced;
+        if (!enhanced)
+            return;
+
+        setTextAreaValue(enhanced);
+
+        
+
+        textAreaElement.focus();
+
+    }
 
 
     
     async function add() : Promise<void> {
         let text = getTextAreaValue();
-        if (text === undefined)
+        if (text === undefined || text === '') {
+            showDialog(false);
             return;
+        }
     
         const response = await fetch(`/api/todos/1`, {
             method: 'POST',
@@ -42,9 +64,7 @@
             })
         });
 
-        updateTodoList(
-            insertTodo( todoList, await response.json())
-        );
+        updateTodoList( insertTodo( todoList, await response.json()) );
         showDialog(false);
     }
 
@@ -70,10 +90,12 @@
 
         <textarea placeholder={randomPlaceholder} id="textarea-todo" bind:this={textAreaElement}></textarea>
 
-        <div class="add-button">
+        <div class="footer">
+            <ActionButton type="ai" onClick={() => generate()} icon={ICONS.sparkle}/>
             <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
         </div>
 
+            
     </div>
 </div>
 
@@ -151,16 +173,20 @@
                 background-color: var(--bkg-base);
                 transition: border-color 0.3s ease;
                 overflow-y: auto;
+                
+                &:focus {
+                    outline: none;
+                }
             }
 
-            textarea:focus {
-                outline: none;
-            }
-
-            .add-button {
+            .footer {
+                display: flex;
                 margin-top: 12px;
-                align-self: flex-end;      
+                justify-content: space-between;
+
             }
+
+
         }
     }
 </style>

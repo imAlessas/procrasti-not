@@ -44,7 +44,6 @@
             })
         });
 
-
         todoList = insertTodo(todoList, await response.json())
         updateTodoList(todoList);
     }
@@ -119,21 +118,14 @@
         </div>
 
         {#if todoList.length >0}
-            <TodoList
-                todoList={todoList}
-                {updateTodoList}
-            />
+            <TodoList {todoList} {updateTodoList} />
         {:else}
             <div class="nothing-todo non-selectable" in:fade={{ delay: 500 }}> Nothing to do! </div>    
         {/if}
 
+        
         {#if addTodoClicked}
-            <TodoForm
-                {loggedUser}
-                {todoList}
-                {showDialog}
-                {updateTodoList}
-            />
+            <TodoForm {loggedUser} {todoList} {showDialog} {updateTodoList} />
         {/if}
 
     </div>
@@ -146,7 +138,7 @@
     .app-container {
         display: flex;
         place-content: center;
-        align-items: center; // This centers children horizontally
+        align-items: center;
         min-height: 100vh;
         width: 100%;
 

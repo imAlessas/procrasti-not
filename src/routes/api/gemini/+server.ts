@@ -7,7 +7,7 @@ const ai = new GoogleGenAI({apiKey: env.GEMINI_API_KEY});
 
 
 
-export const GET: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 
     const text:string = (await request.json()).text;
 
@@ -19,8 +19,12 @@ export const GET: RequestHandler = async ({ request }) => {
         contents: `${env.GEMINI_LEADING_PROMPT}${text}${env.GEMINI_TRAILING_PROMPT}`
     });
 
+    if (!response.candidates || !response.candidates[0].content?.parts)
+        return new Response(JSON.stringify({enhanced: text}), { status: 200 });
 
 
-    return new Response(JSON.stringify({}), { status: 200 });
+    return new Response(JSON.stringify({
+        enhanced: response.candidates[0].content?.parts[0].text
+    }), { status: 200 });
 
 };

@@ -5,6 +5,7 @@
     import ActionButton from "./generics/ActionButton.svelte";
     import IconButton from "./generics/IconButton.svelte";
     import { ICONS } from "$lib/utils/const";
+    import LoadingAnimation from "./generics/LoadingAnimation.svelte";
 
 
     export let loggedUser: DatabaseUser;
@@ -14,6 +15,7 @@
 
     let randomPlaceholder: string = "";
     let textAreaElement: HTMLTextAreaElement;
+    let thinking = false;
 
     function getTextAreaValue() : string | undefined {
         let textareaElement = document.getElementById("textarea-todo") as HTMLTextAreaElement;
@@ -28,6 +30,8 @@
 
     async function generate() : Promise<void> {
 
+        thinking = true;
+
         const response = await fetch(`/api/gemini`, {
             method: 'POST',
             body:JSON.stringify({
@@ -39,10 +43,9 @@
         if (!enhanced)
             return;
 
-        setTextAreaValue(enhanced);
-
+        thinking = false;
         
-
+        setTextAreaValue(enhanced);
         textAreaElement.focus();
 
     }
@@ -80,6 +83,12 @@
 <div class="dialog">
     <div class="dialog-content">
 
+        {#if thinking}
+            <div class="loading">
+                <LoadingAnimation />
+            </div>
+        {/if}
+
         <div class="header">
             <h2>Add your todo</h2>
             
@@ -88,8 +97,8 @@
             </div>
         </div>
 
-        <textarea placeholder={randomPlaceholder} id="textarea-todo" bind:this={textAreaElement}></textarea>
-
+        <textarea placeholder={randomPlaceholder} id="textarea-todo" class={thinking ? "blur" : ""} bind:this={textAreaElement}></textarea>
+ 
         <div class="footer">
             <ActionButton type="ai" onClick={() => generate()} icon={ICONS.sparkle}/>
             <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
@@ -142,6 +151,26 @@
                 }
             }
 
+            .loading {
+                position: absolute;
+                top: 45%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1;
+                
+                @media (max-width: 800px) {
+                    top: 40%;
+                }
+
+                @media (max-width: 450px) {
+                    top: 35%;
+                }
+
+            }
+
             .header {
                 display: flex;
                 justify-content: space-between;
@@ -173,7 +202,7 @@
                 background-color: var(--bkg-base);
                 transition: border-color 0.3s ease;
                 overflow-y: auto;
-                
+
                 &:focus {
                     outline: none;
                 }

@@ -18,6 +18,7 @@ $btn-active-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 // Action buttons
 $btn-red: rgba(218, 0, 0, 0.5);
 $btn-green: rgba(0, 202, 74, 0.5);
+$btn-blue: rgba(0, 145, 202, 0.5);
 
 // List
 $bkg-todo-list: rgba(109, 129, 150, 0.10); 
@@ -40,6 +41,7 @@ $bkg-todo-item: rgba(10, 95, 56, 0.06);
     --bkg-gradient: linear-gradient(135deg, #{$bkg-first}, #{$bkg-base}, #{$bkg-second});
     --btn-gradient: linear-gradient(135deg, #{$btn-first}, #{$btn-second});
     --btn-hover-gradient: linear-gradient(135deg, #{$btn-hover-first}, #{$btn-hover-second});
+    --btn-ai-gradient: linear-gradient(315deg, #{$btn-blue}, #{$bkg-base});
     --btn-delete-gradient: linear-gradient(315deg, #{$btn-red}, #{$bkg-base});
     --btn-complete-gradient: linear-gradient(315deg, #{$btn-green}, #{$bkg-base});
 

@@ -2,7 +2,6 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { sortTodoList, insertTodo, getRandomTodo} from "$lib/utils/todo";
-    import { saveJson } from '$lib/utils/storage';
 
     // Components
     import TodoList from '../../components/TodoList.svelte';
@@ -28,7 +27,6 @@
 
     function updateTodoList(new_list : DatabaseTodo[]) : void {
         todoList = sortTodoList(new_list);
-        saveJson(todoList);
     }
 
 

@@ -1,4 +1,4 @@
-import { retrieveSystemTheme } from '$lib/utils/const';
-import { writable } from 'svelte/store';
+import { retrieveTheme, Theme } from '$lib/utils/theme';
+import { writable, type Writable } from 'svelte/store';
 
-export const theme : any = writable( retrieveSystemTheme() );
+export const theme : Writable<Theme> = writable( retrieveTheme() );

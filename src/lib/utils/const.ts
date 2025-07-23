@@ -18,4 +18,4 @@ export const ICONS: Record<string, string> = {
     mountain: "tabler:mountain",
 };
 
-export const THEME_COOKIE = "theme";
+export const THEME_COOKIE = "procrastinot-theme";

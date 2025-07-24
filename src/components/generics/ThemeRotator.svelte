@@ -5,21 +5,22 @@
     import IconButton from './IconButton.svelte';
     import { ICONS } from '$lib/utils/const';
     import type { DatabaseUser } from '$lib/database/interfaces';
+    import { Theme, updateThemeCookie } from '$lib/utils/theme';
 
     export let loggedUser: DatabaseUser | undefined;
     export let currentTheme: string;
 
 
-    const THEMES_MAP: Record<string, string> = {
-        "light" : ICONS.sun,
-        "alpine" : ICONS.mountain,
-        "dark" : ICONS.moon,
-        "cyberpunk" : ICONS.city,
+    const THEMES_MAP: Record<Theme, string> = {
+        [Theme.light] : ICONS.sun,
+        [Theme.alpine] : ICONS.mountain,
+        [Theme.dark] : ICONS.moon,
+        [Theme.cyberpunk] : ICONS.city,
     }
 
     const THEMES: string[] = Object.keys(THEMES_MAP);
 
-    $: theme.set(currentTheme);
+    $: theme.set(currentTheme as Theme);
     let index = THEMES.indexOf($theme);
 
     onMount(() => {
@@ -32,8 +33,10 @@
     async function rotateTheme() {
         index = (index + 1) % THEMES.length;
         const newTheme = THEMES[index];
-        theme.set(newTheme);
+        theme.set(newTheme as Theme);
         refreshTheme();
+
+        updateThemeCookie(newTheme);
 
         if (loggedUser)
             await fetch(`/api/users/${loggedUser._id}`, {
@@ -47,6 +50,9 @@
     function refreshTheme() {
         document.body.classList.remove(...THEMES);
         document.body.classList.add($theme);
+        
+        updateThemeCookie($theme);
+
         console.debug("Switching to theme:", $theme);
     }
 

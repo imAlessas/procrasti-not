@@ -26,7 +26,6 @@ export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | nu
 export const createUser = async (newUser : DatabaseUser) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
-
     return await Users.create(newUser);
 
 };
@@ -41,7 +40,6 @@ export const updateTheme = async (userId : ObjectId, theme : string) : Promise<B
         }}
     );
     
-
     return response.matchedCount == 1 && response.modifiedCount == 1;
 
 };
@@ -51,7 +49,7 @@ export const updateTheme = async (userId : ObjectId, theme : string) : Promise<B
 export const findTodos = async (_idUser : ObjectId) : Promise<DatabaseTodo[] | null> => {
     await connectToMongoDB();
 
-    const constraints = { _idUser: _idUser  }
+    const constraints = { _idUser: _idUser, deleted: null  }
     const todos = await Todos.find(constraints).lean<DatabaseTodo[] | null>();
 
     return todos ?? null
@@ -60,6 +58,8 @@ export const findTodos = async (_idUser : ObjectId) : Promise<DatabaseTodo[] | n
 
 export const createTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo> => {
     await connectToMongoDB();
+
+    console.log(newTodo);
 
     return await Todos.create(newTodo);
 
@@ -98,8 +98,13 @@ export const uncompleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
 export const deleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
     await connectToMongoDB();
 
-    const result = await Todos.deleteOne({_id: todoId});
+    const response : UpdateResult = await Todos.updateOne(
+        {  _id: todoId  },
+        { $set : {
+            deleted: Date.now()
+        }}
+    );
 
-    return result.deletedCount == 1;
+    return response.matchedCount == 1 && response.modifiedCount == 1;
 
 };

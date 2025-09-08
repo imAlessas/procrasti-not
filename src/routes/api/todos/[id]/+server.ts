@@ -26,9 +26,10 @@ export const POST: RequestHandler = async ({ request }) => {
         _id:        new ObjectId(),
         _idUser:    data._idUser,
         text:       data.text,
-        created:    Date.now(),
         isDone:     false,
-        completed:  null
+        created:    Date.now(),
+        completed:  null,
+        deleted:    null,
     }
 
     const todo = await createTodo(newTodo);
@@ -45,8 +46,8 @@ export const PUT: RequestHandler = async ({ params, request}) => {
 
     const result = await (
         complete 
-        ? completeTodo(new ObjectId(params.id)) 
-        : uncompleteTodo(new ObjectId(params.id))
+            ? completeTodo(new ObjectId(params.id)) 
+            : uncompleteTodo(new ObjectId(params.id))
     );
 
     return new Response(JSON.stringify(result), { status: 200 });

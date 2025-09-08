@@ -40,11 +40,11 @@
         })
 
         const enhanced = (await response.json()).enhanced;
+        thinking = false;
+        
         if (!enhanced)
             return;
 
-        thinking = false;
-        
         setTextAreaValue(enhanced);
         textAreaElement.focus();
 

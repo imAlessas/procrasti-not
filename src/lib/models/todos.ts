@@ -5,11 +5,10 @@ const todosSchema = new mongoose.Schema({
     _id: ObjectId,
     _idUser: ObjectId,     // External key
     text: String,
-    created: Number,
     isDone: Boolean,
+    created: Number,
     completed: Number,
-    
+    deleted: Number,
 });
 
 export const Todos = mongoose.models.Todos || mongoose.model('Todos', todosSchema);
-

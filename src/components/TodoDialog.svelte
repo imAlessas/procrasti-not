@@ -239,9 +239,17 @@
                 transition: border-color 0.3s ease;
                 overflow-y: auto;
 
+                &.blur {
+                    filter: blur(4px);
+                    pointer-events: none;
+                    user-select: none;
+                    transition: filter 0.3s ease;
+                }
+
                 &:focus {
                     outline: none;
                 }
+
             }
 
             .footer {

@@ -64,15 +64,13 @@
 
 
 <li class="todo-item {todo.isDone ? 'completed' : ''}"  >
-    <div class="check-todo">
-        <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon={ICONS.check}/>
-            
-        <button onclick={ () => todoClicked() }>
+    <button onclick={ () => todoClicked() }>
+        <div class="check-todo">
+            <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon={ICONS.check}/>
             <div class="todo-text"> {todo.text} </div>
-        </button>
-
-    </div>
-
+        </div>
+    </button>
+        
     <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon={ICONS.bin}/>
 
 </li>
@@ -94,27 +92,36 @@
             color: #999;
         }
 
-        .check-todo {
+        button {
+            all: unset;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 10px;
             background-color: var(--bkg-todo-item);
+            transition: background-color 0.5s ease;
+            
+            &:hover {
+                background-color: var(--bkg-todo-list);
+            }
+            
+        }
+        
+        
+        .check-todo {
             border-radius: 10px;
             padding: 10px;
             display: flex;
             align-items: center;
-            width: 100%;
-
-            button {
-                all: unset;
-                cursor: pointer;
-
-                .todo-text {
-                    text-align: justify;
-                    padding-left: 15px;
-                    padding-right: 15px;
-                }
-                
-            }
-
         }
+
+
+
+        .todo-text {
+            text-align: justify;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
 
     }
 </style>

@@ -9,7 +9,7 @@
 
 
 
-<button class="action-button {type} non-selectable " onclick={onClick}>
+<button class="action-button {type} non-selectable " on:click|stopPropagation={onClick}>
     <Icon {icon} />
 </button>
 

@@ -4,8 +4,8 @@ import { MONGO_URL } from '$env/static/private';
 // Create the global variable mongoose
 declare global {
     var mongoose: {
-        conn: typeof import("mongoose") | null;                         // Active mongoose connection, if any
-        promise: Promise<typeof import("mongoose")> | null;             // Promise of onging connection, if any
+        conn: typeof import("mongoose") | null;                // Active mongoose connection, if any
+        promise: Promise<typeof import("mongoose")> | null;    // Promise of onging connection, if any
     };
 }
 

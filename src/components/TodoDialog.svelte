@@ -1,17 +1,19 @@
 <script lang="ts">
-    import type { DatabaseTodo, DatabaseUser } from "$lib/database/interfaces";
     import { insertTodo, getRandomTodo } from "$lib/utils/todo";
     import { onMount } from "svelte";
     import ActionButton from "./generics/ActionButton.svelte";
     import IconButton from "./generics/IconButton.svelte";
     import { ICONS } from "$lib/utils/const";
-    import LoadingAnimation from "./generics/LoadingAnimation.svelte";
-
+    import LoadingAnimation from "./generics/PulsingAnimation.svelte";
+    import type { DatabaseTodo, DatabaseUser } from "$lib/database/interfaces";
+    
 
     export let loggedUser: DatabaseUser;
     export let todoList: DatabaseTodo[];
+    export let todo: DatabaseTodo | undefined = undefined;
     export let showDialog: (value: boolean) => void;
     export let updateTodoList: (list: DatabaseTodo[]) => void;
+    export let editMode: boolean;
 
     let randomPlaceholder: string = "";
     let textAreaElement: HTMLTextAreaElement;
@@ -40,11 +42,11 @@
         })
 
         const enhanced = (await response.json()).enhanced;
+        thinking = false;
+        
         if (!enhanced)
             return;
 
-        thinking = false;
-        
         setTextAreaValue(enhanced);
         textAreaElement.focus();
 
@@ -59,7 +61,7 @@
             return;
         }
     
-        const response = await fetch(`/api/todos/1`, {
+        const response = await fetch(`/api/todos/create`, {
             method: 'POST',
             body:JSON.stringify({
                 text: text,
@@ -71,8 +73,37 @@
         showDialog(false);
     }
 
+        
+    async function edit() : Promise<void> {
+        if (!todo)
+            return;
+
+        let text = getTextAreaValue();
+        if (text === undefined || text === '') {
+            showDialog(false);
+            return;
+        }
+    
+        await fetch(`/api/todos/edit`, {
+            method: 'PUT',
+            body:JSON.stringify({
+                text: text,
+                todoID: todo._id.toString(),
+            })
+        });
+
+        todo.text = text;
+        updateTodoList( todoList );
+        showDialog(false);
+    }
+
+
     onMount( async () => {
-        randomPlaceholder = await getRandomTodo();
+        if (editMode)
+            setTextAreaValue( todo?.text ?? "" );
+        else 
+            randomPlaceholder = await getRandomTodo();
+        
         textAreaElement.focus();
     });
 
@@ -90,7 +121,7 @@
         {/if}
 
         <div class="header">
-            <h2>Add your todo</h2>
+            <h2> {editMode ? "Edit" : "Add"} your todo</h2>
             
             <div class="close">
                 <ActionButton icon={ICONS.close} onClick={() => showDialog(false)} type="delete"/>
@@ -101,9 +132,14 @@
  
         <div class="footer">
             <ActionButton type="ai" onClick={() => generate()} icon={ICONS.sparkle}/>
-            <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
-        </div>
 
+            {#if editMode}
+                <IconButton onClick={() => edit()} text="Confirm" icon={ICONS.pencil_confirm}/>
+            {:else}
+                <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
+            {/if}
+
+        </div>
             
     </div>
 </div>
@@ -203,9 +239,17 @@
                 transition: border-color 0.3s ease;
                 overflow-y: auto;
 
+                &.blur {
+                    filter: blur(4px);
+                    pointer-events: none;
+                    user-select: none;
+                    transition: filter 0.3s ease;
+                }
+
                 &:focus {
                     outline: none;
                 }
+
             }
 
             .footer {

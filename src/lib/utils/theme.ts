@@ -9,26 +9,25 @@ export enum Theme {
 
 
 
-
 export function retrieveTheme(): Theme {
 
     const themeFromCookie = retrieveThemeFromCookie();
     if (themeFromCookie !== null)
         return themeFromCookie;
 
-    // fallback to system preference if cookie is not available
+    // Fallback to system preference if cookie is not available
     if (typeof window !== 'undefined' && window.matchMedia)
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? Theme.dark : Theme.light;
     
-    return Theme.dark; // fallback default on server
+    // Fallback default on server
+    return Theme.dark;
 }
+
 
 
 export function updateThemeCookie(theme: string) : void {
     document.cookie = `${THEME_COOKIE}=${theme}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
 }
-
-
 
 
 

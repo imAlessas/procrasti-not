@@ -17,7 +17,8 @@ async function findOrCreateUser(fetch: typeof globalThis.fetch, authUser: UserIn
     if (!authUser) return undefined;
 
     const existingUser = await getUserByLogtoId(fetch, authUser.sub);
-    if (existingUser) return existingUser;
+    if (existingUser)
+        return existingUser;
 
     return await createUser(fetch, authUser);
 }
@@ -26,11 +27,16 @@ async function findOrCreateUser(fetch: typeof globalThis.fetch, authUser: UserIn
 
 // Fetches a user from the database by their Logto user ID.
 async function getUserByLogtoId(fetch: typeof globalThis.fetch, logtoUserId: string): Promise<DatabaseUser | undefined> {
-    const response = await fetch(`/api/users/${logtoUserId}`, { method: 'GET' });
+    const response = await fetch(`/api/users/find`, {
+        method: 'POST' ,
+        body:JSON.stringify({
+            logtoID: logtoUserId
+        })
+    });
     const data = await response.json();
 
     if (data.error) {
-        console.debug('Error fetching user:', data.error);
+        console.error('Error fetching user:', data.error);
         return undefined;
     }
 
@@ -41,15 +47,21 @@ async function getUserByLogtoId(fetch: typeof globalThis.fetch, logtoUserId: str
 
 
 // Creates a new user in the database based on Logto user info.
-async function createUser(fetch: typeof globalThis.fetch, logtoUser: UserInfoResponse): Promise<DatabaseUser> {
-    const response = await fetch(`/api/users/${logtoUser.sub}`, {
+async function createUser(fetch: typeof globalThis.fetch, logtoUser: UserInfoResponse): Promise<DatabaseUser | undefined> {
+    const response = await fetch(`/api/users/create`, {
         method: 'POST',
-        body: JSON.stringify({ newUser: logtoUser }),
+        body: JSON.stringify({
+            newUser: logtoUser
+        }),
         headers: { 'Content-Type': 'application/json' }
     });
-    const user = await response.json();
+    const data = await response.json();
+
+    if (data.error) {
+        console.error('Error creating user:', data.error);
+        return undefined;
+    }
 
     console.debug('User created in database.');
-    return user as DatabaseUser;
+    return data as DatabaseUser;
 }
-

@@ -1,18 +1,13 @@
 import { Todos } from "$lib/models/todos";
 import { Users } from "$lib/models/users";
 import { ObjectId } from "mongodb";
-import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 import { connectToMongoDB } from "./mongoose";
 import type { UpdateResult } from "mongoose";
-
-function removeMongoID(doc: any) : DatabaseTodo {
-    const { _id, ...rest } = doc;
-    return { ...rest }
-}
+import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 
 
 
-
+// Retruns the user object provided by the Logto ID, null otherwise
 export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
 
@@ -23,14 +18,17 @@ export const findUserByLogtoId = async (id : string) : Promise<DatabaseUser | nu
 
 };
 
+
+// Creates a new user 
 export const createUser = async (newUser : DatabaseUser) : Promise<DatabaseUser | null> => {
     await connectToMongoDB();
-
 
     return await Users.create(newUser);
 
 };
 
+
+// Updates the theme given the user ID and the new theme
 export const updateTheme = async (userId : ObjectId, theme : string) : Promise<Boolean> => {
     await connectToMongoDB();
 
@@ -41,23 +39,24 @@ export const updateTheme = async (userId : ObjectId, theme : string) : Promise<B
         }}
     );
     
-
     return response.matchedCount == 1 && response.modifiedCount == 1;
 
 };
 
 
-
+// Retrieves all TODOs of a user
 export const findTodos = async (_idUser : ObjectId) : Promise<DatabaseTodo[] | null> => {
     await connectToMongoDB();
 
-    const constraints = { _idUser: _idUser  }
+    const constraints = { _idUser: _idUser, deleted: null  }
     const todos = await Todos.find(constraints).lean<DatabaseTodo[] | null>();
 
     return todos ?? null
 
 }; 
 
+
+// Creates a new todo
 export const createTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo> => {
     await connectToMongoDB();
 
@@ -65,6 +64,8 @@ export const createTodo = async (newTodo : DatabaseTodo) : Promise<DatabaseTodo>
 
 };
 
+
+// Marks the todo as completed and updates the complete date
 export const completeTodo = async (todoId : ObjectId) : Promise<Boolean> => {
     await connectToMongoDB();
 
@@ -80,6 +81,8 @@ export const completeTodo = async (todoId : ObjectId) : Promise<Boolean> => {
 
 };
 
+
+// Marks the todo as not completed and nullifies the complete date
 export const uncompleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
     await connectToMongoDB();
 
@@ -95,11 +98,33 @@ export const uncompleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
 
 };
 
+// Marks the todo as not completed and nullifies the complete date
+export const editTodo = async (todoId : ObjectId, newText: string) : Promise<Boolean> => {
+    await connectToMongoDB();
+
+    const response : UpdateResult = await Todos.updateOne(
+        {  _id: todoId  },
+        { $set : {
+            text: newText
+        }}
+    );
+
+    return response.matchedCount == 1 && response.modifiedCount == 1;
+
+};
+
+
+// It updates the date, instead of removing it from the database
 export const deleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
     await connectToMongoDB();
 
-    const result = await Todos.deleteOne({_id: todoId});
+    const response : UpdateResult = await Todos.updateOne(
+        {  _id: todoId  },
+        { $set : {
+            deleted: Date.now()
+        }}
+    );
 
-    return result.deletedCount == 1;
+    return response.matchedCount == 1 && response.modifiedCount == 1;
 
 };

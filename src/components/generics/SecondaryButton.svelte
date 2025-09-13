@@ -4,7 +4,7 @@
 
 
 
-<button class="secondary-button non-selectable" onclick={ onClick }>
+<button class="secondary-button non-selectable" on:click|stopPropagation={ onClick }>
     <span class="not-cover">
         <slot />
     </span>

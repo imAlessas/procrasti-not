@@ -2,26 +2,26 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { sortTodoList, insertTodo, getRandomTodo} from "$lib/utils/todo";
-
-    // Components
     import TodoList from '../../components/TodoList.svelte';
-    import TodoForm from '../../components/TodoDialog.svelte';
+    import TodoDialog from '../../components/TodoDialog.svelte';
     import { ICONS } from '$lib/utils/const';
-    import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
-    import type { ObjectId } from 'mongodb';
     import PrimaryButton from '../../components/generics/PrimaryButton.svelte';
     import SecondaryButton from '../../components/generics/SecondaryButton.svelte';
     import Icon from '../../components/generics/Icon.svelte';
     import IconButton from '../../components/generics/IconButton.svelte';
     import { goto } from '$app/navigation';
+    import type { ObjectId } from 'mongodb';
+    import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
 
     export let data;
-
     
     let todoList: DatabaseTodo[] = [];
     let loggedUser : DatabaseUser;
     
     let addTodoClicked = false;
+
+    let editTodoClicked = false;
+    let selectedTodo: DatabaseTodo;
 
 
 
@@ -34,7 +34,7 @@
 
         const text = await getRandomTodo();
 
-        const response = await fetch(`/api/todos/1`, {
+        const response = await fetch(`/api/todos/create`, {
             method: 'POST',
             body:JSON.stringify({
                 text : text,
@@ -47,15 +47,28 @@
     }
 
 
-    function showDialog(value : boolean) : void {
+    function addTodo(value : boolean) : void {
         addTodoClicked = value
+    }
+
+    function editTodo(value : boolean) : void {
+        editTodoClicked = value
+    }
+
+    function selectTodo(todo: DatabaseTodo) {
+        selectedTodo = todo;
     }
 
 
     async function retrieveTodos(_idUser:ObjectId) : Promise<DatabaseTodo[]> {
         
         let todos : DatabaseTodo[] = [];
-        const response = await fetch(`/api/todos/${_idUser}`, {method: 'GET'});
+        const response = await fetch(`/api/todos/find`, {
+            method: 'POST',
+            body:JSON.stringify({
+                userID: _idUser.toString(),
+            })
+        });
         const json = await response.json();
 
         if (json.error) {
@@ -108,7 +121,7 @@
                     <Icon icon={ICONS.dice}/>
                 </SecondaryButton>
 
-                <PrimaryButton onClick={ () => showDialog(true)}>
+                <PrimaryButton onClick={ () => addTodo(true)}>
                     <Icon icon={ICONS.add}/>
                 </PrimaryButton>
             </div>
@@ -116,14 +129,18 @@
         </div>
 
         {#if todoList.length >0}
-            <TodoList {todoList} {updateTodoList} />
+            <TodoList {todoList} showDialog={editTodo} {updateTodoList} {selectTodo} />
         {:else}
             <div class="nothing-todo non-selectable" in:fade={{ delay: 500 }}> Nothing to do! </div>    
         {/if}
 
         
         {#if addTodoClicked}
-            <TodoForm {loggedUser} {todoList} {showDialog} {updateTodoList} />
+            <TodoDialog {loggedUser} {todoList} showDialog={addTodo} {updateTodoList} editMode={false} />
+        {/if}
+
+        {#if editTodoClicked}
+            <TodoDialog {loggedUser} {todoList} showDialog={editTodo} {updateTodoList} editMode={true} todo={selectedTodo}/>
         {/if}
 
     </div>

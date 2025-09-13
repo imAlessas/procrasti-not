@@ -10,6 +10,7 @@ export const ICONS: Record<string, string> = {
     sparkle : "mingcute:sparkles-fill",
     in : "tabler:door-enter",
     out : "tabler:door-exit",
+    pencil : "tabler:pencil",
 
     // Themes
     moon : "tabler:moon-filled",

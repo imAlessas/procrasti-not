@@ -39,9 +39,12 @@
         updateThemeCookie(newTheme);
 
         if (loggedUser)
-            await fetch(`/api/users/${loggedUser._id}`, {
+            await fetch(`/api/users/theme`, {
                 method: 'PUT',
-                body: JSON.stringify({ theme: newTheme }),
+                body: JSON.stringify({
+                    userID: loggedUser._id.toString(),
+                    theme: newTheme
+                }),
             });
 
     }

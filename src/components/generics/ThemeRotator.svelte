@@ -4,8 +4,8 @@
     import { onMount } from 'svelte';
     import IconButton from './IconButton.svelte';
     import { ICONS } from '$lib/utils/const';
-    import type { DatabaseUser } from '$lib/database/interfaces';
     import { Theme, updateThemeCookie } from '$lib/utils/theme';
+    import type { DatabaseUser } from '$lib/database/interfaces';
 
     export let loggedUser: DatabaseUser | undefined;
     export let currentTheme: string;

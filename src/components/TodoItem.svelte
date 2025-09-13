@@ -1,10 +1,8 @@
 <script lang='ts'>
-    import type { DatabaseTodo } from '$lib/database/interfaces';
     import { ICONS } from '$lib/utils/const';
-
-
     import { removeTodo } from '$lib/utils/todo';
     import ActionButton from './generics/ActionButton.svelte';
+    import type { DatabaseTodo } from '$lib/database/interfaces';
 
 
     export let todoList : DatabaseTodo[];

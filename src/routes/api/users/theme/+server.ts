@@ -1,8 +1,6 @@
-// src/routes/api/users/[id].ts
-import type { RequestHandler } from '@sveltejs/kit';
-import { createUser, findUserByLogtoId, updateTheme } from '$lib/database/query';
+import { updateTheme } from '$lib/database/query';
 import { ObjectId } from 'mongodb';
-import type { DatabaseUser } from '$lib/database/interfaces';
+import type { RequestHandler } from '@sveltejs/kit';
 
 
 export const PUT: RequestHandler = async ({ request}) => {

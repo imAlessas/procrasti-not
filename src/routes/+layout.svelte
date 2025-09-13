@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { DatabaseUser } from "$lib/database/interfaces";
     import { retrieveTheme } from "$lib/utils/theme";
     import ThemeRotator from "../components/generics/ThemeRotator.svelte";
-
+    import type { DatabaseUser } from "$lib/database/interfaces";
+    
     export let data;
 
     const loggedUser: DatabaseUser | undefined = data.loggedUser;

@@ -1,7 +1,6 @@
-// src/routes/api/users/[id].ts
-import type { RequestHandler } from '@sveltejs/kit';
-import { createUser, findUserByLogtoId, updateTheme } from '$lib/database/query';
+import { createUser } from '$lib/database/query';
 import { ObjectId } from 'mongodb';
+import type { RequestHandler } from '@sveltejs/kit';
 import type { DatabaseUser } from '$lib/database/interfaces';
 
 

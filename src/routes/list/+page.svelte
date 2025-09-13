@@ -2,21 +2,18 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { sortTodoList, insertTodo, getRandomTodo} from "$lib/utils/todo";
-
-    // Components
     import TodoList from '../../components/TodoList.svelte';
     import TodoDialog from '../../components/TodoDialog.svelte';
     import { ICONS } from '$lib/utils/const';
-    import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
-    import type { ObjectId } from 'mongodb';
     import PrimaryButton from '../../components/generics/PrimaryButton.svelte';
     import SecondaryButton from '../../components/generics/SecondaryButton.svelte';
     import Icon from '../../components/generics/Icon.svelte';
     import IconButton from '../../components/generics/IconButton.svelte';
     import { goto } from '$app/navigation';
+    import type { ObjectId } from 'mongodb';
+    import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
 
     export let data;
-
     
     let todoList: DatabaseTodo[] = [];
     let loggedUser : DatabaseUser;

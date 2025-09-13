@@ -1,9 +1,9 @@
 import { Todos } from "$lib/models/todos";
 import { Users } from "$lib/models/users";
 import { ObjectId } from "mongodb";
-import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 import { connectToMongoDB } from "./mongoose";
 import type { UpdateResult } from "mongoose";
+import type { DatabaseTodo, DatabaseUser } from "./interfaces";
 
 
 

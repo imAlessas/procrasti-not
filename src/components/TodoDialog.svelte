@@ -1,12 +1,12 @@
 <script lang="ts">
-    import type { DatabaseTodo, DatabaseUser } from "$lib/database/interfaces";
     import { insertTodo, getRandomTodo } from "$lib/utils/todo";
     import { onMount } from "svelte";
     import ActionButton from "./generics/ActionButton.svelte";
     import IconButton from "./generics/IconButton.svelte";
     import { ICONS } from "$lib/utils/const";
     import LoadingAnimation from "./generics/LoadingAnimation.svelte";
-
+    import type { DatabaseTodo, DatabaseUser } from "$lib/database/interfaces";
+    
 
     export let loggedUser: DatabaseUser;
     export let todoList: DatabaseTodo[];

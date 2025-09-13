@@ -59,6 +59,17 @@
             return;
         }
     
+        const response = await fetch(`/api/todos/create`, {
+            method: 'POST',
+            body:JSON.stringify({
+                text: text,
+                _idUser: loggedUser._id
+            })
+        });
+
+        updateTodoList( insertTodo( todoList, await response.json()) );
+        showDialog(false);
+    }
         const response = await fetch(`/api/todos/1`, {
             method: 'POST',
             body:JSON.stringify({

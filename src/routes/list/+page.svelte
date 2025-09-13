@@ -34,7 +34,7 @@
 
         const text = await getRandomTodo();
 
-        const response = await fetch(`/api/todos/1`, {
+        const response = await fetch(`/api/todos/create`, {
             method: 'POST',
             body:JSON.stringify({
                 text : text,
@@ -55,7 +55,7 @@
     async function retrieveTodos(_idUser:ObjectId) : Promise<DatabaseTodo[]> {
         
         let todos : DatabaseTodo[] = [];
-        const response = await fetch(`/api/todos/${_idUser}`, {method: 'GET'});
+        const response = await fetch(`/api/todos/find/${_idUser}`, {method: 'GET'});
         const json = await response.json();
 
         if (json.error) {

@@ -63,7 +63,12 @@
     async function retrieveTodos(_idUser:ObjectId) : Promise<DatabaseTodo[]> {
         
         let todos : DatabaseTodo[] = [];
-        const response = await fetch(`/api/todos/find/${_idUser}`, {method: 'GET'});
+        const response = await fetch(`/api/todos/find`, {
+            method: 'POST',
+            body:JSON.stringify({
+                userID: _idUser.toString(),
+            })
+        });
         const json = await response.json();
 
         if (json.error) {

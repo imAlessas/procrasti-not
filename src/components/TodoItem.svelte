@@ -24,7 +24,12 @@
     // Removes the clicked todo
     async function remove(todoId: string) : Promise<void> {
 
-        const response = await fetch(`/api/todos/delete/${todoId}`, {method: 'DELETE'})
+        const response = await fetch(`/api/todos/delete`, {
+            method: 'DELETE',
+            body:JSON.stringify({
+                todoID: todoId.toString(),
+            })
+        });
 
         if (!await response.json())
             return;
@@ -38,9 +43,10 @@
     // Marks the clicked todo as completed
     async function complete(todoId: string) : Promise<void> {
 
-        const response = await fetch(`/api/todos/complete/${todoId}`, {
+        const response = await fetch(`/api/todos/complete`, {
             method: 'PUT',
             body:JSON.stringify({
+                todoID: todoId.toString(),
                 complete: !todo.isDone
             })
         });

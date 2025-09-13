@@ -10,7 +10,17 @@
     export let todoList : DatabaseTodo[];
     export let todo : DatabaseTodo;
     export let updateTodoList : (list : DatabaseTodo[]) => void;
+    export let showDialog: (value: boolean) => void;
+    export let selectTodo: (todo : DatabaseTodo) => void;
 
+
+    function todoClicked() {
+        if( todo.isDone )
+            return;
+        
+        selectTodo(todo)
+        showDialog(true);
+    }
 
 
     // Removes the clicked todo
@@ -42,7 +52,6 @@
         
         todo.isDone = !todo.isDone;
         updateTodoList(todoList);
-
     }
 
 
@@ -50,13 +59,18 @@
 
 
 
-<li class="todo-item {todo.isDone ? 'completed' : ''}">
+<li class="todo-item {todo.isDone ? 'completed' : ''}"  >
     <div class="check-todo">
         <ActionButton type="complete" onClick={() => complete(todo._id.toString())} icon={ICONS.check}/>
-        <span class="todo-text"> {todo.text} </span>
+            
+        <button onclick={ () => todoClicked() }>
+            <div class="todo-text"> {todo.text} </div>
+        </button>
+
     </div>
 
     <ActionButton type="delete" onClick={() => remove(todo._id.toString())} icon={ICONS.bin}/>
+
 </li>
 
 
@@ -71,6 +85,11 @@
         transition: background-color 0.3s ease, transform 0.2s ease;
         gap: 10px;
 
+        &.completed .todo-text {
+            text-decoration: line-through;
+            color: #999;
+        }
+
         .check-todo {
             background-color: var(--bkg-todo-item);
             border-radius: 10px;
@@ -78,17 +97,19 @@
             display: flex;
             align-items: center;
             width: 100%;
-        }
 
-        .todo-text {
-            text-align: justify;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
+            button {
+                all: unset;
+                cursor: pointer;
 
-        &.completed .todo-text {
-            text-decoration: line-through;
-            color: #999;
+                .todo-text {
+                    text-align: justify;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+                
+            }
+
         }
 
     }

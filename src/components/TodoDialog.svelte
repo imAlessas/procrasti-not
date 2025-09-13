@@ -10,8 +10,10 @@
 
     export let loggedUser: DatabaseUser;
     export let todoList: DatabaseTodo[];
+    export let todo: DatabaseTodo | undefined = undefined;
     export let showDialog: (value: boolean) => void;
     export let updateTodoList: (list: DatabaseTodo[]) => void;
+    export let editMode: boolean;
 
     let randomPlaceholder: string = "";
     let textAreaElement: HTMLTextAreaElement;
@@ -70,20 +72,38 @@
         updateTodoList( insertTodo( todoList, await response.json()) );
         showDialog(false);
     }
-        const response = await fetch(`/api/todos/1`, {
-            method: 'POST',
+
+        
+    async function edit() : Promise<void> {
+        if (!todo)
+            return;
+
+        let text = getTextAreaValue();
+        if (text === undefined || text === '') {
+            showDialog(false);
+            return;
+        }
+    
+        await fetch(`/api/todos/edit`, {
+            method: 'PUT',
             body:JSON.stringify({
                 text: text,
-                _idUser: loggedUser._id
+                todoID: todo._id.toString(),
             })
         });
 
-        updateTodoList( insertTodo( todoList, await response.json()) );
+        todo.text = text;
+        updateTodoList( todoList );
         showDialog(false);
     }
 
+
     onMount( async () => {
-        randomPlaceholder = await getRandomTodo();
+        if (editMode)
+            setTextAreaValue( todo?.text ?? "" );
+        else 
+            randomPlaceholder = await getRandomTodo();
+        
         textAreaElement.focus();
     });
 
@@ -101,7 +121,7 @@
         {/if}
 
         <div class="header">
-            <h2>Add your todo</h2>
+            <h2> {editMode ? "Edit" : "Add"} your todo</h2>
             
             <div class="close">
                 <ActionButton icon={ICONS.close} onClick={() => showDialog(false)} type="delete"/>
@@ -112,9 +132,14 @@
  
         <div class="footer">
             <ActionButton type="ai" onClick={() => generate()} icon={ICONS.sparkle}/>
-            <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
-        </div>
 
+            {#if editMode}
+                <IconButton onClick={() => edit()} text="Edit" icon={ICONS.pencil}/>
+            {:else}
+                <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
+            {/if}
+
+        </div>
             
     </div>
 </div>

@@ -5,7 +5,7 @@
 
     // Components
     import TodoList from '../../components/TodoList.svelte';
-    import TodoForm from '../../components/TodoDialog.svelte';
+    import TodoDialog from '../../components/TodoDialog.svelte';
     import { ICONS } from '$lib/utils/const';
     import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
     import type { ObjectId } from 'mongodb';
@@ -22,6 +22,9 @@
     let loggedUser : DatabaseUser;
     
     let addTodoClicked = false;
+
+    let editTodoClicked = false;
+    let selectedTodo: DatabaseTodo;
 
 
 
@@ -47,8 +50,16 @@
     }
 
 
-    function showDialog(value : boolean) : void {
+    function addTodo(value : boolean) : void {
         addTodoClicked = value
+    }
+
+    function editTodo(value : boolean) : void {
+        editTodoClicked = value
+    }
+
+    function selectTodo(todo: DatabaseTodo) {
+        selectedTodo = todo;
     }
 
 
@@ -108,7 +119,7 @@
                     <Icon icon={ICONS.dice}/>
                 </SecondaryButton>
 
-                <PrimaryButton onClick={ () => showDialog(true)}>
+                <PrimaryButton onClick={ () => addTodo(true)}>
                     <Icon icon={ICONS.add}/>
                 </PrimaryButton>
             </div>
@@ -116,14 +127,18 @@
         </div>
 
         {#if todoList.length >0}
-            <TodoList {todoList} {updateTodoList} />
+            <TodoList {todoList} showDialog={editTodo} {updateTodoList} {selectTodo} />
         {:else}
             <div class="nothing-todo non-selectable" in:fade={{ delay: 500 }}> Nothing to do! </div>    
         {/if}
 
         
         {#if addTodoClicked}
-            <TodoForm {loggedUser} {todoList} {showDialog} {updateTodoList} />
+            <TodoDialog {loggedUser} {todoList} showDialog={addTodo} {updateTodoList} editMode={false} />
+        {/if}
+
+        {#if editTodoClicked}
+            <TodoDialog {loggedUser} {todoList} showDialog={editTodo} {updateTodoList} editMode={true} todo={selectedTodo}/>
         {/if}
 
     </div>

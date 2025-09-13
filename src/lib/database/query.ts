@@ -98,6 +98,21 @@ export const uncompleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {
 
 };
 
+// Marks the todo as not completed and nullifies the complete date
+export const editTodo = async (todoId : ObjectId, newText: string) : Promise<Boolean> => {
+    await connectToMongoDB();
+
+    const response : UpdateResult = await Todos.updateOne(
+        {  _id: todoId  },
+        { $set : {
+            text: newText
+        }}
+    );
+
+    return response.matchedCount == 1 && response.modifiedCount == 1;
+
+};
+
 
 // It updates the date, instead of removing it from the database
 export const deleteTodo = async (todoId : ObjectId) : Promise<Boolean> => {

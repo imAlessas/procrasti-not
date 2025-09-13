@@ -134,7 +134,7 @@
             <ActionButton type="ai" onClick={() => generate()} icon={ICONS.sparkle}/>
 
             {#if editMode}
-                <IconButton onClick={() => edit()} text="Edit" icon={ICONS.pencil}/>
+                <IconButton onClick={() => edit()} text="Confirm" icon={ICONS.pencil_confirm}/>
             {:else}
                 <IconButton onClick={() => add()} text="Add" icon={ICONS.add}/>
             {/if}

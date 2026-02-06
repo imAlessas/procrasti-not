@@ -95,7 +95,7 @@
         button {
             all: unset;
             cursor: pointer;
-            width: 100%;
+            width: 85%;
             border-radius: 10px;
             background-color: var(--bkg-todo-item);
             transition: background-color 0.5s ease;
@@ -120,6 +120,9 @@
             text-align: justify;
             padding-left: 15px;
             padding-right: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
 

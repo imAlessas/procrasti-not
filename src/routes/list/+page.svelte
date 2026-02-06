@@ -173,7 +173,7 @@
             animation: fadeIn 1s ease-in-out;
             
             @media (max-width: 450px) {
-                width: 80%;
+                width: 70%;
             }
 
             .header {

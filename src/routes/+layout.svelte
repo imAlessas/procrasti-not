@@ -1,23 +1,15 @@
 <script lang="ts">
-    import { retrieveTheme } from "$lib/utils/theme";
-    import ThemeRotator from "../components/generics/ThemeRotator.svelte";
-    import type { DatabaseUser } from "$lib/database/interfaces";
-    
-    export let data;
+    import '$lib/styles/style.scss';
+    import ThemeRotator from '$lib/components/ThemeRotator.svelte';
 
-    const loggedUser: DatabaseUser | undefined = data.loggedUser;
-    const currentTheme: string = loggedUser?.theme ?? retrieveTheme();
+    let { data, children } = $props();
 </script>
 
-
-
 <main>
-    <ThemeRotator {loggedUser} {currentTheme} />
-    <slot />
+    <ThemeRotator
+        loggedUser={data.loggedUser}
+        initialTheme={data.theme}
+        hasThemePreference={data.hasThemePreference}
+    />
+    {@render children()}
 </main>
-
-
-
-<style lang="scss">
-   @use '$lib/styles/style.scss' as *;
-</style> 

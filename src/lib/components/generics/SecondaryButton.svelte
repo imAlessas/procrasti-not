@@ -1,16 +1,31 @@
 <script lang="ts">
-    export let onClick: () => any = () => {};
+    import type { Snippet } from "svelte";
+
+    let {
+        onClick = () => {},
+        label,
+        disabled = false,
+        children,
+    }: {
+        onClick?: () => unknown;
+        label?: string;
+        disabled?: boolean;
+        children: Snippet;
+    } = $props();
 </script>
 
-
-
-<button class="secondary-button non-selectable" on:click|stopPropagation={ onClick }>
+<button
+    class="secondary-button non-selectable"
+    type="button"
+    aria-label={label}
+    title={label}
+    {disabled}
+    onclick={onClick}
+>
     <span class="not-cover">
-        <slot />
+        {@render children()}
     </span>
 </button>
-
-
 
 <style lang="scss">
     .secondary-button {
@@ -39,7 +54,7 @@
             transition: opacity 0.3s ease;
         }
 
-        &:hover {
+        &:hover:not(:disabled) {
             transform: scale(105%);
 
             &::after {
@@ -47,15 +62,24 @@
             }
         }
 
-        &:active {
+        &:active:not(:disabled) {
             transform: scale(95%);
             box-shadow: var(--btn-active-box-shadow);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--text-color);
+            outline-offset: 2px;
         }
 
         .not-cover {
             z-index: 2;
             position: relative;
         }
-
     }
 </style>

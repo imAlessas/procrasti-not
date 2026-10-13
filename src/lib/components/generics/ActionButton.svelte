@@ -1,21 +1,33 @@
 <script lang="ts">
     import Icon from "./Icon.svelte";
-    
-    export let icon;
-    export let onClick: () => any = () => {};
-    export let type : "complete" | "delete" | "ai";
 
+    let {
+        icon,
+        label,
+        type,
+        onClick = () => {},
+        disabled = false,
+    }: {
+        icon: string;
+        label: string;
+        type: "complete" | "delete" | "ai";
+        onClick?: () => unknown;
+        disabled?: boolean;
+    } = $props();
 </script>
 
-
-
-<button class="action-button {type} non-selectable " on:click|stopPropagation={onClick}>
+<button
+    class="action-button {type} non-selectable"
+    type="button"
+    aria-label={label}
+    title={label}
+    {disabled}
+    onclick={onClick}
+>
     <Icon {icon} />
 </button>
 
-
-
-<style class="scss">
+<style lang="scss">
     .action-button {
         display: flex;
         align-items: center;
@@ -31,19 +43,29 @@
         font-weight: bold;
         flex-shrink: 0;
 
-        &:hover {
+        &:hover:not(:disabled) {
             transform: scale(105%);
         }
 
-        &:active {
+        &:active:not(:disabled) {
             transform: scale(95%);
             box-shadow: var(--btn-active-box-shadow);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--text-color);
+            outline-offset: 2px;
         }
 
         &.complete {
             border-radius: 100%;
 
-            &:hover {
+            &:hover:not(:disabled) {
                 background: var(--btn-complete-gradient);
             }
         }
@@ -51,7 +73,7 @@
         &.delete {
             border-radius: 10px;
 
-            &:hover {
+            &:hover:not(:disabled) {
                 background: var(--btn-delete-gradient);
             }
         }
@@ -59,10 +81,9 @@
         &.ai {
             border-radius: 100%;
 
-            &:hover {
+            &:hover:not(:disabled) {
                 background: var(--btn-ai-gradient);
             }
         }
-
     }
 </style>

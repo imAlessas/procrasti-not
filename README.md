@@ -29,14 +29,14 @@ Procrasti Not is a simple todo list application built with SvelteKit. It stores 
 Log in using Logto.io or Google authentication.
 
 <div align="center">
-    <img src="./static/readme/logto.png" alt="Logto login splash-page" />
+    <img src="./docs/readme/logto.png" alt="Logto login splash-page" />
 </div>
 
 ### Theme Switching
 
 Switch between included themes.
 <div align="center">
-    <img src="./static/readme/rotate-theme.gif" alt="Theme rotator" />
+    <img src="./docs/readme/rotate-theme.gif" alt="Theme rotator" />
 </div>
 
 ### Managing Todos
@@ -44,7 +44,7 @@ Switch between included themes.
 Add random todos, mark tasks as completed, or delete them.
 
 <div align="center">
-    <img src="./static/readme/random-todo.gif" alt="Interract with the list" />
+    <img src="./docs/readme/random-todo.gif" alt="Interract with the list" />
 </div>
 
 ### Custom Todo with AI Correction
@@ -52,8 +52,32 @@ Add random todos, mark tasks as completed, or delete them.
 Add custom todos and use AI to correct typos.
 
 <div align="center">
-    <img src="./static/readme/add-todo.gif" alt="Correct cutom todo" />
+    <img src="./docs/readme/add-todo.gif" alt="Correct cutom todo" />
 </div>
+
+## 🛠️ Development
+
+```bash
+npm install
+cp .env.example .env   # fill in the values
+npm run dev
+npm run check          # type check
+npm test               # unit tests
+```
+
+See [`.env.example`](./.env.example) for every required variable (MongoDB, Logto, Gemini).
+
+### API
+
+All endpoints require a signed-in user and only ever touch that user's data. Bodies are JSON (`Content-Type: application/json`) and errors use proper HTTP status codes.
+
+| Method | Route | Purpose |
+| --- | --- | --- |
+| `POST` | `/api/todos` | Create a todo `{ text }` |
+| `PATCH` | `/api/todos/:id` | Edit `{ text }` and/or complete `{ isDone }` |
+| `DELETE` | `/api/todos/:id` | Soft-delete a todo |
+| `PUT` | `/api/users/theme` | Save the theme `{ theme }` |
+| `POST` | `/api/gemini` | Fix typos `{ text }` (10 requests/minute per user) |
 
 ---
 

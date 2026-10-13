@@ -1,162 +1,140 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
-    import { sortTodoList, insertTodo, getRandomTodo} from "$lib/utils/todo";
-    import TodoList from '../../components/TodoList.svelte';
-    import TodoDialog from '../../components/TodoDialog.svelte';
-    import { ICONS } from '$lib/utils/const';
-    import PrimaryButton from '../../components/generics/PrimaryButton.svelte';
-    import SecondaryButton from '../../components/generics/SecondaryButton.svelte';
-    import Icon from '../../components/generics/Icon.svelte';
-    import IconButton from '../../components/generics/IconButton.svelte';
-    import { goto } from '$app/navigation';
-    import type { ObjectId } from 'mongodb';
-    import type { DatabaseTodo, DatabaseUser } from '$lib/database/interfaces';
+    import { fade } from "svelte/transition";
+    import TodoList from "$lib/components/TodoList.svelte";
+    import TodoDialog from "$lib/components/TodoDialog.svelte";
+    import PrimaryButton from "$lib/components/generics/PrimaryButton.svelte";
+    import SecondaryButton from "$lib/components/generics/SecondaryButton.svelte";
+    import Icon from "$lib/components/generics/Icon.svelte";
+    import IconButton from "$lib/components/generics/IconButton.svelte";
+    import { api } from "$lib/utils/api";
+    import { ICONS } from "$lib/utils/const";
+    import { getRandomTodo, removeTodo, replaceTodo, sortTodoList } from "$lib/utils/todo";
+    import type { TodoDTO } from "$lib/types";
 
-    export let data;
-    
-    let todoList: DatabaseTodo[] = [];
-    let loggedUser : DatabaseUser;
-    
-    let addTodoClicked = false;
+    let { data } = $props();
 
-    let editTodoClicked = false;
-    let selectedTodo: DatabaseTodo;
+    let todos = $state<TodoDTO[]>([]);
+    let dialogOpen = $state(false);
+    let editedTodo = $state<TodoDTO | undefined>(undefined);
+    let errorMessage = $state("");
 
-
-
-    function updateTodoList(new_list : DatabaseTodo[]) : void {
-        todoList = sortTodoList(new_list);
-    }
-
-
-    async function insertRandomTodo() : Promise<void> {
-
-        const text = await getRandomTodo();
-
-        const response = await fetch(`/api/todos/create`, {
-            method: 'POST',
-            body:JSON.stringify({
-                text : text,
-                _idUser : loggedUser._id
-            })
-        });
-
-        todoList = insertTodo(todoList, await response.json())
-        updateTodoList(todoList);
-    }
-
-
-    function addTodo(value : boolean) : void {
-        addTodoClicked = value
-    }
-
-    function editTodo(value : boolean) : void {
-        editTodoClicked = value
-    }
-
-    function selectTodo(todo: DatabaseTodo) {
-        selectedTodo = todo;
-    }
-
-
-    async function retrieveTodos(_idUser:ObjectId) : Promise<DatabaseTodo[]> {
-        
-        let todos : DatabaseTodo[] = [];
-        const response = await fetch(`/api/todos/find`, {
-            method: 'POST',
-            body:JSON.stringify({
-                userID: _idUser.toString(),
-            })
-        });
-        const json = await response.json();
-
-        if (json.error) {
-            console.debug(json.error);
-            return todos;
-        }
-        
-        todos = json;
-        return todos;
-
-    }
-
-
-    onMount(async () => {
-        try {
-
-            const user : DatabaseUser | undefined = data.loggedUser;
-            if (!user) {
-                goto("/");
-                return;
-            }
-
-            loggedUser = user;
-            
-            todoList = sortTodoList(await retrieveTodos(loggedUser._id));
-
-        } catch (error) {
-            console.error('Error fetching todo:', error);
-        }
+    // Initial list from the server, then kept in sync locally
+    $effect.pre(() => {
+        todos = data.todos;
     });
 
+    const sortedTodos = $derived(sortTodoList(todos));
 
+    function fail(error: unknown): void {
+        errorMessage = (error as Error).message;
+        setTimeout(() => (errorMessage = ""), 5000);
+    }
+
+    async function addTodo(text: string): Promise<TodoDTO> {
+        const created = await api<TodoDTO>("POST", "/api/todos", { text });
+        todos = [...todos, created];
+        return created;
+    }
+
+    async function insertRandomTodo(): Promise<void> {
+        try {
+            await addTodo(await getRandomTodo());
+        } catch (error) {
+            fail(error);
+        }
+    }
+
+    function openAddDialog(): void {
+        editedTodo = undefined;
+        dialogOpen = true;
+    }
+
+    function openEditDialog(todo: TodoDTO): void {
+        editedTodo = todo;
+        dialogOpen = true;
+    }
+
+    async function saveTodo(text: string): Promise<void> {
+        if (editedTodo) {
+            const updated = await api<TodoDTO>("PATCH", `/api/todos/${editedTodo.id}`, { text });
+            todos = replaceTodo(todos, updated);
+        } else {
+            await addTodo(text);
+        }
+
+        dialogOpen = false;
+    }
+
+    // Optimistic update, rolled back when the server refuses it
+    async function toggleTodo(todo: TodoDTO): Promise<void> {
+        const previous = todos;
+        const isDone = !todo.isDone;
+        todos = replaceTodo(todos, { ...todo, isDone, completed: isDone ? Date.now() : null });
+
+        try {
+            todos = replaceTodo(todos, await api<TodoDTO>("PATCH", `/api/todos/${todo.id}`, { isDone }));
+        } catch (error) {
+            todos = previous;
+            fail(error);
+        }
+    }
+
+    async function deleteTodo(todo: TodoDTO): Promise<void> {
+        const previous = todos;
+        todos = removeTodo(todos, todo.id);
+
+        try {
+            await api("DELETE", `/api/todos/${todo.id}`);
+        } catch (error) {
+            todos = previous;
+            fail(error);
+        }
+    }
 </script>
 
-
-
 <div class="app-container">
-
     <form method="POST" action="?/signOut" class="signout-form">
-        <IconButton icon={ICONS.out} text="Sign out"/>
+        <IconButton icon={ICONS.out} text="Sign out" type="submit" />
     </form>
 
     <div class="todo-container" in:fade={{ duration: 1000 }}>
-        
         <div class="header non-selectable">
             <h1>Todo List</h1>
-            
+
             <div class="button-container">
-                <SecondaryButton onClick={() => insertRandomTodo()}>
-                    <Icon icon={ICONS.dice}/>
+                <SecondaryButton label="Add a random todo" onClick={insertRandomTodo}>
+                    <Icon icon={ICONS.dice} />
                 </SecondaryButton>
 
-                <PrimaryButton onClick={ () => addTodo(true)}>
-                    <Icon icon={ICONS.add}/>
+                <PrimaryButton label="Add a todo" onClick={openAddDialog}>
+                    <Icon icon={ICONS.add} />
                 </PrimaryButton>
             </div>
-            
         </div>
 
-        {#if todoList.length >0}
-            <TodoList {todoList} showDialog={editTodo} {updateTodoList} {selectTodo} />
+        {#if errorMessage}
+            <p class="error" role="alert">{errorMessage}</p>
+        {/if}
+
+        {#if sortedTodos.length > 0}
+            <TodoList todos={sortedTodos} onToggle={toggleTodo} onDelete={deleteTodo} onEdit={openEditDialog} />
         {:else}
-            <div class="nothing-todo non-selectable" in:fade={{ delay: 500 }}> Nothing to do! </div>    
+            <div class="nothing-todo non-selectable" in:fade={{ delay: 500 }}>Nothing to do!</div>
         {/if}
 
-        
-        {#if addTodoClicked}
-            <TodoDialog {loggedUser} {todoList} showDialog={addTodo} {updateTodoList} editMode={false} />
+        {#if dialogOpen}
+            <TodoDialog todo={editedTodo} onSave={saveTodo} onClose={() => (dialogOpen = false)} />
         {/if}
-
-        {#if editTodoClicked}
-            <TodoDialog {loggedUser} {todoList} showDialog={editTodo} {updateTodoList} editMode={true} todo={selectedTodo}/>
-        {/if}
-
     </div>
 </div>
 
-
-
 <style lang="scss">
-
     .app-container {
         display: flex;
         place-content: center;
         align-items: center;
         min-height: 100vh;
         width: 100%;
-
 
         .signout-form {
             position: absolute;
@@ -171,9 +149,9 @@
             width: 400px;
             padding: 20px;
             animation: fadeIn 1s ease-in-out;
-            
+
             @media (max-width: 450px) {
-                width: 20%;
+                width: 70%;
             }
 
             .header {
@@ -181,20 +159,25 @@
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 20px;
-                
+
                 h1 {
                     margin: 0;
                     font-size: 24px;
                     color: var(--text-color);
                 }
-                
+
                 .button-container {
                     display: flex;
                     gap: 10px;
                 }
-                
             }
-            
+
+            .error {
+                margin: 0 0 12px;
+                color: #e57373;
+                font-size: 14px;
+            }
+
             .nothing-todo {
                 display: flex;
                 align-items: center;
@@ -202,7 +185,6 @@
                 padding-top: 15px;
                 font-size: 18px;
             }
-
         }
     }
 </style>

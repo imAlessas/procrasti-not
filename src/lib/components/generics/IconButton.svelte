@@ -2,35 +2,40 @@
     import Icon from "./Icon.svelte";
     import PrimaryButton from "./PrimaryButton.svelte";
 
-    export let icon;
-    export let text = "";
-    export let onClick: () => any = () => {};
-
+    let {
+        icon,
+        text = "",
+        label,
+        type = "button",
+        onClick = () => {},
+        disabled = false,
+    }: {
+        icon: string;
+        text?: string;
+        label?: string;
+        type?: "button" | "submit";
+        onClick?: () => unknown;
+        disabled?: boolean;
+    } = $props();
 </script>
 
-
-
-<PrimaryButton {onClick}>
-    <div class="icon-button {text.length > 0 ? "gap" : ""}">
+<PrimaryButton {onClick} {type} {disabled} label={label ?? text}>
+    <div class="icon-button" class:gap={text.length > 0}>
         <div class="icon-container">
             <Icon {icon} />
         </div>
-        
-        <span class="button-text">
-            {text}
-        </span>
-        
+
+        {#if text}
+            <span class="button-text">{text}</span>
+        {/if}
     </div>
 </PrimaryButton>
-
-
 
 <style lang="scss">
     .icon-button {
         display: flex;
         align-items: center;
 
-        
         &.gap {
             gap: 8px;
         }
@@ -41,7 +46,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
         }
     }
 </style>

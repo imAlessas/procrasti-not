@@ -1,29 +1,14 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { goto } from '$app/navigation';
-    import { ICONS } from '$lib/utils/const.js';
-    import IconButton from '../components/generics/IconButton.svelte';
-
-    export let data;
-
-    onMount( async () => {
-        if(data.loggedUser)
-            goto("/list")
-    });
-
+    import { ICONS } from '$lib/utils/const';
+    import IconButton from '$lib/components/generics/IconButton.svelte';
 </script>
 
-
-
 <form method="POST" action="?/signIn" class="signin-form">
-    <IconButton icon={ICONS.in} text="Sign in"/>
+    <IconButton icon={ICONS.in} text="Sign in" type="submit" />
 </form>
-
-
 
 <style lang="scss">
     .signin-form {
         margin: auto;
     }
 </style>
-    
